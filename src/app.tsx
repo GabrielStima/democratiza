@@ -29,8 +29,8 @@ const Estilo = lazy(() =>
     : Promise.resolve({ default: Erro404 }),
 );
 
-function noSite(filho: ComponentChildren) {
-  return <LayoutSite>{filho}</LayoutSite>;
+function noSite(filho: ComponentChildren, faixas = false) {
+  return <LayoutSite faixas={faixas}>{filho}</LayoutSite>;
 }
 function noApp(filho: ComponentChildren) {
   return <LayoutApp>{filho}</LayoutApp>;
@@ -39,7 +39,7 @@ function noApp(filho: ComponentChildren) {
 /** A rota `/` decide a Home olhando se existe progresso salvo neste navegador. */
 function Inicio() {
   const e = estado.value;
-  return e ? noApp(<HomeProgresso estado={e} />) : noSite(<HomeVisitante />);
+  return e ? noApp(<HomeProgresso estado={e} />) : noSite(<HomeVisitante />, true);
 }
 
 export function Aplicacao() {

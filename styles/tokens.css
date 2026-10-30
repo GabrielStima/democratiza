@@ -8,6 +8,7 @@
   --verde-botao-hover: #0a7939;
   --verde-noite: #0b3d20;
   --verde-claro: #ddf5e5;
+  --verde-painel: #e9f6ec;
   --verde-feedback: #d7f5e1;
   --verde-texto: #1e4d30;
   --amarelo-ouro: #ffc928;
@@ -27,6 +28,8 @@
 
   /* Neutros */
   --texto: #1e2622;
+  /* Texto de corpo nas páginas do site (design: #4A5A50). */
+  --texto-corpo: #4a5a50;
   --texto-suave: #5d6b62;
   --texto-mudo: #6b7a70;
   --borda: #e1e8e2;
@@ -64,6 +67,6 @@
   --espaco-7: 48px;
 
   /* Layout */
-  --largura-site: 1120px;
+  --largura-site: 1160px;
   --largura-licao: 820px;
 }

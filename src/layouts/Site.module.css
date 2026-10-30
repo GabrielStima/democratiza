@@ -9,7 +9,7 @@
 .interno {
   max-width: var(--largura-site);
   margin: 0 auto;
-  padding: var(--espaco-4) var(--espaco-5);
+  padding: 14px var(--espaco-5);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -22,17 +22,19 @@
   margin-right: auto;
   font-family: var(--fonte-titulo);
   font-weight: 800;
-  font-size: 24px;
-  color: var(--verde-noite);
+  font-size: 30px;
+  letter-spacing: -0.5px;
+  color: var(--verde-mata);
   text-decoration: none;
 }
 .menu {
   display: flex;
   gap: var(--espaco-5);
+  font-size: 16px;
   font-weight: 700;
 }
 .menu a {
-  color: var(--texto-suave);
+  color: var(--texto-corpo);
   text-decoration: none;
 }
 .menu a:hover {
@@ -44,6 +46,10 @@
   max-width: var(--largura-site);
   margin: 0 auto;
   padding: var(--espaco-6) var(--espaco-5);
+}
+.faixas {
+  flex: 1;
+  width: 100%;
 }
 .rodape {
   border-top: 2px solid var(--linha);
