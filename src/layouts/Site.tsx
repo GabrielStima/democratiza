@@ -1,6 +1,7 @@
 import type { ComponentChildren } from 'preact';
 import { Botao3D } from '../componentes/Botao3D';
 import { Capi } from '../componentes/Capi';
+import { REPOSITORIO } from '../licao/fluxo.ts';
 import { catalogo } from '../conteudo/index.ts';
 import { licaoParaContinuar } from '../engine/continuar.ts';
 import { caderno, estado } from '../stores/index.ts';
@@ -46,8 +47,15 @@ export function Site({
       <main class={faixas ? estilos.faixas : estilos.principal}>{children}</main>
       <footer class={estilos.rodape}>
         <div class={estilos.interno}>
-          <span>Democratiza · gratuito, apartidário e com fonte em tudo.</span>
-          <a href="/sobre">Sobre</a>
+          <span class={estilos.marcaRodape}>democratiza</span>
+          <span>Projeto educativo, independente e apartidário.</span>
+          <nav class={estilos.linksRodape} aria-label="Rodapé">
+            <a href="/sobre">Princípios</a>
+            <a href={primeiroCurso ? `/c/${primeiroCurso}` : '/'}>Conteúdo</a>
+            <a href={`${REPOSITORIO}/issues/new`} target="_blank" rel="noopener noreferrer">
+              Sugerir correção
+            </a>
+          </nav>
         </div>
       </footer>
     </div>
