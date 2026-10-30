@@ -1,0 +1,44 @@
+{
+  "titulo": "Lição",
+  "status": "revisado",
+  "ensina": ["alfa"],
+  "situacao": {
+    "texto": "s",
+    "palpites": ["1", "2", "3"]
+  },
+  "explicacao": [
+    {
+      "titulo": "t",
+      "texto": "texto",
+      "glossario": {},
+      "fonte": {
+        "descricao": "Fixture de teste, fonte de exemplo, p. 1"
+      },
+      "checagem": {
+        "tipo": "multipla_escolha",
+        "pergunta": "p?",
+        "opcoes": ["a", "b", "c"],
+        "correta": 0,
+        "reexplicacao": "r"
+      },
+      "visual": "nao-existe"
+    }
+  ],
+  "pratica": [
+    {
+      "tipo": "multipla_escolha",
+      "conceitos": ["alfa"],
+      "pergunta": "p?",
+      "opcoes": ["a", "b", "c"],
+      "correta": 0,
+      "explicacao": "x",
+      "fonte": {
+        "descricao": "Fixture de teste, fonte de exemplo, p. 1"
+      }
+    }
+  ],
+  "revisao": {
+    "por": "G",
+    "em": "2026-10-28"
+  }
+}

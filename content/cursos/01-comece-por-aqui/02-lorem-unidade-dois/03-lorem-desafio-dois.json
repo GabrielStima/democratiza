@@ -1,0 +1,59 @@
+{
+  "titulo": "Desafio da unidade",
+  "status": "rascunho",
+  "tipo": "desafio",
+  "pratica": [
+    {
+      "tipo": "multipla_escolha",
+      "conceitos": ["lorem-06", "lorem-07"],
+      "titulo_curto": "Lorem ipsum?",
+      "pergunta": "Lorem ipsum dolor sit amet 1?",
+      "opcoes": [
+        "Consectetur adipiscing",
+        "Sed do eiusmod",
+        "Tempor incididunt",
+        "Ut labore et dolore"
+      ],
+      "correta": 1,
+      "explicacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "fonte": {
+        "descricao": "Lorem Ipsum, fonte de exemplo, cap. 25, p. 250"
+      }
+    },
+    {
+      "tipo": "verdadeiro_falso",
+      "conceitos": ["lorem-08", "lorem-09"],
+      "afirmacao": "Lorem ipsum dolor sit amet 1, consectetur adipiscing elit.",
+      "correta": false,
+      "explicacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "fonte": {
+        "descricao": "Lorem Ipsum, fonte de exemplo, cap. 26, p. 260",
+        "link": "https://example.com"
+      }
+    },
+    {
+      "tipo": "multipla_escolha",
+      "conceitos": ["lorem-06", "lorem-07", "lorem-08", "lorem-09", "lorem-10"],
+      "titulo_curto": "Lorem ipsum?",
+      "pergunta": "Lorem ipsum dolor sit amet 2?",
+      "opcoes": ["Consectetur adipiscing", "Sed do eiusmod", "Tempor incididunt"],
+      "correta": 2,
+      "explicacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "fonte": {
+        "descricao": "Lorem Ipsum, fonte de exemplo, cap. 27, p. 270"
+      }
+    },
+    {
+      "tipo": "quem_resolve",
+      "conceitos": ["lorem-09", "lorem-10"],
+      "situacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "opcoes": ["Lorem", "Ipsum", "Dolor"],
+      "correta": 1,
+      "explicacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "fonte": {
+        "descricao": "Lorem Ipsum, fonte de exemplo, cap. 28, p. 280",
+        "link": "https://example.com"
+      }
+    }
+  ]
+}

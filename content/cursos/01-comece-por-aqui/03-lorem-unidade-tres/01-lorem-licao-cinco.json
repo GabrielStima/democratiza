@@ -1,0 +1,73 @@
+{
+  "titulo": "Lorem lição cinco",
+  "status": "rascunho",
+  "ensina": ["lorem-11", "lorem-12"],
+  "situacao": {
+    "texto": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "palpites": ["Lorem", "Ipsum dolor", "Sit amet"]
+  },
+  "explicacao": [
+    {
+      "titulo": "Lorem ipsum dolor 1",
+      "texto": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Veja o [[termo1]] no texto.",
+      "analogia": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "visual": "lorem-esquema",
+      "glossario": {
+        "termo1": "Lorem ipsum, definição curta de exemplo."
+      },
+      "fonte": {
+        "descricao": "Lorem Ipsum, fonte de exemplo, cap. 29, p. 290"
+      },
+      "checagem": {
+        "tipo": "multipla_escolha",
+        "pergunta": "Lorem ipsum dolor 1?",
+        "opcoes": ["Sit amet", "Consectetur", "Adipiscing"],
+        "correta": 1,
+        "reexplicacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      }
+    }
+  ],
+  "pratica": [
+    {
+      "tipo": "multipla_escolha",
+      "conceitos": ["lorem-11", "lorem-12"],
+      "titulo_curto": "Lorem ipsum?",
+      "pergunta": "Lorem ipsum dolor sit amet 1?",
+      "opcoes": [
+        "Consectetur adipiscing",
+        "Sed do eiusmod",
+        "Tempor incididunt",
+        "Ut labore et dolore"
+      ],
+      "correta": 1,
+      "explicacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "fonte": {
+        "descricao": "Lorem Ipsum, fonte de exemplo, cap. 30, p. 300",
+        "link": "https://example.com"
+      }
+    },
+    {
+      "tipo": "verdadeiro_falso",
+      "conceitos": ["lorem-11", "lorem-12"],
+      "afirmacao": "Lorem ipsum dolor sit amet 1, consectetur adipiscing elit.",
+      "correta": false,
+      "explicacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "fonte": {
+        "descricao": "Lorem Ipsum, fonte de exemplo, cap. 31, p. 310"
+      }
+    },
+    {
+      "tipo": "multipla_escolha",
+      "conceitos": ["lorem-11", "lorem-12"],
+      "titulo_curto": "Lorem ipsum?",
+      "pergunta": "Lorem ipsum dolor sit amet 2?",
+      "opcoes": ["Consectetur adipiscing", "Sed do eiusmod", "Tempor incididunt"],
+      "correta": 2,
+      "explicacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "fonte": {
+        "descricao": "Lorem Ipsum, fonte de exemplo, cap. 32, p. 320",
+        "link": "https://example.com"
+      }
+    }
+  ]
+}

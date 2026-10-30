@@ -1,0 +1,7 @@
+{
+  "titulo": "Aprofundamento lorem",
+  "nivel": "aprofundamento",
+  "descricao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "cor": "azul",
+  "requer_conceitos": ["lorem-05", "lorem-08"]
+}

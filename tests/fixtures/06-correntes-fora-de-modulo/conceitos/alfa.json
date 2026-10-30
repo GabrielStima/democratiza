@@ -1,0 +1,11 @@
+{
+  "id": "alfa",
+  "nome": "alfa",
+  "definicao": "d",
+  "exemplo": "e",
+  "nao_confunda": "n",
+  "requer": [],
+  "fonte": {
+    "descricao": "Fixture de teste, fonte de exemplo, p. 1"
+  }
+}

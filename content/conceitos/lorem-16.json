@@ -1,0 +1,12 @@
+{
+  "id": "lorem-16",
+  "nome": "Lorem ipsum 16",
+  "definicao": "Lorem ipsum dolor sit amet.",
+  "exemplo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "nao_confunda": "Dolor sit amet 16, que é outra coisa.",
+  "requer": ["lorem-08"],
+  "fonte": {
+    "descricao": "Lorem Ipsum, fonte de exemplo, cap. 16, p. 160",
+    "link": "https://example.com"
+  }
+}

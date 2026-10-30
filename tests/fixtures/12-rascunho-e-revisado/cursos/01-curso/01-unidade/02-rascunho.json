@@ -1,0 +1,39 @@
+{
+  "titulo": "Lição",
+  "status": "rascunho",
+  "ensina": ["beta"],
+  "situacao": {
+    "texto": "s",
+    "palpites": ["1", "2", "3"]
+  },
+  "explicacao": [
+    {
+      "titulo": "t",
+      "texto": "texto",
+      "glossario": {},
+      "fonte": {
+        "descricao": "Fixture de teste, fonte de exemplo, p. 1"
+      },
+      "checagem": {
+        "tipo": "multipla_escolha",
+        "pergunta": "p?",
+        "opcoes": ["a", "b", "c"],
+        "correta": 0,
+        "reexplicacao": "r"
+      }
+    }
+  ],
+  "pratica": [
+    {
+      "tipo": "multipla_escolha",
+      "conceitos": ["beta"],
+      "pergunta": "p?",
+      "opcoes": ["a", "b", "c"],
+      "correta": 0,
+      "explicacao": "x",
+      "fonte": {
+        "descricao": "Fixture de teste, fonte de exemplo, p. 1"
+      }
+    }
+  ]
+}

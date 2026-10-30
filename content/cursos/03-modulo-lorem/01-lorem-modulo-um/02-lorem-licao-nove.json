@@ -1,0 +1,100 @@
+{
+  "titulo": "Lorem lição nove",
+  "status": "rascunho",
+  "ensina": ["lorem-18"],
+  "situacao": {
+    "texto": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "palpites": ["Lorem", "Ipsum dolor", "Sit amet"]
+  },
+  "explicacao": [
+    {
+      "titulo": "Lorem ipsum dolor 1",
+      "texto": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Veja o [[termo1]] no texto.",
+      "analogia": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "visual": "lorem-esquema",
+      "glossario": {
+        "termo1": "Lorem ipsum, definição curta de exemplo."
+      },
+      "fonte": {
+        "descricao": "Lorem Ipsum, fonte de exemplo, cap. 66, p. 660",
+        "link": "https://example.com"
+      },
+      "checagem": {
+        "tipo": "multipla_escolha",
+        "pergunta": "Lorem ipsum dolor 1?",
+        "opcoes": ["Sit amet", "Consectetur", "Adipiscing"],
+        "correta": 1,
+        "reexplicacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      }
+    }
+  ],
+  "pratica": [
+    {
+      "tipo": "multipla_escolha",
+      "conceitos": ["lorem-18"],
+      "titulo_curto": "Lorem ipsum?",
+      "pergunta": "Lorem ipsum dolor sit amet 1?",
+      "opcoes": [
+        "Consectetur adipiscing",
+        "Sed do eiusmod",
+        "Tempor incididunt",
+        "Ut labore et dolore"
+      ],
+      "correta": 1,
+      "explicacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "fonte": {
+        "descricao": "Lorem Ipsum, fonte de exemplo, cap. 67, p. 670"
+      }
+    },
+    {
+      "tipo": "verdadeiro_falso",
+      "conceitos": ["lorem-18"],
+      "afirmacao": "Lorem ipsum dolor sit amet 1, consectetur adipiscing elit.",
+      "correta": false,
+      "explicacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "fonte": {
+        "descricao": "Lorem Ipsum, fonte de exemplo, cap. 68, p. 680",
+        "link": "https://example.com"
+      }
+    },
+    {
+      "tipo": "multipla_escolha",
+      "conceitos": ["lorem-18"],
+      "titulo_curto": "Lorem ipsum?",
+      "pergunta": "Lorem ipsum dolor sit amet 2?",
+      "opcoes": ["Consectetur adipiscing", "Sed do eiusmod", "Tempor incididunt"],
+      "correta": 2,
+      "explicacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "fonte": {
+        "descricao": "Lorem Ipsum, fonte de exemplo, cap. 69, p. 690"
+      }
+    },
+    {
+      "tipo": "correntes",
+      "conceitos": ["lorem-18"],
+      "argumento": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "leituras": [
+        {
+          "nome": "Leitura lorem (1990)",
+          "resumo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "fonte": {
+            "descricao": "Lorem Ipsum, fonte de exemplo, cap. 63, p. 630"
+          }
+        },
+        {
+          "nome": "Leitura ipsum (2005)",
+          "resumo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "fonte": {
+            "descricao": "Lorem Ipsum, fonte de exemplo, cap. 64, p. 640",
+            "link": "https://example.com"
+          }
+        }
+      ],
+      "correta": 0,
+      "explicacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "fonte": {
+        "descricao": "Lorem Ipsum, fonte de exemplo, cap. 65, p. 650"
+      }
+    }
+  ]
+}

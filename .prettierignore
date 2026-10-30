@@ -6,3 +6,4 @@ playwright-report
 test-results
 Claude outputs
 *.md
+tests/fixtures

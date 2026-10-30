@@ -1,0 +1,7 @@
+{
+  "titulo": "Módulo lorem",
+  "nivel": "modulo",
+  "descricao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "cor": "roxo",
+  "requer_conceitos": ["lorem-14", "lorem-16"]
+}
