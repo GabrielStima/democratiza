@@ -4,18 +4,38 @@ import { Capi } from '../componentes/Capi';
 import { Cartao } from '../componentes/Cartao';
 import { catalogo, carregarLicao } from '../conteudo/index.ts';
 import { listarLicoes } from '../engine/progresso.ts';
-import { Opcoes } from '../licao/Opcoes';
 import { apresentar, type Apresentacao } from '../licao/pratica.ts';
 import { PRINCIPIOS } from '../textos/principios.ts';
 import { abrirMeta } from '../stores/ui.ts';
 import estilos from './home.module.css';
 
-const CONFIANCA = [
-  'Gratuito',
-  'Sem cadastro',
-  'Apartidário',
-  'Fonte em tudo',
-  'Funciona até sem internet',
+const ICONES_CONFIANCA = {
+  escudo: <path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z" />,
+  livro: (
+    <>
+      <path d="M4 19V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z" />
+      <path d="M8 7h6" />
+    </>
+  ),
+  cadeado: (
+    <>
+      <rect x="5" y="11" width="14" height="10" rx="2" />
+      <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+    </>
+  ),
+  celular: (
+    <>
+      <rect x="7" y="2" width="10" height="20" rx="2" />
+      <path d="M11 18h2" />
+    </>
+  ),
+};
+
+const CONFIANCA: { icone: keyof typeof ICONES_CONFIANCA; texto: string }[] = [
+  { icone: 'escudo', texto: 'Sem lado: explica, não opina' },
+  { icone: 'livro', texto: 'Baseado em fontes oficiais' },
+  { icone: 'cadeado', texto: 'Sem cadastro e sem anúncios' },
+  { icone: 'celular', texto: 'Funciona até sem internet' },
 ];
 
 const PASSOS = [
@@ -75,25 +95,31 @@ function PerguntaRapida({ pergunta }: { pergunta: Pergunta }) {
   const { apresentacao } = pergunta;
   const respondeu = escolha !== null;
   const certa = escolha === apresentacao.correta;
-  const estados: Record<number, 'certa' | 'errada'> = {};
-  if (respondeu) {
-    estados[apresentacao.correta] = 'certa';
-    if (!certa && escolha !== null) estados[escolha] = 'errada';
-  }
+  const estadoDe = (i: number): string => {
+    if (!respondeu) return '';
+    if (i === apresentacao.correta) return estilos.opcaoCerta ?? '';
+    return i === escolha ? (estilos.opcaoErrada ?? '') : '';
+  };
   return (
-    <Cartao class={estilos.pergunta}>
-      <p class={estilos.kicker}>Experimente agora</p>
-      <h2>{apresentacao.enunciado}</h2>
-      <Opcoes
-        nome="pergunta-rapida"
-        legenda={apresentacao.enunciado}
-        opcoes={apresentacao.opcoes}
-        valor={escolha}
-        aoEscolher={setEscolha}
-        travado={respondeu}
-        estados={estados}
-        grandes={apresentacao.grandes}
-      />
+    <div class={estilos.pergunta}>
+      <p class={estilos.kickerAzul}>Pergunta rápida</p>
+      <fieldset class={estilos.rapida}>
+        <legend>{apresentacao.enunciado}</legend>
+        <div class={estilos.opcoesRapidas}>
+          {apresentacao.opcoes.map((texto, i) => (
+            <label key={i} class={`${estilos.opcaoRapida} ${estadoDe(i)}`}>
+              <input
+                type="radio"
+                name="pergunta-rapida"
+                checked={escolha === i}
+                disabled={respondeu}
+                onChange={() => setEscolha(i)}
+              />
+              <span>{texto}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
       <div aria-live="polite">
         {respondeu && (
           <p class={estilos.resposta}>
@@ -101,7 +127,7 @@ function PerguntaRapida({ pergunta }: { pergunta: Pergunta }) {
           </p>
         )}
       </div>
-    </Cartao>
+    </div>
   );
 }
 
@@ -113,92 +139,124 @@ export function HomeVisitante() {
   return (
     <div class={estilos.home}>
       <section class={estilos.heroi}>
-        <div>
-          <h1>Entenda a política do Brasil em 5 minutos por dia.</h1>
-          <p class={estilos.lead}>
-            Lições curtas, prática e revisão, no estilo dos aplicativos de idiomas. Gratuito,
-            apartidário e com fonte em tudo.
-          </p>
-          <div class={estilos.acoes}>
-            <Botao3D onClick={comecar}>Começar agora</Botao3D>
-            <Botao3D
-              variante="neutro"
-              onClick={() =>
-                document.getElementById('como-funciona')?.scrollIntoView({ behavior: 'smooth' })
-              }
-            >
-              Como funciona
-            </Botao3D>
+        <div class={estilos.heroiInterno}>
+          <div class={estilos.heroiTexto}>
+            <span class={estilos.selo}>Grátis · apartidário · sem cadastro</span>
+            <h1>Entenda a política do Brasil em 5 minutos por dia.</h1>
+            <p class={estilos.lead}>
+              Lições curtas, perguntas rápidas e muita prática para você descobrir como funcionam os
+              Três Poderes, o seu voto, a Constituição e o dinheiro público. Quem ensina é a Capi,
+              uma capivara que leu a Constituição inteira.
+            </p>
+            <div class={estilos.acoes}>
+              <Botao3D tamanho="grande" onClick={comecar}>
+                Começar agora
+              </Botao3D>
+              <Botao3D
+                tamanho="grande"
+                variante="neutro"
+                onClick={() =>
+                  document.getElementById('como-funciona')?.scrollIntoView({ behavior: 'smooth' })
+                }
+              >
+                Como funciona
+              </Botao3D>
+            </div>
+            <p class={estilos.nota}>Seu progresso fica salvo no seu próprio navegador.</p>
+          </div>
+          <div class={estilos.vitrine}>
+            <div class={estilos.painelCapi}>
+              <Capi class={estilos.capiGrande} tamanho={340} alt="Capi, a capivara mascote" />
+            </div>
+            {pergunta && <PerguntaRapida pergunta={pergunta} />}
           </div>
         </div>
-        {pergunta ? <PerguntaRapida pergunta={pergunta} /> : <Capi tamanho={220} />}
       </section>
 
-      <ul class={estilos.confianca} aria-label="Em resumo">
-        {CONFIANCA.map((c) => (
-          <li key={c}>{c}</li>
-        ))}
-      </ul>
-
-      <section id="como-funciona" class={estilos.secao}>
-        <h2>Como funciona</h2>
-        <ol class={estilos.passos}>
-          {PASSOS.map((p, i) => (
-            <li key={p.titulo}>
-              <span class={estilos.numeroPasso}>{i + 1}</span>
-              <h3>{p.titulo}</h3>
-              <p>{p.texto}</p>
+      <section class={estilos.faixaConfianca} aria-label="Em resumo">
+        <ul class={estilos.confianca}>
+          {CONFIANCA.map((c) => (
+            <li key={c.texto}>
+              <svg
+                aria-hidden="true"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                {ICONES_CONFIANCA[c.icone]}
+              </svg>
+              {c.texto}
             </li>
           ))}
-        </ol>
+        </ul>
       </section>
 
-      {unidades.length > 0 && (
+      <div class={estilos.conteudo}>
+        <section id="como-funciona" class={estilos.secao}>
+          <h2>Como funciona</h2>
+          <ol class={estilos.passos}>
+            {PASSOS.map((p, i) => (
+              <li key={p.titulo}>
+                <span class={estilos.numeroPasso}>{i + 1}</span>
+                <h3>{p.titulo}</h3>
+                <p>{p.texto}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {unidades.length > 0 && (
+          <section class={estilos.secao}>
+            <h2>O que você vai aprender</h2>
+            <ul class={estilos.unidades}>
+              {unidades.map((u, i) => (
+                <li key={u.id}>
+                  <Cartao>
+                    <p class={estilos.kicker}>Unidade {i + 1}</p>
+                    <h3>{u.titulo}</h3>
+                    <p>{u.descricao}</p>
+                  </Cartao>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         <section class={estilos.secao}>
-          <h2>O que você vai aprender</h2>
-          <ul class={estilos.unidades}>
-            {unidades.map((u, i) => (
-              <li key={u.id}>
-                <Cartao>
-                  <p class={estilos.kicker}>Unidade {i + 1}</p>
-                  <h3>{u.titulo}</h3>
-                  <p>{u.descricao}</p>
-                </Cartao>
+          <h2>Aprender sem esquecer</h2>
+          <ul class={estilos.gamificacao}>
+            {GAMIFICACAO.map((g) => (
+              <li key={g.titulo}>
+                <h3>{g.titulo}</h3>
+                <p>{g.texto}</p>
               </li>
             ))}
           </ul>
         </section>
-      )}
 
-      <section class={estilos.secao}>
-        <h2>Aprender sem esquecer</h2>
-        <ul class={estilos.gamificacao}>
-          {GAMIFICACAO.map((g) => (
-            <li key={g.titulo}>
-              <h3>{g.titulo}</h3>
-              <p>{g.texto}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
+        <section class={estilos.secao}>
+          <h2>Nossos princípios</h2>
+          <ul class={estilos.principios}>
+            {PRINCIPIOS.map((p) => (
+              <li key={p.titulo}>
+                <h3>{p.titulo}</h3>
+                <p>{p.texto}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-      <section class={estilos.secao}>
-        <h2>Nossos princípios</h2>
-        <ul class={estilos.principios}>
-          {PRINCIPIOS.map((p) => (
-            <li key={p.titulo}>
-              <h3>{p.titulo}</h3>
-              <p>{p.texto}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section class={estilos.final}>
-        <Capi tamanho={96} />
-        <h2>Comece agora, é de graça.</h2>
-        <Botao3D onClick={comecar}>Começar agora</Botao3D>
-      </section>
+        <section class={estilos.final}>
+          <Capi tamanho={96} />
+          <h2>Comece agora, é de graça.</h2>
+          <Botao3D onClick={comecar}>Começar agora</Botao3D>
+        </section>
+      </div>
     </div>
   );
 }

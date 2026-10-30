@@ -61,49 +61,209 @@
 .home {
   display: flex;
   flex-direction: column;
+}
+.conteudo {
+  display: flex;
+  flex-direction: column;
   gap: var(--espaco-7);
+  width: 100%;
+  max-width: var(--largura-site);
+  margin: 0 auto;
+  padding: var(--espaco-7) var(--espaco-5);
 }
 .heroi {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  background: var(--fundo);
+}
+.heroiInterno {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--espaco-6);
+  gap: var(--espaco-7);
+  max-width: var(--largura-site);
+  margin: 0 auto;
+  padding: 72px var(--espaco-5) 80px;
+}
+.heroiTexto {
+  display: flex;
+  flex: 1 1 460px;
+  flex-direction: column;
+  gap: var(--espaco-5);
+  min-width: 0;
+}
+.selo {
+  align-self: flex-start;
+  padding: 8px 14px;
+  background: var(--amarelo-claro);
+  border-radius: var(--raio-pilula);
+  color: var(--amarelo-texto);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
 .heroi h1 {
-  font-size: 44px;
+  margin: 0;
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 1.02;
+  color: var(--verde-noite);
 }
 .lead {
-  margin: var(--espaco-4) 0 var(--espaco-5);
-  font-size: 19px;
-  color: var(--texto-suave);
+  max-width: 34rem;
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--texto-corpo);
 }
 .acoes {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--espaco-3);
+  gap: 14px;
+  padding-top: var(--espaco-2);
 }
-.pergunta h2 {
-  margin: 0 0 var(--espaco-4);
-  font-size: 22px;
+.nota {
+  margin: 0;
+  font-size: 14px;
+  color: var(--texto-suave);
+}
+.vitrine {
+  flex: 1 1 380px;
+  width: 100%;
+  max-width: 440px;
+  min-width: 0;
+  margin: 0 auto;
+}
+.painelCapi {
+  display: flex;
+  justify-content: center;
+  padding: var(--espaco-6);
+  background: var(--verde-painel);
+  border-radius: 48px;
+}
+.capiGrande {
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+}
+.pergunta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 300px;
+  margin: -56px 12px 0 auto;
+  padding: 18px 20px;
+  background: var(--fundo);
+  border: 2px solid var(--borda);
+  border-bottom-width: var(--borda-3d);
+  border-radius: var(--raio-g);
+}
+.kickerAzul {
+  margin: 0;
+  color: var(--azul-anil);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.rapida {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.rapida legend {
+  float: left;
+  width: 100%;
+  margin: 0 0 10px;
+  padding: 0;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+.opcoesRapidas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+  clear: both;
+}
+.opcaoRapida {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  cursor: pointer;
+}
+.opcaoRapida input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.opcaoRapida span {
+  flex: 1;
+  padding: 8px 12px;
+  border: 2px solid var(--borda);
+  border-radius: var(--raio-p);
+  font-weight: 800;
+  text-align: center;
+}
+.opcaoRapida:hover input:not(:disabled) + span {
+  border-color: var(--azul-borda);
+}
+.opcaoRapida input:focus-visible + span {
+  box-shadow: var(--foco);
+}
+.opcaoRapida input:disabled {
+  cursor: default;
+}
+.opcaoCerta span {
+  background: var(--verde-claro);
+  border-color: var(--verde-botao);
+  color: var(--verde-mata);
+}
+.opcaoCerta span::before {
+  content: '✓ ';
+}
+.opcaoErrada span {
+  background: var(--coral-claro);
+  border-color: var(--coral);
+  color: var(--coral-escuro);
+}
+.opcaoErrada span::before {
+  content: '✕ ';
 }
 .resposta {
   margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.faixaConfianca {
+  background: var(--verde-mata);
 }
 .confianca {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--espaco-3);
-  margin: 0;
-  padding: 0;
+  justify-content: space-around;
+  gap: var(--espaco-4) var(--espaco-6);
+  max-width: var(--largura-site);
+  margin: 0 auto;
+  padding: 22px var(--espaco-5);
   list-style: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
 }
 .confianca li {
-  padding: 8px 16px;
-  background: var(--verde-claro);
-  border-radius: var(--raio-pilula);
-  color: var(--verde-texto);
-  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.confianca svg {
+  flex: none;
+  color: var(--amarelo-ouro);
 }
 .secao h2 {
   margin: 0 0 var(--espaco-5);

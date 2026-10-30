@@ -18,6 +18,24 @@ test('a Home do visitante abre sem problema sério de acessibilidade', async ({ 
   expect(await graves(page)).toEqual([]);
 });
 
+test('o topo da Home do visitante segue o design: selo, nota e faixa de diferenciais', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await expect(page.getByRole('link', { name: 'democratiza' })).toBeVisible();
+  await expect(page.getByText('Grátis · apartidário · sem cadastro')).toBeVisible();
+  await expect(page.getByText('Seu progresso fica salvo no seu próprio navegador.')).toBeVisible();
+  const faixa = page.getByRole('region', { name: 'Em resumo' });
+  for (const texto of [
+    'Sem lado: explica, não opina',
+    'Baseado em fontes oficiais',
+    'Sem cadastro e sem anúncios',
+    'Funciona até sem internet',
+  ]) {
+    await expect(faixa.getByText(texto)).toBeVisible();
+  }
+});
+
 test.describe('com rascunhos ligados', () => {
   test.skip(process.env.VITE_MOSTRAR_RASCUNHOS !== '1', 'o conteúdo Lorem só existe com rascunhos');
 
