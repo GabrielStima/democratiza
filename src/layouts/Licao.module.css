@@ -3,21 +3,83 @@
   display: flex;
   flex-direction: column;
 }
+.faixa {
+  padding: 4px var(--espaco-5);
+  background: var(--amarelo-claro);
+  color: var(--amarelo-texto);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-align: center;
+  text-transform: uppercase;
+}
 .topo {
   border-bottom: 2px solid var(--linha);
 }
 .interno {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-5);
   max-width: var(--largura-site);
   margin: 0 auto;
-  padding: var(--espaco-4) var(--espaco-5);
+  padding: var(--espaco-3) var(--espaco-5);
 }
 .fechar {
+  flex: none;
   width: 44px;
   height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: none;
+  background: none;
   color: var(--texto-mudo);
+  cursor: pointer;
+}
+.identidade {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.posicao {
+  color: var(--texto-suave);
+  font-size: 13px;
+  font-weight: 800;
+}
+.nome {
+  overflow: hidden;
+  font-family: var(--fonte-titulo);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--verde-noite);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fases {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+  margin: 0 0 0 auto;
+  padding: 0;
+  list-style: none;
+}
+.fase {
+  padding: 6px 14px;
+  border-radius: var(--raio-pilula);
+  font-size: 13px;
+  font-weight: 800;
+}
+.feita {
+  background: var(--verde-claro);
+  color: var(--verde-texto);
+}
+.atual {
+  background: var(--verde-botao);
+  color: #fff;
+}
+.proxima {
+  background: var(--cinza-trilho);
+  color: var(--texto-suave);
 }
 .principal {
   flex: 1;
@@ -25,4 +87,19 @@
   max-width: var(--largura-licao);
   margin: 0 auto;
   padding: var(--espaco-6) var(--espaco-5);
+}
+.rodape {
+  position: sticky;
+  bottom: 0;
+  background: var(--fundo);
+  border-top: 2px solid var(--linha);
+}
+.rodapeInterno {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+  max-width: var(--largura-licao);
+  margin: 0 auto;
+  padding: var(--espaco-4) var(--espaco-5);
 }

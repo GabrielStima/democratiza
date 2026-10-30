@@ -2,9 +2,9 @@ import { lazy, LocationProvider, Route, Router } from 'preact-iso';
 import type { ComponentChildren } from 'preact';
 import { Avisos } from './componentes/Aviso';
 import { estado } from './stores/index.ts';
+import { RotaLicao } from './licao/LicaoPagina.tsx';
 import { ErrosConteudo } from './conteudo/ErrosConteudo.tsx';
 import { App as LayoutApp } from './layouts/App';
-import { Licao as LayoutLicao } from './layouts/Licao';
 import { Site as LayoutSite } from './layouts/Site';
 import { EmConstrucao } from './paginas/EmConstrucao';
 import { Erro404 } from './paginas/Erro404';
@@ -52,14 +52,7 @@ export function Aplicacao() {
           path="/c/:curso"
           component={() => noApp(<EmConstrucao titulo="Curso" milestone="M5" />)}
         />
-        <Route
-          path="/c/:curso/:unidade/:licao"
-          component={() => (
-            <LayoutLicao>
-              <EmConstrucao titulo="Lição" milestone="M3" />
-            </LayoutLicao>
-          )}
-        />
+        <Route path="/c/:curso/:unidade/:licao" component={RotaLicao} />
         <Route
           path="/caderno"
           component={() => noApp(<EmConstrucao titulo="Caderno" milestone="M6" />)}
