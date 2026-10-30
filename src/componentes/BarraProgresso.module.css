@@ -1,0 +1,12 @@
+.trilho {
+  height: 14px;
+  border-radius: var(--raio-pilula);
+  background: var(--cinza-trilho);
+  overflow: hidden;
+}
+.preenchimento {
+  height: 100%;
+  border-radius: var(--raio-pilula);
+  background: var(--verde-ipe);
+  transition: width 0.3s ease;
+}

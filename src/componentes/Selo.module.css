@@ -1,0 +1,21 @@
+.selo {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: var(--raio-pilula);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.introducao {
+  background: var(--verde-claro);
+  color: var(--verde-mata);
+}
+.aprofundamento {
+  background: var(--azul-claro);
+  color: var(--azul-escuro);
+}
+.modulo {
+  background: var(--roxo-claro);
+  color: var(--roxo-modulo);
+}

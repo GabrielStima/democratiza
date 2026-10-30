@@ -1,0 +1,23 @@
+.fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espaco-5);
+  background: rgb(11 61 32 / 55%);
+}
+.caixa {
+  width: 100%;
+  max-width: 520px;
+  max-height: 100%;
+  overflow: auto;
+  padding: var(--espaco-6);
+  background: var(--fundo);
+  border-radius: var(--raio-xg);
+  box-shadow: var(--sombra-janela);
+}
+.caixa:focus {
+  outline: none;
+}

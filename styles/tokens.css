@@ -1,0 +1,67 @@
+/* Única fonte de cores, raios, sombras e tipografia do Democratiza. */
+:root {
+  /* Marca */
+  --verde-ipe: #12a150;
+  --verde-mata: #0b6e37;
+  /* Fundo de botão/pílula com texto branco: #12a150 dá só 3,4:1; este dá 4,6:1 (WCAG AA). */
+  --verde-botao: #0c8840;
+  --verde-botao-hover: #0a7939;
+  --verde-noite: #0b3d20;
+  --verde-claro: #ddf5e5;
+  --verde-feedback: #d7f5e1;
+  --verde-texto: #1e4d30;
+  --amarelo-ouro: #ffc928;
+  --amarelo-claro: #fff4cc;
+  --amarelo-texto: #7a5600;
+  --azul-anil: #1d5fb8;
+  --azul-claro: #e3edfa;
+  --azul-borda: #7fa9e0;
+  --azul-escuro: #174c93;
+  --coral: #e05454;
+  --coral-claro: #ffe3e3;
+  --coral-escuro: #a12a2a;
+  --roxo-modulo: #6b3fb8;
+  --roxo-claro: #eee6fa;
+
+  /* Neutros */
+  --texto: #1e2622;
+  --texto-suave: #5d6b62;
+  --texto-mudo: #6b7a70;
+  --borda: #e1e8e2;
+  --borda-forte: #d4ddd6;
+  --linha: #e8eee6;
+  --fundo: #ffffff;
+  --fundo-suave: #f6f9f6;
+  --cinza-trilho: #e5e9e6;
+  --cinza-sombra: #c7cec9;
+
+  /* Raios */
+  --raio-p: 12px;
+  --raio-m: 16px;
+  --raio-g: 20px;
+  --raio-xg: 24px;
+  --raio-pilula: 999px;
+
+  /* Sombras (borda inferior grossa dos botões e cartões 3D) */
+  --sombra-botao: 0 5px 0;
+  --borda-3d: 5px;
+  --foco: 0 0 0 3px #ffffff, 0 0 0 6px var(--azul-anil);
+  --sombra-janela: 0 24px 60px rgb(11 61 32 / 28%);
+
+  /* Tipografia */
+  --fonte-titulo: 'Baloo 2', system-ui, sans-serif;
+  --fonte-texto: 'Nunito Variable', 'Nunito', system-ui, sans-serif;
+
+  /* Espaço */
+  --espaco-1: 4px;
+  --espaco-2: 8px;
+  --espaco-3: 12px;
+  --espaco-4: 16px;
+  --espaco-5: 24px;
+  --espaco-6: 32px;
+  --espaco-7: 48px;
+
+  /* Layout */
+  --largura-site: 1120px;
+  --largura-licao: 820px;
+}
