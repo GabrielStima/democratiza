@@ -303,7 +303,13 @@ export function HomeVisitante() {
 
       <section class={estilos.faixa} aria-label="Gamificação">
         <div class={`${estilos.faixaInterna} ${estilos.gamificacaoInterna}`}>
-          <h2 class={estilos.tituloGamificacao}>Aprender sem esquecer</h2>
+          <div class={estilos.textoGamificacao}>
+            <h2>Aprender sem esquecer</h2>
+            <p>
+              Cada lição vale XP. A cada dia estudado sua ofensiva cresce. E cada conceito novo vai
+              para o seu caderno, onde a Capi traz de volta na hora certa para você não esquecer.
+            </p>
+          </div>
           <ul class={estilos.gamificacao}>
             {GAMIFICACAO.map((g) => (
               <li key={g.titulo} class={estilos.cartaoGame}>
@@ -341,13 +347,16 @@ export function HomeVisitante() {
         </div>
       </section>
 
-      <div class={estilos.conteudo}>
-        <section class={estilos.final}>
-          <Capi tamanho={96} />
-          <h2>Comece agora, é de graça.</h2>
-          <Botao3D onClick={comecar}>Começar agora</Botao3D>
-        </section>
-      </div>
+      <section class={estilos.faixa} aria-label="Comece agora">
+        <div class={`${estilos.faixaInterna} ${estilos.final}`}>
+          <Capi tamanho={140} />
+          <h2>Bora entender o Brasil?</h2>
+          <p>A primeira lição leva menos de 5 minutos.</p>
+          <Botao3D tamanho="grande" onClick={comecar}>
+            Começar agora
+          </Botao3D>
+        </div>
+      </section>
     </div>
   );
 }

@@ -62,15 +62,6 @@
   display: flex;
   flex-direction: column;
 }
-.conteudo {
-  display: flex;
-  flex-direction: column;
-  gap: var(--espaco-7);
-  width: 100%;
-  max-width: var(--largura-site);
-  margin: 0 auto;
-  padding: var(--espaco-7) var(--espaco-5);
-}
 .heroi {
   background: var(--fundo);
 }
@@ -386,13 +377,24 @@
   align-items: center;
   gap: var(--espaco-7);
 }
-.tituloGamificacao {
+.textoGamificacao {
+  display: flex;
   flex: 1 1 400px;
+  flex-direction: column;
+  gap: 18px;
   min-width: 0;
+}
+.textoGamificacao h2 {
   margin: 0;
   color: var(--verde-noite);
   font-size: clamp(32px, 4vw, 44px);
   line-height: 1.05;
+}
+.textoGamificacao p {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--texto-corpo);
 }
 .gamificacao {
   flex: 1 1 420px;
@@ -459,17 +461,20 @@
   font-size: 30px;
 }
 .final {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: var(--espaco-4);
-  padding: var(--espaco-6);
-  background: var(--verde-claro);
-  border-radius: var(--raio-xg);
+  gap: 22px;
   text-align: center;
 }
 .final h2 {
   margin: 0;
+  color: var(--verde-noite);
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.05;
+}
+.final p {
+  margin: 0;
+  font-size: 18px;
+  color: var(--texto-corpo);
 }
 
 /* Home com progresso */
