@@ -1,5 +1,5 @@
 import type { ComponentChildren } from 'preact';
-import { useEffect, useRef } from 'preact/hooks';
+import { useLayoutEffect, useRef } from 'preact/hooks';
 import estilos from './Janela.module.css';
 
 interface Props {
@@ -18,7 +18,8 @@ export function Janela({ titulo, aberta, aoFechar, children }: Props) {
   const aoFecharRef = useRef(aoFechar);
   aoFecharRef.current = aoFechar;
 
-  useEffect(() => {
+  // Layout effect: o ouvinte de teclado precisa estar ligado assim que a janela aparece.
+  useLayoutEffect(() => {
     if (!aberta) return;
     const anterior = document.activeElement as HTMLElement | null;
     const elementos = () =>
