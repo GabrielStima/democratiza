@@ -265,9 +265,37 @@
   flex: none;
   color: var(--amarelo-ouro);
 }
-.secao h2 {
-  margin: 0 0 var(--espaco-5);
-  font-size: 30px;
+.faixa {
+  background: var(--fundo);
+}
+.faixaClara {
+  background: var(--fundo-faixa);
+}
+.faixaInterna {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: var(--largura-site);
+  margin: 0 auto;
+  padding: 88px var(--espaco-5);
+}
+.tituloFaixa {
+  margin: 0;
+  color: var(--verde-noite);
+  font-size: clamp(32px, 4vw, 44px);
+  text-align: center;
+}
+.verde {
+  --tom-fundo: var(--verde-claro);
+  --tom-texto: var(--verde-mata);
+}
+.azul {
+  --tom-fundo: var(--azul-claro);
+  --tom-texto: var(--azul-anil);
+}
+.amarelo {
+  --tom-fundo: var(--amarelo-claro);
+  --tom-texto: var(--amarelo-texto);
 }
 .passos,
 .unidades,
@@ -280,30 +308,90 @@
   padding: 0;
   list-style: none;
 }
-.passos h3,
+.passos {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--espaco-5);
+}
+.unidades {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+.passo {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px;
+  border: 2px solid var(--borda);
+  border-bottom-width: var(--borda-3d);
+  border-radius: var(--raio-xg);
+}
+.passo h3 {
+  margin: 0;
+  font-size: 24px;
+}
+.passo p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--texto-corpo);
+}
+.iconePasso {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: var(--tom-fundo);
+  border-radius: 18px;
+  color: var(--tom-texto);
+}
+.amarelo.iconePasso {
+  color: var(--amarelo-icone);
+}
+.unidade {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px;
+  background: var(--fundo);
+  border: 2px solid var(--borda);
+  border-bottom-width: var(--borda-3d);
+  border-radius: 22px;
+}
+.unidade h3 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.15;
+}
+.unidade p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--texto-corpo);
+}
+.seloUnidade {
+  align-self: flex-start;
+  padding: 6px 10px;
+  background: var(--tom-fundo);
+  border-radius: var(--raio-pilula);
+  color: var(--tom-texto);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
 .gamificacao h3,
-.principios h3,
-.unidades h3 {
+.principios h3 {
   margin: 0 0 var(--espaco-2);
   font-size: 20px;
 }
-.passos p,
 .gamificacao p,
-.principios p,
-.unidades p {
+.principios p {
   margin: 0;
 }
-.numeroPasso {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  margin-bottom: var(--espaco-2);
-  background: var(--verde-botao);
-  border-radius: var(--raio-pilula);
-  color: #fff;
-  font-weight: 800;
+.secao h2 {
+  margin: 0 0 var(--espaco-5);
+  font-size: 30px;
 }
 .final {
   display: flex;
