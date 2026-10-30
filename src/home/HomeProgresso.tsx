@@ -61,7 +61,7 @@ function CartaoContinuar({ c }: { c: NonNullable<DadosHome['continuar']> }) {
         </div>
       </div>
       <span class={estilos.capi}>
-        <Capi tamanho={150} />
+        <Capi tamanho={150} rounded/>
       </span>
     </section>
   );
