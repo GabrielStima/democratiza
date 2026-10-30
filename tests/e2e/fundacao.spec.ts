@@ -35,6 +35,7 @@ test.describe('telas de desenvolvimento', () => {
     await expect(page.getByRole('heading', { name: 'Guia de estilo' })).toBeVisible();
     await page.getByRole('button', { name: 'Abrir janela' }).click();
     await expect(page.getByRole('dialog', { name: 'Janela de exemplo' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Continuar a lição' })).toBeFocused();
     await page.keyboard.press('Escape');
     await expect(page.getByRole('dialog')).toHaveCount(0);
   });
