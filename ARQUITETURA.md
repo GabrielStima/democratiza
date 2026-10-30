@@ -11,7 +11,7 @@
 | Item | Decisão |
 |---|---|
 | Público | Brasileiros leigos em política, começando do zero |
-| Plataforma (v1) | **Desktop primeiro.** Layout responsivo, mas o app pensado para celular fica para depois |
+| Plataforma | **Desktop primeiro.** Layout responsivo, mas o app pensado para celular fica para depois |
 | Proposta | 5 a 7 minutos por dia: primeiro entender o conceito, depois praticar, sempre com fonte específica |
 | Custo | ~R$ 40/ano (só o domínio). Site estático em hospedagem gratuita |
 | Backend | **Nenhum.** Tudo roda no navegador; progresso salvo localmente |
@@ -53,6 +53,10 @@
 democratiza/
 ├── ARQUITETURA.md
 ├── ESPECIFICACAO.md                      # milestones e entregas tela a tela
+├── AGENTS.md                             # regras para quem programa (pessoas e IA), incluindo commits
+├── CLAUDE.md                             # só aponta para o AGENTS.md
+├── .gitignore
+├── clean-appledouble.mjs                 # remove os arquivos ._* criados pelo macOS (ver AGENTS.md)
 ├── content/                              # TODO O CONTEÚDO (ver seção 6)
 │   ├── conceitos/                        # banco único, usado por todos os cursos
 │   │   ├── democracia.json
@@ -232,20 +236,21 @@ A fonte fica **escrita direto no lugar onde é usada**: uma descrição específ
 ```
 
 - **`status`:** `rascunho` ou `revisado`. Rascunhos aparecem só no ambiente local (`npm run dev`); **só lições revisadas vão para o site no ar**. É o fluxo "a IA escreve, o Gabriel valida".
+- **`tipo`:** omitido = lição normal. `"desafio"` = lição de fechamento da unidade: sem `situacao` nem `explicacao`, só uma `pratica` com exercícios dos conceitos da unidade.
 - **`checagem` em cada card:** opcional, **menos no último card, onde é obrigatória**. É essa que fecha a situação e mostra o palpite da pessoa.
 - **IDs:** não ficam escritos no JSON. O id de cada curso, unidade e lição é o **nome da pasta ou do arquivo sem o número** (ex.: `comece-por-aqui/o-que-e-democracia/o-poder-vem-do-povo`).
 
 ### Tipos de exercício
 
-| Tipo | Quando | Descrição |
+| Tipo | Milestone | Descrição |
 |---|---|---|
-| `multipla_escolha` | v1 | 1 resposta certa entre 3–4 (usado também nas checagens) |
-| `verdadeiro_falso` | v1 | Afirmação + V/F, sempre com o porquê |
-| `quem_resolve` | v1 | Situação do dia a dia → qual instituição resolve |
-| `classificar` | v1.1 | Arrastar itens para categorias |
-| `ordenar` | v1.1 | Ordenar etapas de um processo |
-| `mito_ou_fato` | v1.1 | Frases que circulam por aí, com explicação |
-| `correntes` | v2, **só em Módulos** | "Qual corrente diria isso?" Associar argumentos a autores ou correntes, sem resposta de opinião |
+| `multipla_escolha` | M4 | 1 resposta certa entre 3–4 (usado também nas checagens) |
+| `verdadeiro_falso` | M4 | Afirmação + V/F, sempre com o porquê |
+| `quem_resolve` | M4 | Situação do dia a dia → qual instituição resolve |
+| `classificar` | M9 | Arrastar itens para categorias |
+| `ordenar` | M9 | Ordenar etapas de um processo |
+| `mito_ou_fato` | M9 | Frases que circulam por aí, com explicação |
+| `correntes` | M11, **só em Módulos** | "Qual corrente diria isso?" Associar argumentos a autores ou correntes, sem resposta de opinião |
 
 **Campos de cada tipo.** Todos têm `conceitos`, `explicacao` (por que a resposta é essa), `fonte` e, opcionalmente, `titulo_curto` (o rótulo pequeno acima da pergunta, ex.: "Onde vale?").
 
@@ -255,6 +260,9 @@ A fonte fica **escrita direto no lugar onde é usada**: uma descrição específ
 | `verdadeiro_falso` | `afirmacao`, `correta` (`true` ou `false`) |
 | `quem_resolve` | `situacao`, `opcoes` (instituições ou poderes), `correta` |
 | `correntes` | `argumento`, `leituras` (2 ou mais, cada uma com `nome`, `resumo` e `fonte`), `correta` (qual leitura defende o argumento) |
+| `classificar` | `pergunta`, `categorias` (2 a 4, cada uma com `nome` e `dica`), `itens` (cada um com `texto` e a `categoria` certa) |
+| `ordenar` | `pergunta`, `etapas` (escritas **na ordem certa**; o app embaralha) |
+| `mito_ou_fato` | `frase`, `correta` (`"mito"` ou `"fato"`) |
 
 ---
 
@@ -320,7 +328,7 @@ Exemplo de erro de build:
 
 ## 7. Funcionalidades
 
-### 7.1 Telas (v1, desktop)
+### 7.1 Telas (desktop)
 | Tela | Rota | Função |
 |---|---|---|
 | Home · visitante | `/` (sem progresso salvo) | Apresentação, CTA "Começar agora" (leva ao "Comece por aqui") |
@@ -332,11 +340,11 @@ Exemplo de erro de build:
 | Revisar | `/revisar` | Resumo do que vence hoje, agenda das próximas revisões e a sessão de revisão (que reaproveita a tela da Prática), com os conceitos vencidos de **todos** os cursos. Também permite treinar um curso inteiro |
 | Caderno | `/caderno` | Conceitos aprendidos, de todos os cursos |
 | Sobre | `/sobre` | Princípios, como ensinamos, backup (salvar, abrir, apagar progresso), bibliografia completa (gerada a partir das fontes das lições), como sugerir correção |
-| Meta diária | janela sobre `/` na primeira visita | Escolher 20, 50 ou 100 XP antes da primeira lição. **Ainda sem design** |
+| Meta diária | janela sobre `/` na primeira visita | Escolher 20, 50 ou 100 XP antes da primeira lição |
 | Guia de estilo | `/_estilo` | Só em desenvolvimento: tokens e componentes |
 | Ferramentas | `/_dev` | Só em desenvolvimento: carregar progresso de demonstração e limpar tudo |
 
-> **Sem tela de perfil na v1.** A rota `/` decide qual Home mostrar olhando se existe progresso no navegador.
+> **Sem tela de perfil.** A rota `/` decide qual Home mostrar olhando se existe progresso no navegador.
 
 ### 7.2 Vários cursos ao mesmo tempo
 A pessoa pode fazer **vários cursos em paralelo**; sem servidor, isso não custa nada, porque o progresso de cada curso é só um pedaço pequeno do `localStorage`. Para a Home não virar bagunça:
@@ -349,7 +357,7 @@ A pessoa pode fazer **vários cursos em paralelo**; sem servidor, isso não cust
 - Um curso é liberado quando todos os `requer_conceitos` estão no caderno da pessoa, venham de onde vierem.
 - Dentro de um curso, as lições seguem em ordem.
 
-### 7.4 Gamificação (v1 enxuta, tudo calculado no navegador)
+### 7.4 Gamificação (versão enxuta, tudo calculado no navegador)
 - **XP:** só na Prática e na Revisão. +10 por acerto de primeira, +5 se acertar depois de errar.
 - **Erro na Prática:** a pessoa vê a resposta certa e a explicação, e a pergunta volta **uma vez** no fim da fila da lição (acertando, +5). O conceito vai para a caixa 1 da revisão. Na tela final, "Acertos" conta só os de primeira.
 - **Ofensiva (dias seguidos):** +1 por dia com ao menos 1 lição ou revisão concluída. Usa a data local do aparelho.
@@ -437,18 +445,24 @@ GitHub Actions em todo push:
 4. Lighthouse CI — performance e acessibilidade ≥ 90
 5. Deploy automático da `main` no Cloudflare Pages
 
+### Fluxo de trabalho
+As regras completas estão no [`AGENTS.md`](AGENTS.md). Em resumo: **commits atômicos** no padrão Conventional Commits, `main` sempre publicável, e, ao terminar um fluxo, rodar `node clean-appledouble.mjs` **antes** de commitar, para remover os arquivos `._*` que o macOS cria.
+
 ---
 
 ## 11. Roadmap
 
-Cada fase corresponde a milestones da [`ESPECIFICACAO.md`](ESPECIFICACAO.md).
+Não há fases: **todo o planejamento é o MVP**. O trabalho está dividido em 13 milestones (M0 a M12), na ordem descrita na [`ESPECIFICACAO.md`](ESPECIFICACAO.md). As prévias do Cloudflare mostram o progresso desde o M0; o site só é apontado para `democratiza.app.br` no M12.
 
-| Fase | Milestones | O que a pessoa consegue fazer |
+| Bloco | Milestones | O que entrega |
 |---|---|---|
-| **MVP (desktop)** | M0 a M7 | Entrar, fazer lições completas, acompanhar ofensiva e meta, guardar conceitos no Caderno, revisar o que está esquecendo e fazer backup. No ar em democratiza.app.br com as primeiras unidades reais do "Comece por aqui" |
-| **v1.1** | M8 a M10 | Catálogo de cursos com desbloqueio por conceitos, exercícios `classificar`, `ordenar` e `mito_ou_fato`, uso offline (PWA), primeiro Aprofundamento |
-| **v2** | M11 em diante | Primeiro Módulo com o tipo `correntes`; depois, versão pensada para celular e modo escuro |
-| **Depois** | Cursos sobre temas atuais (só depois que a base de conceitos estiver sólida). Sincronizar entre aparelhos exigiria backend (Supabase ou Firebase, plano grátis) |
+| Base | M0 a M2 | Projeto e deploy, pipeline de conteúdo, motor e armazenamento |
+| Lição | M3 e M4 | Situação, Explicação, Checagem, Prática e Lição concluída |
+| Navegação e revisão | M5 a M8 | Home, Curso, Caderno, Revisar, Sobre, Cursos e desbloqueio |
+| Acabamento | M9 a M11 | Novos exercícios, uso offline, Módulos com debate entre correntes |
+| Lançamento | M12 | Conteúdo real, domínio, qualidade e publicação |
+
+**Fora do planejamento atual:** versão pensada para celular, modo escuro, cursos sobre temas atuais (só depois que a base de conceitos estiver sólida) e sincronização entre aparelhos, que exigiria backend (Supabase ou Firebase, plano grátis).
 
 ---
 
@@ -479,8 +493,12 @@ Cada fase corresponde a milestones da [`ESPECIFICACAO.md`](ESPECIFICACAO.md).
 | Fontes | ✅ Campo `fonte` em cada explicação, conceito e exercício: descrição específica + link opcional |
 | Conteúdo enquanto não existe o real | ✅ Lorem Ipsum em cursos fictícios, todos `rascunho` |
 | Rascunhos nas prévias | ✅ Aparecem no `npm run dev` e nas prévias do Cloudflare; na `main` só `revisado` |
-| Revisar no MVP | 🟡 Proposta: entra no MVP (a tela final promete "volta para revisão amanhã"); o catálogo **Cursos** e o desbloqueio ficam para a v1.1 |
-| Treino livre de um curso | 🟡 Proposta: sem XP e sem mexer nas caixas de revisão |
+| Fases do projeto | ✅ Não há fases: todo o planejamento é o MVP (milestones M0 a M12) |
+| Revisar | ✅ Faz parte do MVP |
+| Refazer uma lição concluída | ✅ Não dá XP (o XP só vem da primeira vez) |
+| Treino livre de um curso e "Praticar agora" do Caderno | ✅ Sem XP e sem mexer nas caixas de revisão |
+| "Desafio da unidade" | ✅ Lição `tipo: "desafio"`, só com Prática, no fim de cada unidade |
+| Sair da lição pelo X | ✅ Pede confirmação; o avanço fica salvo |
+| Estimativa de minutos de uma lição | ✅ 1 min por card + 30 s por exercício (ajustar depois de medir) |
+| Commits | ✅ Atômicos, no padrão Conventional Commits (ver `AGENTS.md`) |
 | Conteúdo exato e ordem dos cursos | ⏳ A definir com calma |
-
-Legenda: ✅ decidido · 🟡 proposta para você confirmar · ⏳ em aberto.
