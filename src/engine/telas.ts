@@ -17,6 +17,7 @@ import {
   idLicao,
   listarLicoes,
   minutosEstimados,
+  partirIdLicao,
   progressoDoCurso,
   proximaLicao,
   type EstadoLicao,
@@ -50,6 +51,7 @@ export interface CartaoContinuar {
   cursoTitulo: string;
   nivel: Nivel;
   licaoTitulo: string;
+  unidadeTitulo: string;
   /** "Unidade N · Lição X de Y" */
   unidade: number;
   numero: number;
@@ -93,7 +95,7 @@ export interface DadosHome {
     semana: { dia: string; estudou: boolean }[];
   };
   meta: { xp: number; meta: number; atingida: boolean };
-  revisao: { vencidos: number };
+  revisao: { vencidos: number; cursos: number };
   caderno: { total: number; recentes: string[] };
 }
 
@@ -114,6 +116,7 @@ export function dadosDaHome(
       cursoTitulo: cursoDoCartao.titulo,
       nivel: cursoDoCartao.nivel,
       licaoTitulo: para.licao.titulo,
+      unidadeTitulo: cursoDoCartao.unidades[para.unidadeIndice]?.titulo ?? '',
       unidade: para.unidadeIndice + 1,
       numero: daUnidade.findIndex((l) => l.id === para.id) + 1,
       totalNaUnidade: daUnidade.length,
@@ -161,6 +164,7 @@ export function dadosDaHome(
     .map((e) => catalogo.conceitos[e.conceitoId]?.nome ?? e.conceitoId);
 
   const xp = xpDeHoje(estado, hoje);
+  const vencidos = conceitosVencidos(caderno, hoje);
   return {
     continuar,
     cursos,
@@ -173,7 +177,15 @@ export function dadosDaHome(
       semana: ultimosSeteDias(estado.diasEstudados, hoje),
     },
     meta: { xp, meta: estado.config.metaDiaria, atingida: xp >= estado.config.metaDiaria },
-    revisao: { vencidos: conceitosVencidos(caderno, hoje).length },
+    revisao: {
+      vencidos: vencidos.length,
+      cursos: new Set(
+        vencidos.flatMap((e) => {
+          const p = partirIdLicao(e.licaoId);
+          return p ? [p.cursoId] : [];
+        }),
+      ).size,
+    },
     caderno: { total: Object.keys(caderno).length, recentes },
   };
 }
@@ -293,4 +305,17 @@ export function dadosDoCurso(
       return c ? [{ id: c.id, titulo: c.titulo }] : [];
     }),
   };
+}
+
+/**
+ * "Você aprende os dois em “Sistema político brasileiro”.": onde se aprendem os conceitos
+ * que faltam para liberar um curso. Vazio quando não se sabe de que curso eles vêm.
+ */
+export function ondeAprender(faltantes: { cursoTitulo?: string }[]): string {
+  const cursos = [...new Set(faltantes.flatMap((f) => (f.cursoTitulo ? [f.cursoTitulo] : [])))];
+  if (cursos.length === 0) return '';
+  if (cursos.length > 1) return `Você aprende em ${cursos.map((c) => `“${c}”`).join(' e ')}.`;
+  const n = faltantes.length;
+  const quais = n === 1 ? 'esse conceito' : n === 2 ? 'os dois' : 'todos';
+  return `Você aprende ${quais} em “${cursos[0] ?? ''}”.`;
 }

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { PERFIS } from '../dev/perfis.ts';
 import { catalogoLorem } from '../testes/catalogo.ts';
-import { dadosDaHome, dadosDoCurso, primeiraLicaoDoSite } from './telas.ts';
+import { dadosDaHome, dadosDoCurso, ondeAprender, primeiraLicaoDoSite } from './telas.ts';
 
 const catalogo = catalogoLorem();
 const HOJE = '2026-10-28';
@@ -97,5 +97,21 @@ describe('primeiraLicaoDoSite', () => {
       '/c/comece-por-aqui/lorem-unidade-um/lorem-licao-modelo',
     );
     expect(primeiraLicaoDoSite({ ...catalogo, cursos: [] })).toBeNull();
+  });
+});
+
+describe('ondeAprender', () => {
+  it('diz em que curso se aprendem os conceitos que faltam', () => {
+    const c = (cursoTitulo?: string) => (cursoTitulo ? { cursoTitulo } : {});
+    expect(ondeAprender([c('Sistema')])).toBe('Você aprende esse conceito em “Sistema”.');
+    expect(ondeAprender([c('Sistema'), c('Sistema')])).toBe('Você aprende os dois em “Sistema”.');
+    expect(ondeAprender([c('A'), c('A'), c('A')])).toBe('Você aprende todos em “A”.');
+    expect(ondeAprender([c('A'), c('B')])).toBe('Você aprende em “A” e “B”.');
+    expect(ondeAprender([c()])).toBe('');
+  });
+  it('a Home guarda quantos cursos têm conceito vencido e o título da unidade', () => {
+    const d = home('em-andamento');
+    expect(d.revisao.cursos).toBeGreaterThanOrEqual(1);
+    expect(d.continuar?.unidadeTitulo).toBeTruthy();
   });
 });
