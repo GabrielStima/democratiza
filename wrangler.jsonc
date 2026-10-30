@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "democratiza",
+  "compatibility_date": "2026-10-29",
+  "assets": {
+    "directory": "./dist",
+    // Qualquer rota que não seja um arquivo devolve o index.html (o app resolve a rota).
+    "not_found_handling": "single-page-application"
+  }
+}
