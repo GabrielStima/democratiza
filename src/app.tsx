@@ -2,6 +2,10 @@ import { lazy, LocationProvider, Route, Router } from 'preact-iso';
 import type { ComponentChildren } from 'preact';
 import { Avisos } from './componentes/Aviso';
 import { estado } from './stores/index.ts';
+import { RotaCurso } from './curso/PaginaCurso.tsx';
+import { HomeProgresso } from './home/HomeProgresso.tsx';
+import { HomeVisitante } from './home/HomeVisitante.tsx';
+import { JanelaMeta } from './home/JanelaMeta.tsx';
 import { RotaLicao } from './licao/LicaoPagina.tsx';
 import { ErrosConteudo } from './conteudo/ErrosConteudo.tsx';
 import { App as LayoutApp } from './layouts/App';
@@ -34,9 +38,8 @@ function noApp(filho: ComponentChildren) {
 
 /** A rota `/` decide a Home olhando se existe progresso salvo neste navegador. */
 function Inicio() {
-  return estado.value
-    ? noApp(<EmConstrucao titulo="Home com progresso" milestone="M5" />)
-    : noSite(<EmConstrucao titulo="Home do visitante" milestone="M5" />);
+  const e = estado.value;
+  return e ? noApp(<HomeProgresso estado={e} />) : noSite(<HomeVisitante />);
 }
 
 export function Aplicacao() {
@@ -48,10 +51,7 @@ export function Aplicacao() {
           path="/cursos"
           component={() => noApp(<EmConstrucao titulo="Cursos" milestone="M8" />)}
         />
-        <Route
-          path="/c/:curso"
-          component={() => noApp(<EmConstrucao titulo="Curso" milestone="M5" />)}
-        />
+        <Route path="/c/:curso" component={RotaCurso} />
         <Route path="/c/:curso/:unidade/:licao" component={RotaLicao} />
         <Route
           path="/caderno"
@@ -75,6 +75,7 @@ export function Aplicacao() {
         />
         <Route default component={() => noSite(<Erro404 />)} />
       </Router>
+      <JanelaMeta />
       <Avisos />
       {MOSTRAR_DEV && <ErrosConteudo />}
     </LocationProvider>

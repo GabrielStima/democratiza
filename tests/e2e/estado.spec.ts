@@ -24,15 +24,15 @@ test.describe('estado e perfis (com rascunhos ligados)', () => {
 
   test('a rota / muda de Home conforme exista progresso', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByRole('heading', { name: 'Home do visitante' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Entenda a política do Brasil/ })).toBeVisible();
     await page.goto('/_dev');
     await page.getByRole('button', { name: 'Carregar perfil: Um curso só' }).click();
     await page.goto('/');
-    await expect(page.getByRole('heading', { name: 'Home com progresso' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Bom te ver de novo!' })).toBeVisible();
     await page.goto('/_dev');
     await page.getByRole('button', { name: 'Limpar tudo' }).click();
     await page.goto('/');
-    await expect(page.getByRole('heading', { name: 'Home do visitante' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Entenda a política do Brasil/ })).toBeVisible();
   });
 
   test('avançar dias sem estudar: em risco após 1, zerada após 2', async ({ page }) => {

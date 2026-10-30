@@ -51,3 +51,15 @@
   max-width: 1000px;
   width: 100%;
 }
+
+.contagem {
+  margin-left: var(--espaco-2);
+  padding: 2px 10px;
+  background: var(--coral-botao);
+  border-radius: var(--raio-pilula);
+  color: #fff;
+  font-size: 13px;
+}
+.nota p {
+  margin: 0 0 var(--espaco-3);
+}

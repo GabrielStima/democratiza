@@ -1,10 +1,17 @@
 import type { ComponentChildren } from 'preact';
 import { Botao3D } from '../componentes/Botao3D';
 import { Capi } from '../componentes/Capi';
+import { catalogo } from '../conteudo/index.ts';
+import { licaoParaContinuar } from '../engine/continuar.ts';
+import { caderno, estado } from '../stores/index.ts';
+import { abrirMeta } from '../stores/ui.ts';
 import estilos from './Site.module.css';
 
 /** Layout do visitante: cabeçalho e rodapé. */
 export function Site({ children }: { children: ComponentChildren }) {
+  const e = estado.value;
+  const continuar = e ? licaoParaContinuar(e, catalogo, caderno.value) : null;
+  const primeiroCurso = catalogo.cursos[0]?.id;
   return (
     <div class={estilos.pagina}>
       <header class={estilos.cabecalho}>
@@ -15,10 +22,14 @@ export function Site({ children }: { children: ComponentChildren }) {
           </a>
           <nav class={estilos.menu} aria-label="Principal">
             <a href="/#como-funciona">Como funciona</a>
-            <a href="/cursos">Cursos</a>
+            <a href={primeiroCurso ? `/c/${primeiroCurso}` : '/'}>Cursos</a>
             <a href="/sobre">Nossos princípios</a>
           </nav>
-          <Botao3D href="/c/comece-por-aqui">Começar</Botao3D>
+          {e ? (
+            <Botao3D href={continuar ? `/c/${continuar.id}` : '/'}>Continuar</Botao3D>
+          ) : (
+            <Botao3D onClick={() => abrirMeta('primeira')}>Começar</Botao3D>
+          )}
         </div>
       </header>
       <main class={estilos.principal}>{children}</main>

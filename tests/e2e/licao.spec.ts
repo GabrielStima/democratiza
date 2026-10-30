@@ -90,7 +90,7 @@ test.describe('lição, parte 1 (com rascunhos ligados)', () => {
     await page.keyboard.press('Escape');
     await expect(janela).toBeVisible();
     await janela.getByRole('button', { name: 'Sair', exact: true }).click();
-    await expect(page.getByRole('heading', { name: 'Home do visitante' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Entenda a política do Brasil/ })).toBeVisible();
 
     await page.goBack();
     await expect(page.getByLabel('Adipiscing elit sed')).toBeChecked();
