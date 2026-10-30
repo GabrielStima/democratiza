@@ -1,0 +1,237 @@
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  max-width: 900px;
+}
+.cabeca {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-5);
+}
+.cabeca > div {
+  flex: 1 1 360px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+.cabeca h1 {
+  margin: 0;
+  color: var(--verde-noite);
+  font-size: 40px;
+  line-height: 1.05;
+}
+.cabeca p {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--texto-corpo);
+}
+.secao {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.secao h2 {
+  margin: 0;
+  color: var(--verde-noite);
+  font-size: 28px;
+}
+.texto {
+  margin: 0;
+  max-width: 44rem;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--texto-corpo);
+}
+.dica {
+  margin: 0;
+  font-size: 15px;
+  color: var(--texto-corpo);
+}
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cartao {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px;
+  border: 2px solid var(--borda);
+  border-radius: 18px;
+}
+.cartao strong {
+  font-size: 17px;
+  color: var(--verde-mata);
+}
+.cartao span {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--texto-corpo);
+}
+.etapas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.etapa {
+  padding: 10px 16px;
+  border-radius: var(--raio-pilula);
+  font-size: 14px;
+  font-weight: 800;
+}
+.amarelo {
+  background: var(--amarelo-claro);
+  color: var(--amarelo-texto);
+}
+.verde {
+  background: var(--verde-claro);
+  color: var(--verde-mata);
+}
+.azul {
+  background: var(--azul-claro);
+  color: var(--azul-escuro);
+}
+.nivel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 18px;
+  border-radius: 18px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--texto);
+}
+.introducao {
+  background: var(--verde-fundo-suave);
+}
+.aprofundamento {
+  background: var(--azul-fundo-suave);
+}
+.modulo {
+  background: var(--roxo-fundo-suave);
+}
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-3);
+}
+.escondido {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.biblio {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.biblio li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 16px;
+  padding: 14px 18px;
+  border: 2px solid var(--borda);
+  border-radius: 16px;
+}
+.referencia {
+  flex: 1 1 420px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.uso {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--texto-suave);
+}
+.erro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  padding: var(--espaco-5);
+  background: var(--fundo-faixa);
+  border-radius: 22px;
+}
+.erro > div:first-child {
+  flex: 1 1 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.erro h2 {
+  margin: 0;
+  color: var(--verde-noite);
+  font-size: 24px;
+}
+.erro p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--texto-corpo);
+}
+
+/* Janelas de dados */
+.janela {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espaco-3);
+}
+.janela h2 {
+  margin: 0;
+  font-size: 26px;
+}
+.janela p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--texto-corpo);
+}
+.etiqueta {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+.motivo {
+  font-size: 14px;
+  color: var(--texto-suave);
+}
+.link {
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--verde-mata);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.link:focus-visible {
+  outline: none;
+  box-shadow: var(--foco);
+}
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-3);
+  margin-top: var(--espaco-2);
+}
