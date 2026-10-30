@@ -75,11 +75,43 @@ const PASSOS = [
 const TONS_UNIDADE = ['verde', 'azul', 'amarelo'] as const;
 
 const GAMIFICACAO = [
-  { titulo: 'Ofensiva', texto: 'Dias seguidos estudando' },
-  { titulo: 'XP', texto: 'Cada acerto na prática vale pontos' },
-  { titulo: 'Revisão', texto: 'A Capi traz o conceito de volta' },
-  { titulo: 'Caderno', texto: 'Cada conceito aprendido vira um cartão seu' },
-];
+  {
+    classe: 'iconeChama',
+    icone: (
+      <path d="M12 2c1 3.5 5 5.5 5 11a5 5 0 0 1-10 0c0-2.5 1.2-4 2.5-5 .2 2 1 3 2 3.5C11 9 11.5 5 12 2z" />
+    ),
+    titulo: 'Ofensiva',
+    texto: 'Dias seguidos estudando',
+  },
+  {
+    classe: 'iconeRaio',
+    icone: <path d="M13 2L4 14h7l-1 8 9-12h-7z" />,
+    titulo: 'XP',
+    texto: 'Cada acerto na prática vale pontos',
+  },
+  {
+    classe: 'iconeRevisao',
+    icone: (
+      <>
+        <path d="M4 12a8 8 0 1 0 2.3-5.7" />
+        <path d="M4 4v4h4" />
+      </>
+    ),
+    titulo: 'Revisão',
+    texto: 'A Capi traz o conceito de volta',
+  },
+  {
+    classe: 'iconeCaderno',
+    icone: (
+      <>
+        <path d="M4 19V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z" />
+        <path d="M8 7h6M8 11h6" />
+      </>
+    ),
+    titulo: 'Caderno',
+    texto: 'Cada conceito aprendido vira um cartão seu',
+  },
+] as const;
 
 interface Pergunta {
   apresentacao: Apresentacao;
@@ -269,31 +301,47 @@ export function HomeVisitante() {
         </section>
       )}
 
-      <div class={estilos.conteudo}>
-        <section class={estilos.secao}>
-          <h2>Aprender sem esquecer</h2>
+      <section class={estilos.faixa} aria-label="Gamificação">
+        <div class={`${estilos.faixaInterna} ${estilos.gamificacaoInterna}`}>
+          <h2 class={estilos.tituloGamificacao}>Aprender sem esquecer</h2>
           <ul class={estilos.gamificacao}>
             {GAMIFICACAO.map((g) => (
-              <li key={g.titulo}>
+              <li key={g.titulo} class={estilos.cartaoGame}>
+                <svg
+                  aria-hidden="true"
+                  class={estilos[g.classe]}
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  {g.icone}
+                </svg>
                 <h3>{g.titulo}</h3>
                 <p>{g.texto}</p>
               </li>
             ))}
           </ul>
-        </section>
+        </div>
+      </section>
 
-        <section class={estilos.secao}>
-          <h2>Nossos princípios</h2>
+      <section id="principios" class={`${estilos.faixa} ${estilos.faixaClara}`}>
+        <div class={estilos.faixaInterna}>
+          <h2 class={estilos.tituloFaixa}>Nossos princípios</h2>
           <ul class={estilos.principios}>
             {PRINCIPIOS.map((p) => (
-              <li key={p.titulo}>
+              <li key={p.titulo} class={estilos.principio}>
                 <h3>{p.titulo}</h3>
                 <p>{p.texto}</p>
               </li>
             ))}
           </ul>
-        </section>
+        </div>
+      </section>
 
+      <div class={estilos.conteudo}>
         <section class={estilos.final}>
           <Capi tamanho={96} />
           <h2>Comece agora, é de graça.</h2>

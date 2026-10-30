@@ -380,14 +380,79 @@
   letter-spacing: 0.8px;
   text-transform: uppercase;
 }
-.gamificacao h3,
-.principios h3 {
-  margin: 0 0 var(--espaco-2);
-  font-size: 20px;
+.gamificacaoInterna {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-7);
 }
-.gamificacao p,
-.principios p {
+.tituloGamificacao {
+  flex: 1 1 400px;
+  min-width: 0;
   margin: 0;
+  color: var(--verde-noite);
+  font-size: clamp(32px, 4vw, 44px);
+  line-height: 1.05;
+}
+.gamificacao {
+  flex: 1 1 420px;
+  min-width: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.cartaoGame {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px;
+  border: 2px solid var(--borda);
+  border-bottom-width: var(--borda-3d);
+  border-radius: var(--raio-g);
+}
+.cartaoGame h3 {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1;
+}
+.cartaoGame p {
+  margin: 0;
+  font-size: 15px;
+  color: var(--texto-corpo);
+}
+.iconeChama {
+  fill: var(--laranja-chama);
+  stroke: var(--laranja-borda);
+}
+.iconeRaio {
+  fill: var(--amarelo-ouro);
+  stroke: var(--amarelo-icone);
+}
+.iconeRevisao {
+  fill: none;
+  stroke: var(--azul-anil);
+}
+.iconeCaderno {
+  fill: var(--verde-claro);
+  stroke: var(--verde-mata);
+}
+.principios {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--espaco-5);
+}
+.principio {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.principio h3 {
+  margin: 0;
+  color: var(--verde-mata);
+  font-size: 22px;
+}
+.principio p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--texto-corpo);
 }
 .secao h2 {
   margin: 0 0 var(--espaco-5);
