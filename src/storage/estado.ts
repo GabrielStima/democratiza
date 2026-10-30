@@ -28,8 +28,9 @@ export const estadoSchema = z.object({
   licaoEmAndamento: z
     .looseObject({
       id: z.string().min(1),
-      etapa: z.enum(['situacao', 'explicacao', 'checagem', 'pratica']),
+      etapa: z.enum(['situacao', 'explicacao', 'checagem', 'fim', 'pratica']),
       card: inteiro.optional(),
+      palpite: inteiro.optional(),
     })
     .nullable(),
   config: z.object({
