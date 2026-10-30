@@ -29,5 +29,6 @@ export default tseslint.config(
     files: ['*.config.{js,ts}', 'clean-appledouble.mjs'],
     languageOptions: { globals: { ...globals.node } },
   },
+  { files: ['scripts/**'], rules: { 'no-console': 'off' } },
   prettier,
 );
