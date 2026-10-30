@@ -7,6 +7,9 @@ import { HomeProgresso } from './home/HomeProgresso.tsx';
 import { HomeVisitante } from './home/HomeVisitante.tsx';
 import { JanelaMeta } from './home/JanelaMeta.tsx';
 import { RotaLicao } from './licao/LicaoPagina.tsx';
+import { Caderno } from './caderno/Caderno.tsx';
+import { Revisar } from './revisar/Revisar.tsx';
+import { RotaSessao } from './revisar/Sessao.tsx';
 import { ErrosConteudo } from './conteudo/ErrosConteudo.tsx';
 import { App as LayoutApp } from './layouts/App';
 import { Site as LayoutSite } from './layouts/Site';
@@ -53,14 +56,14 @@ export function Aplicacao() {
         />
         <Route path="/c/:curso" component={RotaCurso} />
         <Route path="/c/:curso/:unidade/:licao" component={RotaLicao} />
+        <Route path="/caderno" component={() => noApp(<Caderno />)} />
         <Route
-          path="/caderno"
-          component={() => noApp(<EmConstrucao titulo="Caderno" milestone="M6" />)}
+          path="/caderno/praticar/:conceito"
+          component={() => <RotaSessao modo="conceito" />}
         />
-        <Route
-          path="/revisar"
-          component={() => noApp(<EmConstrucao titulo="Revisar" milestone="M6" />)}
-        />
+        <Route path="/revisar" component={() => noApp(<Revisar />)} />
+        <Route path="/revisar/sessao" component={() => <RotaSessao modo="revisao" />} />
+        <Route path="/revisar/treino/:curso" component={() => <RotaSessao modo="treino" />} />
         <Route
           path="/sobre"
           component={() => noApp(<EmConstrucao titulo="Sobre" milestone="M7" />)}
