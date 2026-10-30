@@ -6,6 +6,7 @@ import { RotaCurso } from './curso/PaginaCurso.tsx';
 import { HomeProgresso } from './home/HomeProgresso.tsx';
 import { HomeVisitante } from './home/HomeVisitante.tsx';
 import { JanelaMeta } from './home/JanelaMeta.tsx';
+import { Sobre } from './sobre/Sobre.tsx';
 import { RotaLicao } from './licao/LicaoPagina.tsx';
 import { Caderno } from './caderno/Caderno.tsx';
 import { Revisar } from './revisar/Revisar.tsx';
@@ -64,10 +65,7 @@ export function Aplicacao() {
         <Route path="/revisar" component={() => noApp(<Revisar />)} />
         <Route path="/revisar/sessao" component={() => <RotaSessao modo="revisao" />} />
         <Route path="/revisar/treino/:curso" component={() => <RotaSessao modo="treino" />} />
-        <Route
-          path="/sobre"
-          component={() => noApp(<EmConstrucao titulo="Sobre" milestone="M7" />)}
-        />
+        <Route path="/sobre" component={() => noApp(<Sobre />)} />
         <Route
           path="/_estilo"
           component={() => (MOSTRAR_DEV ? noApp(<Estilo />) : noSite(<Erro404 />))}

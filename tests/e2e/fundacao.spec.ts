@@ -9,7 +9,7 @@ test('uma rota que não existe mostra a página 404', async ({ page }) => {
 });
 
 test('as rotas principais respondem com a página provisória', async ({ page }) => {
-  for (const rota of ['/cursos', '/sobre']) {
+  for (const rota of ['/cursos']) {
     await page.goto(rota);
     await expect(page.getByText(/Em construção/)).toBeVisible();
   }
