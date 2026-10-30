@@ -47,7 +47,7 @@ test.describe('com rascunhos ligados', () => {
 
     // Pergunta rápida de verdade: escolher mostra o resultado e a explicação.
     const pergunta = page.getByRole('group', { name: /Lorem ipsum dolor sit amet 1/ });
-    await pergunta.getByRole('radio', { name: 'Consectetur adipiscing', exact: true }).check();
+    await pergunta.getByRole('radio', { name: '1', exact: true }).check();
     await expect(page.getByText('Quase!')).toBeVisible();
 
     await page.getByRole('button', { name: 'Começar agora' }).first().click();
@@ -183,7 +183,7 @@ test.describe('com rascunhos ligados', () => {
     }
     await page.getByRole('button', { name: 'Começar prática' }).click();
     for (const certa of [
-      'Sed do eiusmod',
+      '2',
       'Tempor incididunt',
       'Consectetur adipiscing',
       'Falso',

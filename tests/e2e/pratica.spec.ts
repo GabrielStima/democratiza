@@ -38,14 +38,7 @@ async function dadosSalvos(page: Page) {
   });
 }
 
-const CERTAS = [
-  'Sed do eiusmod',
-  'Tempor incididunt',
-  'Consectetur adipiscing',
-  'Falso',
-  'Verdadeiro',
-  'Ipsum',
-];
+const CERTAS = ['2', 'Tempor incididunt', 'Consectetur adipiscing', 'Falso', 'Verdadeiro', 'Ipsum'];
 
 test('lição completa com 1 erro: 55 XP, 5 de 6 e três conceitos no caderno', async ({ page }) => {
   await ateAPratica(page);
@@ -147,7 +140,7 @@ test('sair no meio da Prática e voltar retoma na pergunta certa', async ({ page
 
 test('Rever explicação não muda a pergunta, a resposta nem o XP', async ({ page }) => {
   await ateAPratica(page);
-  await page.getByRole('radio', { name: 'Sed do eiusmod', exact: true }).check();
+  await page.getByRole('radio', { name: '2', exact: true }).check();
   await page.getByRole('button', { name: 'Rever explicação' }).click();
   const janela = page.getByRole('dialog', { name: 'Rever explicação' });
   await expect(janela).toContainText('Rever explicação · 1 de 2');
@@ -156,7 +149,7 @@ test('Rever explicação não muda a pergunta, a resposta nem o XP', async ({ pa
   await expect(janela).toContainText('Aqui não vale ponto');
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog')).toHaveCount(0);
-  await expect(page.getByRole('radio', { name: 'Sed do eiusmod', exact: true })).toBeChecked();
+  await expect(page.getByRole('radio', { name: '2', exact: true })).toBeChecked();
   await expect(page.getByText(/1 de 6/)).toBeVisible();
   expect(await dadosSalvos(page)).toBeNull();
 });
@@ -178,7 +171,7 @@ test('as telas da Prática não têm problema sério de acessibilidade', async (
       (v) => v.impact === 'serious' || v.impact === 'critical',
     );
   expect(await graves()).toEqual([]);
-  await responder(page, 'Consectetur adipiscing'); // errada
+  await responder(page, '1'); // errada
   expect(await graves()).toEqual([]);
   await page.getByRole('button', { name: 'Continuar' }).click();
   await responder(page, 'Tempor incididunt'); // errada de novo na ordem seguinte? (certa)
