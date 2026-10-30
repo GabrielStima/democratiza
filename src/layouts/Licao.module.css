@@ -1,0 +1,28 @@
+.pagina {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.topo {
+  border-bottom: 2px solid var(--linha);
+}
+.interno {
+  max-width: var(--largura-site);
+  margin: 0 auto;
+  padding: var(--espaco-4) var(--espaco-5);
+}
+.fechar {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--texto-mudo);
+}
+.principal {
+  flex: 1;
+  width: 100%;
+  max-width: var(--largura-licao);
+  margin: 0 auto;
+  padding: var(--espaco-6) var(--espaco-5);
+}
