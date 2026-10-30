@@ -1,0 +1,304 @@
+.mudo {
+  color: var(--texto-suave);
+}
+.kicker {
+  margin: 0 0 var(--espaco-2);
+  color: var(--texto-suave);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+/* Janela da meta */
+.meta {
+  text-align: center;
+}
+.meta h2 {
+  margin: var(--espaco-3) 0;
+  font-size: 26px;
+}
+.metaOpcoes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  margin: var(--espaco-5) 0;
+  padding: 0;
+  border: none;
+  text-align: left;
+}
+.metaOpcao {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+.metaOpcao input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.metaCaixa {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--espaco-4);
+  border: 2px solid var(--borda-forte);
+  border-bottom-width: 5px;
+  border-radius: var(--raio-m);
+}
+.metaOpcao input:checked + .metaCaixa {
+  background: var(--azul-claro);
+  border-color: var(--azul-borda);
+  color: var(--azul-escuro);
+}
+.metaOpcao input:focus-visible + .metaCaixa {
+  box-shadow: var(--foco);
+}
+
+/* Home do visitante */
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-7);
+}
+.heroi {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--espaco-6);
+}
+.heroi h1 {
+  font-size: 44px;
+}
+.lead {
+  margin: var(--espaco-4) 0 var(--espaco-5);
+  font-size: 19px;
+  color: var(--texto-suave);
+}
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-3);
+}
+.pergunta h2 {
+  margin: 0 0 var(--espaco-4);
+  font-size: 22px;
+}
+.resposta {
+  margin: 0;
+}
+.confianca {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espaco-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.confianca li {
+  padding: 8px 16px;
+  background: var(--verde-claro);
+  border-radius: var(--raio-pilula);
+  color: var(--verde-texto);
+  font-weight: 800;
+}
+.secao h2 {
+  margin: 0 0 var(--espaco-5);
+  font-size: 30px;
+}
+.passos,
+.unidades,
+.gamificacao,
+.principios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--espaco-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.passos h3,
+.gamificacao h3,
+.principios h3,
+.unidades h3 {
+  margin: 0 0 var(--espaco-2);
+  font-size: 20px;
+}
+.passos p,
+.gamificacao p,
+.principios p,
+.unidades p {
+  margin: 0;
+}
+.numeroPasso {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: var(--espaco-2);
+  background: var(--verde-botao);
+  border-radius: var(--raio-pilula);
+  color: #fff;
+  font-weight: 800;
+}
+.final {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaco-4);
+  padding: var(--espaco-6);
+  background: var(--verde-claro);
+  border-radius: var(--raio-xg);
+  text-align: center;
+}
+.final h2 {
+  margin: 0;
+}
+
+/* Home com progresso */
+.progresso {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: var(--espaco-6);
+  align-items: start;
+}
+.principal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-5);
+  min-width: 0;
+}
+.principal h1 {
+  font-size: 34px;
+}
+.continuar h2 {
+  margin: var(--espaco-2) 0;
+  font-size: 26px;
+}
+.cursoDoCartao {
+  margin: var(--espaco-2) 0 0;
+  font-weight: 800;
+}
+.pontos {
+  display: flex;
+  gap: var(--espaco-2);
+  margin: var(--espaco-3) 0;
+  padding: 0;
+  list-style: none;
+}
+.ponto {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--raio-pilula);
+  background: var(--cinza-trilho);
+}
+.ponto_feita {
+  background: var(--verde-ipe);
+}
+.ponto_atual {
+  background: var(--amarelo-ouro);
+  box-shadow: 0 0 0 3px var(--amarelo-claro);
+}
+.secaoH {
+  margin: 0 0 var(--espaco-3);
+  font-size: 22px;
+}
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.lista h3 {
+  margin: var(--espaco-2) 0;
+  font-size: 20px;
+}
+.linhaCurso {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+}
+.destaque {
+  color: var(--verde-mata);
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.aviso {
+  padding: var(--espaco-3) var(--espaco-4);
+  background: var(--azul-claro);
+  border-radius: var(--raio-m);
+  color: var(--azul-escuro);
+  font-weight: 700;
+}
+.faltantes {
+  margin: 0;
+  padding-left: var(--espaco-5);
+}
+.lateral {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+.cartaoH {
+  margin: 0 0 var(--espaco-2);
+  font-size: 16px;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.grande {
+  margin: 0 0 var(--espaco-2);
+  font-family: var(--fonte-titulo);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--verde-noite);
+}
+.metaBotao {
+  display: block;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+.semana {
+  display: flex;
+  justify-content: space-between;
+  margin: var(--espaco-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.semana li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--texto-suave);
+}
+.bolinha {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--raio-pilula);
+  background: var(--cinza-trilho);
+  color: var(--verde-texto);
+}
+.estudou .bolinha {
+  background: var(--amarelo-ouro);
+  color: var(--amarelo-texto);
+}
+.recentes {
+  margin: 0 0 var(--espaco-3);
+  padding-left: var(--espaco-5);
+}
