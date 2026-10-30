@@ -233,3 +233,207 @@
   flex-direction: column;
   gap: var(--espaco-3);
 }
+
+/* Prática */
+.grandes {
+  flex-direction: row;
+}
+.grandes .opcao {
+  flex: 1;
+}
+.grandes .caixa {
+  justify-content: center;
+  min-height: 96px;
+  font-size: 22px;
+}
+.cabecaPratica {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+  margin: 0 0 var(--espaco-2);
+}
+.contador {
+  font-weight: 800;
+}
+.linkRever {
+  border: none;
+  background: none;
+  color: var(--azul-anil);
+  font-weight: 800;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.barra {
+  margin: 0 0 var(--espaco-5);
+}
+.feedbackTituloPequeno {
+  font-family: var(--fonte-titulo);
+  font-size: 20px;
+  font-weight: 800;
+}
+.fonteFeedback {
+  font-size: 14px;
+}
+
+/* Lição concluída */
+.concluida {
+  text-align: center;
+}
+.numeros {
+  display: flex;
+  justify-content: center;
+  gap: var(--espaco-4);
+  margin: 0 0 var(--espaco-5);
+  padding: 0;
+  list-style: none;
+}
+.numero {
+  min-width: 140px;
+  padding: var(--espaco-4);
+  border: 2px solid var(--borda);
+  border-bottom-width: 4px;
+  border-radius: var(--raio-g);
+}
+.numeroValor {
+  display: block;
+  font-family: var(--fonte-titulo);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--verde-noite);
+}
+.numeroRotulo {
+  color: var(--texto-suave);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.secao {
+  margin: var(--espaco-5) 0 var(--espaco-3);
+  font-size: 20px;
+  text-align: left;
+}
+.novos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  margin: 0 0 var(--espaco-5);
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+.novo {
+  padding: var(--espaco-4);
+  border: 2px solid var(--borda);
+  border-radius: var(--raio-m);
+}
+.novo p {
+  margin: var(--espaco-1) 0 0;
+}
+.seloNovo {
+  display: inline-block;
+  margin-left: var(--espaco-2);
+  padding: 2px 10px;
+  background: var(--verde-claro);
+  border-radius: var(--raio-pilula);
+  color: var(--verde-mata);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.aviso {
+  margin: 0 0 var(--espaco-4);
+  padding: var(--espaco-3) var(--espaco-4);
+  background: var(--azul-claro);
+  border-radius: var(--raio-m);
+  color: var(--azul-escuro);
+  font-weight: 700;
+}
+.desbloqueado {
+  text-align: left;
+  margin: 0 0 var(--espaco-5);
+}
+
+/* Rever o que errei */
+.semPontos {
+  display: inline-block;
+  margin-bottom: var(--espaco-3);
+  padding: 4px 12px;
+  background: var(--azul-claro);
+  border-radius: var(--raio-pilula);
+  color: var(--azul-escuro);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.erros {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  margin: 0 0 var(--espaco-5);
+  padding: 0;
+  list-style: none;
+}
+.erro {
+  padding: var(--espaco-5);
+  border: 2px solid var(--borda);
+  border-bottom-width: 4px;
+  border-radius: var(--raio-g);
+}
+.erro h2 {
+  margin: 0 0 var(--espaco-3);
+  font-size: 20px;
+}
+.marcou,
+.certaResp {
+  margin: 0 0 var(--espaco-2);
+  padding: var(--espaco-3) var(--espaco-4);
+  border-radius: var(--raio-p);
+  font-weight: 700;
+}
+.marcou {
+  background: var(--coral-claro);
+  color: var(--coral-escuro);
+}
+.certaResp {
+  background: var(--verde-feedback);
+  color: var(--verde-texto);
+}
+.rotuloMini {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+/* Rever explicação (janela) */
+.rever h2 {
+  margin: 0 0 var(--espaco-3);
+  font-size: 24px;
+}
+.reverTopo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 var(--espaco-3);
+}
+.reverTopo button {
+  border: none;
+  background: none;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--texto-mudo);
+  cursor: pointer;
+}
+.reverNav {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  margin: var(--espaco-5) 0 var(--espaco-3);
+}
+.fim img,
+.concluida img {
+  margin: 0 auto;
+}

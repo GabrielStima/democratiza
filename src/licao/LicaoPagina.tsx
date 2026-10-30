@@ -1,15 +1,16 @@
 import { useLocation, useRoute } from 'preact-iso';
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { Botao3D } from '../componentes/Botao3D';
-import { Capi } from '../componentes/Capi';
-import { Janela } from '../componentes/Janela';
 import type { Licao } from '../content-schema/licao.ts';
 import { catalogo, carregarLicao } from '../conteudo/index.ts';
 import { Licao as LayoutLicao } from '../layouts/Licao';
 import { Site as LayoutSite } from '../layouts/Site';
 import { Erro404 } from '../paginas/Erro404';
 import { gravarAndamento, lerAndamento } from './andamento.ts';
-import { CardExplicacao, Checagem, FimDaExplicacao, PraticaProvisoria, Situacao } from './Etapas';
+import { CardExplicacao, Checagem, FimDaExplicacao, Situacao } from './Etapas';
+import { SairDaLicao } from './Janelas';
+import { PraticaLicao } from './PraticaLicao';
+import { useEscSair } from './useEscSair.ts';
 import {
   andamentoDoPasso,
   fasesDoPasso,
@@ -18,7 +19,6 @@ import {
   passosDaLicao,
   rotuloDoBotao,
 } from './fluxo.ts';
-import estilos from './licao.module.css';
 
 function localizar(curso: string, unidade: string, licao: string) {
   const c = catalogo.cursos.find((x) => x.id === curso);
@@ -87,8 +87,6 @@ function LicaoCarregada({ id, licao, posicao }: { id: string; licao: Licao; posi
   const [escolha, setEscolha] = useState<number | null>(null);
   const [verificado, setVerificado] = useState(false);
   const [saindo, setSaindo] = useState(false);
-  const saindoRef = useRef(false);
-  saindoRef.current = saindo;
   const topo = useRef<HTMLDivElement>(null);
   const primeira = useRef(true);
 
@@ -116,14 +114,7 @@ function LicaoCarregada({ id, licao, posicao }: { id: string; licao: Licao; posi
     topo.current?.focus();
   }, [indice]);
 
-  // Esc abre a confirmação de sair (a Janela cuida do Esc enquanto está aberta).
-  useEffect(() => {
-    function aoTeclar(e: KeyboardEvent) {
-      if (e.key === 'Escape' && !saindoRef.current) setSaindo(true);
-    }
-    document.addEventListener('keydown', aoTeclar);
-    return () => document.removeEventListener('keydown', aoTeclar);
-  }, []);
+  useEscSair(() => setSaindo(true), saindo);
 
   function irPara(novo: number) {
     guardar(novo, palpite);
@@ -139,7 +130,7 @@ function LicaoCarregada({ id, licao, posicao }: { id: string; licao: Licao; posi
       ? palpite !== null
       : passo.tipo === 'checagem'
         ? verificado || escolha !== null
-        : passo.tipo !== 'pratica';
+        : true;
 
   function avancar() {
     if (passo.tipo === 'checagem' && !verificado) {
@@ -149,8 +140,21 @@ function LicaoCarregada({ id, licao, posicao }: { id: string; licao: Licao; posi
     if (!ultimo) irPara(indice + 1);
   }
 
+  if (passo.tipo === 'pratica') {
+    return (
+      <PraticaLicao
+        id={id}
+        licao={licao}
+        posicao={posicao}
+        salvo={salvo}
+        palpite={palpite}
+        aoVoltar={anterior === null ? null : () => irPara(anterior)}
+      />
+    );
+  }
+
   const ultimoCard = cards.length - 1;
-  let conteudo;
+  let conteudo = null;
   if (passo.tipo === 'situacao' && licao.situacao) {
     conteudo = (
       <Situacao
@@ -186,8 +190,6 @@ function LicaoCarregada({ id, licao, posicao }: { id: string; licao: Licao; posi
     conteudo = (
       <FimDaExplicacao conceitos={licao.ensina.map((c) => catalogo.conceitos[c]?.nome ?? c)} />
     );
-  } else {
-    conteudo = <PraticaProvisoria />;
   }
 
   return (
@@ -206,32 +208,16 @@ function LicaoCarregada({ id, licao, posicao }: { id: string; licao: Licao; posi
           ) : (
             <span />
           )}
-          {passo.tipo !== 'pratica' && (
-            <Botao3D desativado={!podeAvancar} onClick={avancar}>
-              {rotuloDoBotao(passo, verificado)}
-            </Botao3D>
-          )}
+          <Botao3D desativado={!podeAvancar} onClick={avancar}>
+            {rotuloDoBotao(passo, verificado)}
+          </Botao3D>
         </>
       }
     >
       <div ref={topo} tabIndex={-1} style={{ outline: 'none' }}>
         {conteudo}
       </div>
-      <Janela titulo="Sair da lição?" aberta={saindo} aoFechar={() => setSaindo(false)}>
-        <div class={estilos.sair}>
-          <Capi tamanho={96} />
-          <h2>Sair da lição?</h2>
-          <p>Seu avanço fica salvo. Quando você voltar, continua exatamente de onde parou.</p>
-          <div class={estilos.sairAcoes}>
-            <Botao3D larga onClick={() => setSaindo(false)}>
-              Continuar a lição
-            </Botao3D>
-            <Botao3D larga variante="neutro" onClick={() => route('/')}>
-              Sair
-            </Botao3D>
-          </div>
-        </div>
-      </Janela>
+      <SairDaLicao aberta={saindo} aoContinuar={() => setSaindo(false)} aoSair={() => route('/')} />
     </LayoutLicao>
   );
 }

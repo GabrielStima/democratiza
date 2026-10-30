@@ -11,11 +11,22 @@ interface Props {
   aoFechar: () => void;
   /** Botões do rodapé (Voltar e o principal). */
   rodape: ComponentChildren;
+  /** Resposta da Prática: pinta o rodapé inteiro e mostra o feedback acima dos botões. */
+  feedback?: { tom: 'certa' | 'errada'; conteudo: ComponentChildren };
   children: ComponentChildren;
 }
 
 /** Layout da lição: sem menu, com topo próprio, fases e rodapé com os botões. */
-export function Licao({ posicao, nome, rascunho, fases, aoFechar, rodape, children }: Props) {
+export function Licao({
+  posicao,
+  nome,
+  rascunho,
+  fases,
+  aoFechar,
+  rodape,
+  feedback,
+  children,
+}: Props) {
   return (
     <div class={estilos.pagina}>
       {rascunho && <div class={estilos.faixa}>Rascunho</div>}
@@ -60,7 +71,12 @@ export function Licao({ posicao, nome, rascunho, fases, aoFechar, rodape, childr
         </div>
       </header>
       <main class={estilos.principal}>{children}</main>
-      <footer class={estilos.rodape}>
+      <footer class={`${estilos.rodape} ${feedback ? estilos[feedback.tom] : ''}`}>
+        {feedback && (
+          <div class={estilos.feedback} aria-live="polite">
+            {feedback.conteudo}
+          </div>
+        )}
         <div class={estilos.rodapeInterno}>{rodape}</div>
       </footer>
     </div>

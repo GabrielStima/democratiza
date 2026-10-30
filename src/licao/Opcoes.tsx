@@ -20,12 +20,23 @@ interface Props {
   travado?: boolean;
   /** Cor e etiqueta de cada opção (a cor nunca é o único sinal). */
   estados?: Partial<Record<number, EstadoOpcao>>;
+  /** Duas opções grandes lado a lado (verdadeiro ou falso). */
+  grandes?: boolean;
 }
 
 /** Escolha única com botões de rádio de verdade: setas, Espaço e leitor de tela funcionam. */
-export function Opcoes({ nome, legenda, opcoes, valor, aoEscolher, travado, estados = {} }: Props) {
+export function Opcoes({
+  nome,
+  legenda,
+  opcoes,
+  valor,
+  aoEscolher,
+  travado,
+  estados = {},
+  grandes = false,
+}: Props) {
   return (
-    <fieldset class={estilos.opcoes}>
+    <fieldset class={grandes ? `${estilos.opcoes} ${estilos.grandes}` : estilos.opcoes}>
       <legend class="so-leitor">{legenda}</legend>
       {opcoes.map((texto, i) => {
         const estado = estados[i];

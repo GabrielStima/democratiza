@@ -60,7 +60,8 @@ test.describe('lição, parte 1 (com rascunhos ligados)', () => {
     await expect(page.getByRole('heading', { name: 'Agora é praticar!' })).toBeVisible();
     await expect(page.getByText('Você viu 3 conceitos.')).toBeVisible();
     await page.getByRole('button', { name: 'Começar prática' }).click();
-    await expect(page.getByRole('heading', { name: 'A Prática chega no M4' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Rever explicação' })).toBeVisible();
+    await expect(page.getByText(/1 de 6/)).toBeVisible();
   });
 
   test('Voltar leva ao card anterior', async ({ page }) => {

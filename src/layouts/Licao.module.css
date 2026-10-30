@@ -103,3 +103,22 @@
   margin: 0 auto;
   padding: var(--espaco-4) var(--espaco-5);
 }
+
+.rodape.certa {
+  background: var(--verde-feedback);
+  border-top-color: var(--verde-ipe);
+  color: var(--verde-texto);
+}
+.rodape.errada {
+  background: var(--coral-claro);
+  border-top-color: var(--coral);
+  color: var(--coral-escuro);
+}
+.feedback {
+  max-width: var(--largura-licao);
+  margin: 0 auto;
+  padding: var(--espaco-4) var(--espaco-5) 0;
+}
+.feedback p {
+  margin: 0 0 var(--espaco-2);
+}

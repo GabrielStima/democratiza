@@ -157,17 +157,3 @@ export function FimDaExplicacao({ conceitos }: { conceitos: string[] }) {
     </section>
   );
 }
-
-/** A Prática chega no M4; até lá esta tela marca o lugar. */
-export function PraticaProvisoria() {
-  return (
-    <section class={estilos.fim}>
-      <p class={estilos.kicker}>Prática</p>
-      <h1 class={estilos.titulo}>A Prática chega no M4</h1>
-      <p class={estilos.texto}>
-        Aqui entram os exercícios, a única etapa que vale XP. Por enquanto, volte e rele a
-        explicação.
-      </p>
-    </section>
-  );
-}

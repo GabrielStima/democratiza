@@ -21,3 +21,7 @@
 .caixa:focus {
   outline: none;
 }
+
+.larga {
+  max-width: 680px;
+}

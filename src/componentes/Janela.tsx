@@ -6,6 +6,8 @@ interface Props {
   titulo: string;
   aberta: boolean;
   aoFechar: () => void;
+  /** Caixa mais larga, para janelas com bastante texto. */
+  larga?: boolean;
   children: ComponentChildren;
 }
 
@@ -13,7 +15,7 @@ const FOCAVEIS =
   'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])';
 
 /** Caixa de diálogo: fundo escurecido, foco preso dentro e Esc para fechar. */
-export function Janela({ titulo, aberta, aoFechar, children }: Props) {
+export function Janela({ titulo, aberta, aoFechar, larga = false, children }: Props) {
   const caixa = useRef<HTMLDivElement>(null);
   const aoFecharRef = useRef(aoFechar);
   aoFecharRef.current = aoFechar;
@@ -60,7 +62,7 @@ export function Janela({ titulo, aberta, aoFechar, children }: Props) {
     <div class={estilos.fundo} onMouseDown={(e) => e.target === e.currentTarget && aoFechar()}>
       <div
         ref={caixa}
-        class={estilos.caixa}
+        class={larga ? `${estilos.caixa} ${estilos.larga}` : estilos.caixa}
         role="dialog"
         aria-modal="true"
         aria-label={titulo}
