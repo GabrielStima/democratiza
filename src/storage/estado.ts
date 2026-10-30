@@ -31,6 +31,14 @@ export const estadoSchema = z.object({
       etapa: z.enum(['situacao', 'explicacao', 'checagem', 'fim', 'pratica']),
       card: inteiro.optional(),
       palpite: inteiro.optional(),
+      /** Respostas já dadas na Prática, na ordem; delas se refaz a fila inteira. */
+      pratica: z
+        .object({
+          resultados: z.array(
+            z.object({ ex: inteiro, ok: z.boolean(), rep: z.boolean(), m: inteiro, s: inteiro }),
+          ),
+        })
+        .optional(),
     })
     .nullable(),
   config: z.object({

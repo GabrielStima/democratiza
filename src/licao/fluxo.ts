@@ -33,8 +33,17 @@ export function passosDaLicao(licao: Licao): Passo[] {
 }
 
 /** O que gravar em `licaoEmAndamento` para um passo. */
-export function andamentoDoPasso(id: string, passo: Passo, palpite: number | null): Andamento {
-  const base = palpite === null ? { id } : { id, palpite };
+export function andamentoDoPasso(
+  id: string,
+  passo: Passo,
+  palpite: number | null,
+  pratica?: Andamento['pratica'],
+): Andamento {
+  const base = {
+    id,
+    ...(palpite === null ? {} : { palpite }),
+    ...(pratica && pratica.resultados.length > 0 ? { pratica } : {}),
+  };
   switch (passo.tipo) {
     case 'situacao':
       return { ...base, etapa: 'situacao' };
@@ -92,6 +101,11 @@ export function fasesDoPasso(passos: Passo[], indice: number): Fase[] {
     const estado: EstadoFase = n < limite ? 'feita' : n === limite && !noFim ? 'atual' : 'proxima';
     return { rotulo, estado };
   });
+}
+
+/** Todas as pílulas prontas: a lição foi concluída. */
+export function fasesConcluidas(): Fase[] {
+  return ROTULOS_FASES.map((rotulo) => ({ rotulo, estado: 'feita' as const }));
 }
 
 export function rotuloDoBotao(passo: Passo, verificado: boolean): string {
