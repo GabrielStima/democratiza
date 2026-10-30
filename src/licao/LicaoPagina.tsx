@@ -95,9 +95,16 @@ function LicaoCarregada({ id, licao, posicao }: { id: string; licao: Licao; posi
   const passo = passos[indice] ?? { tipo: 'pratica' as const };
   const cards = licao.explicacao ?? [];
 
-  useEffect(() => {
-    gravarAndamento(andamentoDoPasso(id, passo, palpite));
-  }, [id, indice, palpite]);
+  // Grava na hora, dentro do clique: um useEffect pode chegar tarde e perder o ponto ao recarregar.
+  function guardar(novoIndice: number, novoPalpite: number | null) {
+    const alvo = passos[novoIndice] ?? { tipo: 'pratica' as const };
+    gravarAndamento(andamentoDoPasso(id, alvo, novoPalpite));
+  }
+
+  function escolherPalpite(i: number) {
+    setPalpite(i);
+    guardar(indice, i);
+  }
 
   // Ao trocar de etapa, o foco vai para o conteúdo novo e a página volta ao topo.
   useEffect(() => {
@@ -119,6 +126,7 @@ function LicaoCarregada({ id, licao, posicao }: { id: string; licao: Licao; posi
   }, []);
 
   function irPara(novo: number) {
+    guardar(novo, palpite);
     setIndice(novo);
     setEscolha(null);
     setVerificado(false);
@@ -149,7 +157,7 @@ function LicaoCarregada({ id, licao, posicao }: { id: string; licao: Licao; posi
         texto={licao.situacao.texto}
         palpites={licao.situacao.palpites}
         palpite={palpite}
-        aoEscolher={setPalpite}
+        aoEscolher={escolherPalpite}
       />
     );
   } else if (passo.tipo === 'card' && cards[passo.i]) {
