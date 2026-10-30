@@ -110,8 +110,10 @@ test.describe('com rascunhos ligados', () => {
     await page.goto('/');
     const explorar = page.getByRole('region', { name: 'Para explorar' });
     await expect(explorar.getByRole('link', { name: 'Começar curso' })).toHaveCount(1);
-    await expect(explorar.getByText('Faltam estes conceitos:')).toBeVisible();
-    await expect(explorar.getByText(/aprenda em/).first()).toBeVisible();
+    await expect(
+      explorar.getByText(/Falt(a|am) \d+ conceitos? para liberar/).first(),
+    ).toBeVisible();
+    await expect(explorar.getByText(/Você aprende .* em “/).first()).toBeVisible();
   });
 
   test('a meta de hoje reabre a janela e salva a nova meta', async ({ page }) => {
@@ -200,6 +202,26 @@ test.describe('com rascunhos ligados', () => {
     await expect(page.getByRole('heading', { name: 'Bom te ver de novo!' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Lorem lição dois' })).toBeVisible();
     await expect(page.getByText('60 / 50 XP')).toBeVisible();
-    await expect(page.getByText('1 dia', { exact: true })).toBeVisible();
+    await expect(page.getByText('1 dia seguido', { exact: true })).toBeVisible();
+  });
+
+  test('o menu lateral tem ícones e a marca em minúsculas', async ({ page }) => {
+    await carregar(page, 'Em andamento');
+    await page.goto('/');
+    const menu = page.getByRole('navigation', { name: 'Principal' });
+    await expect(menu.locator('a svg')).toHaveCount(4);
+    await expect(page.getByRole('link', { name: 'democratiza' })).toBeVisible();
+  });
+
+  test('a Home com progresso ocupa a largura da tela em duas colunas', async ({ page }) => {
+    await carregar(page, 'Em andamento');
+    await page.setViewportSize({ width: 1600, height: 900 });
+    await page.goto('/');
+    const continuar = await page
+      .getByRole('region', { name: 'Continuar de onde parou' })
+      .boundingBox();
+    const lateral = await page.getByRole('complementary', { name: 'Seu dia' }).boundingBox();
+    expect(continuar?.width ?? 0).toBeGreaterThan(900);
+    expect(lateral?.x ?? 0).toBeGreaterThan((continuar?.x ?? 0) + (continuar?.width ?? 0));
   });
 });
