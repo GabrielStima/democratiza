@@ -18,6 +18,8 @@
   --azul-borda: #7fa9e0;
   --azul-escuro: #174c93;
   --coral: #e05454;
+  /* Coral para botão com texto branco (4.9:1); o --coral puro só passa em elementos grandes. */
+  --coral-botao: #c93f3f;
   --coral-claro: #ffe3e3;
   --coral-escuro: #a12a2a;
   --roxo-modulo: #6b3fb8;

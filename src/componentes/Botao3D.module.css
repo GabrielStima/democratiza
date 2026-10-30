@@ -46,7 +46,7 @@
 }
 
 .perigo {
-  background: var(--coral);
+  background: var(--coral-botao);
   border-bottom-color: var(--coral-escuro);
   color: #fff;
 }
