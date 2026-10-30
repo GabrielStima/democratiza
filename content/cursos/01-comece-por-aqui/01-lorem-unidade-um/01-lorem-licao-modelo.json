@@ -54,10 +54,10 @@
       "titulo_curto": "Lorem ipsum?",
       "pergunta": "Lorem ipsum dolor sit amet 1?",
       "opcoes": [
-        "Consectetur adipiscing",
-        "Sed do eiusmod",
-        "Tempor incididunt",
-        "Ut labore et dolore"
+        "1",
+        "2",
+        "3",
+        "4"
       ],
       "correta": 1,
       "explicacao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
