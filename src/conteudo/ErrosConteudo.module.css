@@ -1,0 +1,44 @@
+.camada {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espaco-5);
+  background: rgb(30 38 34 / 70%);
+}
+.caixa {
+  width: 100%;
+  max-width: 900px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  padding: var(--espaco-5);
+  border-radius: var(--raio-g);
+  background: var(--fundo);
+  border-top: 8px solid var(--coral);
+}
+.caixa h2 {
+  color: var(--coral-escuro);
+}
+.pre {
+  margin: 0;
+  overflow: auto;
+  padding: var(--espaco-4);
+  border-radius: var(--raio-m);
+  background: var(--coral-claro);
+  color: var(--texto);
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+.fechar {
+  align-self: flex-end;
+  padding: 10px 20px;
+  border: 2px solid var(--borda-forte);
+  border-radius: var(--raio-m);
+  background: var(--fundo);
+  font-weight: 800;
+  cursor: pointer;
+}

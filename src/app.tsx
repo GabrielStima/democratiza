@@ -1,6 +1,7 @@
 import { lazy, LocationProvider, Route, Router } from 'preact-iso';
 import type { ComponentChildren } from 'preact';
 import { Avisos } from './componentes/Aviso';
+import { ErrosConteudo } from './conteudo/ErrosConteudo.tsx';
 import { App as LayoutApp } from './layouts/App';
 import { Licao as LayoutLicao } from './layouts/Licao';
 import { Site as LayoutSite } from './layouts/Site';
@@ -12,6 +13,11 @@ export const MOSTRAR_DEV: boolean =
   import.meta.env.DEV || import.meta.env.VITE_MOSTRAR_RASCUNHOS === '1';
 
 /* O guia de estilo e o /_dev só entram no pacote quando a variável está ligada. */
+const Dev = lazy(() =>
+  import.meta.env.DEV || import.meta.env.VITE_MOSTRAR_RASCUNHOS === '1'
+    ? import('./dev/Dev.tsx')
+    : Promise.resolve({ default: Erro404 }),
+);
 const Estilo = lazy(() =>
   import.meta.env.DEV || import.meta.env.VITE_MOSTRAR_RASCUNHOS === '1'
     ? import('./dev/Estilo')
@@ -64,15 +70,12 @@ export function Aplicacao() {
         />
         <Route
           path="/_dev"
-          component={() =>
-            MOSTRAR_DEV
-              ? noApp(<EmConstrucao titulo="Ferramentas de desenvolvimento" milestone="M1" />)
-              : noSite(<Erro404 />)
-          }
+          component={() => (MOSTRAR_DEV ? noApp(<Dev />) : noSite(<Erro404 />))}
         />
         <Route default component={() => noSite(<Erro404 />)} />
       </Router>
       <Avisos />
+      {MOSTRAR_DEV && <ErrosConteudo />}
     </LocationProvider>
   );
 }

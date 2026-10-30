@@ -1,0 +1,67 @@
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-5);
+}
+.resumo {
+  margin: var(--espaco-2) 0 var(--espaco-4);
+  color: var(--texto-suave);
+}
+.erro {
+  padding: var(--espaco-3) var(--espaco-4);
+  border-radius: var(--raio-m);
+  background: var(--coral-claro);
+  color: var(--coral-escuro);
+  font-weight: 800;
+}
+.arvore,
+.arvore ul {
+  margin: 0;
+  padding-left: var(--espaco-5);
+  list-style: none;
+}
+.arvore {
+  padding-left: 0;
+}
+.arvore li {
+  margin: var(--espaco-2) 0;
+}
+.linha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-2) var(--espaco-3);
+}
+.mudo {
+  color: var(--texto-suave);
+  font-size: 14px;
+}
+.etiqueta,
+.revisado,
+.rascunho {
+  padding: 2px 10px;
+  border-radius: var(--raio-pilula);
+  font-size: 12px;
+  font-weight: 800;
+}
+.revisado {
+  background: var(--verde-claro);
+  color: var(--verde-mata);
+}
+.rascunho {
+  background: var(--amarelo-claro);
+  color: var(--amarelo-texto);
+}
+.etiqueta {
+  background: var(--azul-claro);
+  color: var(--azul-escuro);
+}
+code {
+  font-size: 13px;
+  color: var(--texto-suave);
+}
+
+button.etiqueta {
+  border: none;
+  cursor: pointer;
+}
