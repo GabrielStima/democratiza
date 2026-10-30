@@ -2,9 +2,12 @@ import type { ComponentChildren } from 'preact';
 import estilos from './Botao3D.module.css';
 
 export type VarianteBotao = 'primario' | 'secundario' | 'perigo' | 'neutro';
+export type TamanhoBotao = 'pequeno' | 'normal' | 'grande';
 
 interface Props {
   variante?: VarianteBotao;
+  /** `pequeno` é o do cabeçalho do site; `grande` é o do topo da Home. */
+  tamanho?: TamanhoBotao;
   desativado?: boolean;
   href?: string;
   type?: 'button' | 'submit';
@@ -16,6 +19,7 @@ interface Props {
 
 export function Botao3D({
   variante = 'primario',
+  tamanho = 'normal',
   desativado = false,
   href,
   type = 'button',
@@ -27,6 +31,7 @@ export function Botao3D({
   const classe = [
     estilos.botao,
     estilos[variante],
+    tamanho === 'normal' ? '' : estilos[tamanho],
     desativado ? estilos.desativado : '',
     larga ? estilos.larga : '',
   ]
