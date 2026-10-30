@@ -30,5 +30,23 @@ export default tseslint.config(
     languageOptions: { globals: { ...globals.node } },
   },
   { files: ['scripts/**'], rules: { 'no-console': 'off' } },
+  {
+    // O relógio é injetável: só engine/relogio.ts e os testes podem ler a hora do sistema.
+    files: ['src/**/*.{ts,tsx}'],
+    ignores: ['src/engine/relogio.ts', 'src/**/*.test.{ts,tsx}', 'src/testes/**'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: "NewExpression[callee.name='Date'][arguments.length=0]",
+          message: 'Use agora() ou hoje() de engine/relogio.ts em vez de new Date().',
+        },
+        {
+          selector: "CallExpression[callee.object.name='Date'][callee.property.name='now']",
+          message: 'Use agora() de engine/relogio.ts em vez de Date.now().',
+        },
+      ],
+    },
+  },
   prettier,
 );

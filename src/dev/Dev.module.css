@@ -65,3 +65,37 @@ button.etiqueta {
   border: none;
   cursor: pointer;
 }
+
+.perfis {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  margin: 0 0 var(--espaco-4);
+  padding: 0;
+  list-style: none;
+}
+.perfis li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-3);
+}
+.fatos {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--espaco-1) var(--espaco-4);
+  margin: var(--espaco-4) 0;
+}
+.fatos dt {
+  font-weight: 800;
+}
+.fatos dd {
+  margin: 0;
+}
+.json {
+  overflow: auto;
+  padding: var(--espaco-3);
+  border-radius: var(--raio-m);
+  background: var(--fundo-suave);
+  font-size: 12px;
+}

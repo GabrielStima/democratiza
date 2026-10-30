@@ -1,6 +1,7 @@
 import { lazy, LocationProvider, Route, Router } from 'preact-iso';
 import type { ComponentChildren } from 'preact';
 import { Avisos } from './componentes/Aviso';
+import { estado } from './stores/index.ts';
 import { ErrosConteudo } from './conteudo/ErrosConteudo.tsx';
 import { App as LayoutApp } from './layouts/App';
 import { Licao as LayoutLicao } from './layouts/Licao';
@@ -31,11 +32,18 @@ function noApp(filho: ComponentChildren) {
   return <LayoutApp>{filho}</LayoutApp>;
 }
 
+/** A rota `/` decide a Home olhando se existe progresso salvo neste navegador. */
+function Inicio() {
+  return estado.value
+    ? noApp(<EmConstrucao titulo="Home com progresso" milestone="M5" />)
+    : noSite(<EmConstrucao titulo="Home do visitante" milestone="M5" />);
+}
+
 export function Aplicacao() {
   return (
     <LocationProvider>
       <Router>
-        <Route path="/" component={() => noSite(<EmConstrucao titulo="Início" milestone="M5" />)} />
+        <Route path="/" component={Inicio} />
         <Route
           path="/cursos"
           component={() => noApp(<EmConstrucao titulo="Cursos" milestone="M8" />)}

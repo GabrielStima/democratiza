@@ -1,5 +1,13 @@
 import { useState } from 'preact/hooks';
+import { ofensivaAtual, ofensivaEmRisco } from '../engine/ofensiva.ts';
+import { deslocamentoAtual, hoje } from '../engine/relogio.ts';
+import { conceitosVencidos } from '../engine/revisao.ts';
+import { xpDeHoje } from '../engine/xp.ts';
+import { caderno, definirCaderno, definirEstado, estado } from '../stores/index.ts';
+import { PERFIS, type Perfil } from './perfis.ts';
+import { moverRelogio, zerarRelogio } from './relogioDev.ts';
 import { bibliografia, carregarLicao, catalogo } from '../conteudo/index.ts';
+import { Botao3D } from '../componentes/Botao3D.tsx';
 import { Selo } from '../componentes/Selo.tsx';
 import estilos from './Dev.module.css';
 
@@ -104,7 +112,102 @@ export function Dev() {
         </ul>
         {cursos.length === 0 && <p>Nenhuma lição publicada.</p>}
       </section>
+
+      <SecaoEstado />
     </div>
+  );
+}
+
+function SecaoEstado() {
+  const [, atualizar] = useState(0);
+  const e = estado.value;
+  const dia = hoje();
+  const deslocamento = deslocamentoAtual();
+  const vencidos = conceitosVencidos(caderno.value, dia).length;
+
+  function carregar(p: Perfil) {
+    const r = p.construir(catalogo, dia);
+    definirEstado(r.estado);
+    definirCaderno(r.caderno);
+  }
+  function mover(dias: number) {
+    moverRelogio(dias);
+    atualizar((n) => n + 1);
+  }
+  function limparTudo() {
+    definirEstado(null);
+    definirCaderno({});
+  }
+
+  return (
+    <section aria-labelledby="d-estado">
+      <h2 id="d-estado">Estado</h2>
+      <p class={estilos.resumo}>
+        Perfis de demonstração. Carregar um perfil substitui o progresso deste navegador.
+      </p>
+
+      <ul class={estilos.perfis}>
+        {PERFIS.map((p) => (
+          <li key={p.id}>
+            <Botao3D
+              variante="neutro"
+              onClick={() => carregar(p)}
+              aria-label={`Carregar perfil: ${p.nome}`}
+            >
+              {p.nome}
+            </Botao3D>
+            <span class={estilos.mudo}>{p.descricao}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div class={estilos.linha}>
+        <Botao3D variante="perigo" onClick={limparTudo}>
+          Limpar tudo
+        </Botao3D>
+        <Botao3D variante="secundario" onClick={() => mover(-1)}>
+          Voltar 1 dia
+        </Botao3D>
+        <Botao3D variante="secundario" onClick={() => mover(1)}>
+          Avançar 1 dia
+        </Botao3D>
+        <Botao3D
+          variante="neutro"
+          onClick={() => {
+            zerarRelogio();
+            atualizar((n) => n + 1);
+          }}
+        >
+          Relógio real
+        </Botao3D>
+      </div>
+
+      <dl class={estilos.fatos} data-testid="fatos">
+        <dt>Dia simulado</dt>
+        <dd>
+          {dia} ({deslocamento >= 0 ? '+' : ''}
+          {deslocamento})
+        </dd>
+        <dt>Visitante?</dt>
+        <dd>{e ? 'não' : 'sim'}</dd>
+        <dt>Ofensiva exibida</dt>
+        <dd>
+          {e ? ofensivaAtual(e.ofensiva, dia) : 0}
+          {e && ofensivaEmRisco(e.ofensiva, dia) ? ' (em risco)' : ''}
+        </dd>
+        <dt>XP hoje</dt>
+        <dd>{e ? `${xpDeHoje(e, dia)} / ${e.config.metaDiaria}` : '–'}</dd>
+        <dt>Conceitos no caderno</dt>
+        <dd>{Object.keys(caderno.value).length}</dd>
+        <dt>Conceitos vencidos</dt>
+        <dd>{vencidos}</dd>
+      </dl>
+
+      <details>
+        <summary>Estado em JSON</summary>
+        <pre class={estilos.json}>{JSON.stringify(e, null, 2) ?? 'null (visitante)'}</pre>
+      </details>
+    </section>
   );
 }
 
