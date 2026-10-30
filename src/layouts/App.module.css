@@ -1,7 +1,7 @@
 .pagina {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 240px minmax(0, 1fr);
+  grid-template-columns: 232px minmax(0, 1fr);
 }
 .lateral {
   display: flex;
@@ -14,52 +14,75 @@
   display: flex;
   align-items: center;
   gap: var(--espaco-2);
+  padding: 0 var(--espaco-1);
   font-family: var(--fonte-titulo);
   font-weight: 800;
-  font-size: 22px;
-  color: var(--verde-noite);
+  font-size: 24px;
+  color: var(--verde-mata);
   text-decoration: none;
 }
 .menu {
   display: flex;
   flex-direction: column;
-  gap: var(--espaco-1);
+  gap: 6px;
 }
 .menu a {
-  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 14px;
   border: 2px solid transparent;
-  border-radius: var(--raio-m);
+  border-radius: 14px;
+  font-size: 15px;
   font-weight: 800;
-  color: var(--texto-suave);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--texto-corpo);
   text-decoration: none;
 }
 .menu a:hover {
   background: var(--fundo-suave);
 }
 .menu a.ativo {
-  background: var(--verde-claro);
-  border-color: var(--verde-ipe);
+  background: var(--verde-painel);
+  border-color: var(--verde-borda);
   color: var(--verde-mata);
 }
-.nota {
-  margin: auto 0 0;
-  font-size: 13px;
-  color: var(--texto-suave);
+.menu a:focus-visible {
+  outline: none;
+  box-shadow: var(--foco);
 }
-.principal {
-  padding: var(--espaco-6) var(--espaco-5);
-  max-width: 1000px;
-  width: 100%;
-}
-
 .contagem {
-  margin-left: var(--espaco-2);
-  padding: 2px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  margin-left: auto;
+  padding: 0 6px;
   background: var(--coral-botao);
   border-radius: var(--raio-pilula);
   color: #fff;
   font-size: 13px;
+  letter-spacing: 0;
+}
+.nota {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+  padding: 14px;
+  border: 2px solid var(--borda);
+  border-radius: 16px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--texto-corpo);
 }
 .nota p {
-  margin: 0 0 var(--espaco-3);
+  margin: 0;
+}
+.principal {
+  min-width: 0;
+  padding: var(--espaco-6) var(--espaco-6) var(--espaco-7);
 }
