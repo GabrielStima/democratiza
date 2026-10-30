@@ -1,0 +1,46 @@
+# macOS
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+.fseventsd
+.TemporaryItems
+__MACOSX/
+Icon?
+
+# Node / build
+node_modules/
+dist/
+coverage/
+.vite/
+*.log
+npm-debug.log*
+*.tsbuildinfo
+
+# Ambiente e segredos
+.env
+.env.*
+!.env.example
+
+# Testes
+playwright-report/
+test-results/
+blob-report/
+
+# Cloudflare
+.wrangler/
+.dev.vars
+
+# Editores
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Claude Code (configuração local)
+.claude/settings.local.json
+
+# Saídas geradas pelo Claude fora do repositório
+Claude outputs/
