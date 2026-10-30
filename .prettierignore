@@ -7,3 +7,4 @@ test-results
 Claude outputs
 *.md
 tests/fixtures
+clean-appledouble.mjs
