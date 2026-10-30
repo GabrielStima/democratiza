@@ -1,0 +1,32 @@
+.forca {
+  display: inline-flex;
+  gap: 3px;
+  --cor-forca: var(--vermelho-forca);
+}
+.f2 {
+  --cor-forca: var(--amarelo-forca);
+}
+.f3 {
+  --cor-forca: var(--azul-anil);
+}
+.f4,
+.f5 {
+  --cor-forca: var(--verde-mata);
+}
+.barra {
+  width: 12px;
+  height: 8px;
+  border-radius: 3px;
+  background: var(--cinza-trilho);
+}
+.cheia {
+  background: var(--cor-forca);
+}
+.grande {
+  gap: 4px;
+}
+.grande .barra {
+  width: 18px;
+  height: 10px;
+  border-radius: 4px;
+}

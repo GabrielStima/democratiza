@@ -17,17 +17,23 @@
   --amarelo-claro: #fff4cc;
   --amarelo-texto: #7a5600;
   --amarelo-icone: #b87400;
+  --amarelo-fundo: #fff9e3;
+  --amarelo-forca: #8a6100;
   --laranja-chama: #ff9f1c;
   --laranja-borda: #c26a00;
   --azul-anil: #1d5fb8;
   --azul-claro: #e3edfa;
   --azul-borda: #7fa9e0;
   --azul-escuro: #174c93;
+  --azul-sobre-azul: #d6e4f7;
+  --azul-borda-clara: #b7ceeb;
+  --azul-fundo-suave: #eef4fc;
   --coral: #e05454;
   /* Coral para botão com texto branco (4.9:1); o --coral puro só passa em elementos grandes. */
   --coral-botao: #c93f3f;
   --coral-claro: #ffe3e3;
   --coral-escuro: #a12a2a;
+  --vermelho-forca: #b42f2f;
   --roxo-modulo: #6b3fb8;
   --roxo-claro: #eee6fa;
 
@@ -43,6 +49,8 @@
   --fundo: #ffffff;
   --fundo-suave: #f6f9f6;
   --cinza-trilho: #e5e9e6;
+  --borda-tracejada: #c7d3ca;
+  --verde-borda: #9ed8b4;
   --cinza-sombra: #c7cec9;
 
   /* Raios */
