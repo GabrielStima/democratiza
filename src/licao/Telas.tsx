@@ -83,12 +83,15 @@ export function FeedbackPratica({
   xp,
   textoCerto,
   ex,
+  avisoRevisao = true,
 }: {
   ok: boolean;
   /** XP desta resposta; null quando a lição está sendo refeita (não vale XP). */
   xp: number | null;
   textoCerto: string;
   ex: Exercicio;
+  /** Falso no treino livre, que não mexe no calendário de revisões. */
+  avisoRevisao?: boolean;
 }) {
   return ok ? (
     <>
@@ -103,9 +106,11 @@ export function FeedbackPratica({
       <p class={estilos.feedbackTituloPequeno}>Resposta certa: {textoCerto}</p>
       <p>{ex.explicacao}</p>
       <FonteDoExercicio ex={ex} />
-      <p>
-        <strong>Essa pergunta volta na sua revisão.</strong>
-      </p>
+      {avisoRevisao && (
+        <p>
+          <strong>Essa pergunta volta na sua revisão.</strong>
+        </p>
+      )}
     </>
   );
 }

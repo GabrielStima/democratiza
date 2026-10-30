@@ -10,20 +10,26 @@ export function SairDaLicao({
   aberta,
   aoContinuar,
   aoSair,
+  titulo = 'Sair da lição?',
+  texto = 'Seu avanço fica salvo. Quando você voltar, continua exatamente de onde parou.',
+  rotuloContinuar = 'Continuar a lição',
 }: {
   aberta: boolean;
   aoContinuar: () => void;
   aoSair: () => void;
+  titulo?: string;
+  texto?: string;
+  rotuloContinuar?: string;
 }) {
   return (
-    <Janela titulo="Sair da lição?" aberta={aberta} aoFechar={aoContinuar}>
+    <Janela titulo={titulo} aberta={aberta} aoFechar={aoContinuar}>
       <div class={estilos.sair}>
         <Capi tamanho={96} />
-        <h2>Sair da lição?</h2>
-        <p>Seu avanço fica salvo. Quando você voltar, continua exatamente de onde parou.</p>
+        <h2>{titulo}</h2>
+        <p>{texto}</p>
         <div class={estilos.sairAcoes}>
           <Botao3D larga onClick={aoContinuar}>
-            Continuar a lição
+            {rotuloContinuar}
           </Botao3D>
           <Botao3D larga variante="neutro" onClick={aoSair}>
             Sair
