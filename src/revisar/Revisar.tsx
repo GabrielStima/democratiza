@@ -157,7 +157,7 @@ export function Revisar() {
               <p>{proximoTexto(d)}</p>
             </div>
             <span class={estilos.capi}>
-              <Capi tamanho={140} rounded/>
+              <Capi tamanho={140} rounded />
             </span>
           </section>
         ) : (
