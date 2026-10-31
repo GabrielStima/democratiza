@@ -8,13 +8,6 @@ test('uma rota que não existe mostra a página 404', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'Ver os cursos' })).toBeVisible();
 });
 
-test('as rotas principais respondem com a página provisória', async ({ page }) => {
-  for (const rota of ['/cursos']) {
-    await page.goto(rota);
-    await expect(page.getByText(/Em construção/)).toBeVisible();
-  }
-});
-
 test('o 404 não tem problema sério de acessibilidade', async ({ page }) => {
   await page.goto('/nao-existe');
   const resultado = await new AxeBuilder({ page }).analyze();

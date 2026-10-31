@@ -19,7 +19,6 @@ export function Site({
 }) {
   const e = estado.value;
   const continuar = e ? licaoParaContinuar(e, catalogo, caderno.value) : null;
-  const primeiroCurso = catalogo.cursos[0]?.id;
   return (
     <div class={estilos.pagina}>
       <header class={estilos.cabecalho}>
@@ -30,7 +29,7 @@ export function Site({
           </a>
           <nav class={estilos.menu} aria-label="Principal">
             <a href="/#como-funciona">Como funciona</a>
-            <a href={primeiroCurso ? `/c/${primeiroCurso}` : '/'}>Cursos</a>
+            <a href="/cursos">Cursos</a>
             <a href="/sobre">Nossos princípios</a>
           </nav>
           {e ? (
@@ -51,7 +50,7 @@ export function Site({
           <span>Projeto educativo, independente e apartidário.</span>
           <nav class={estilos.linksRodape} aria-label="Rodapé">
             <a href="/sobre">Princípios</a>
-            <a href={primeiroCurso ? `/c/${primeiroCurso}` : '/'}>Conteúdo</a>
+            <a href="/cursos">Conteúdo</a>
             <a href={`${REPOSITORIO}/issues/new`} target="_blank" rel="noopener noreferrer">
               Sugerir correção
             </a>

@@ -16,8 +16,7 @@ export function Erro404() {
       </p>
       <div class={estilos.acoes}>
         <Botao3D href="/">Ir para o início</Botao3D>
-        {/* Até o M8 não existe o catálogo; o botão leva ao curso "Comece por aqui". */}
-        <Botao3D href="/c/comece-por-aqui" variante="neutro">
+        <Botao3D href="/cursos" variante="neutro">
           Ver os cursos
         </Botao3D>
       </div>

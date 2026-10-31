@@ -11,12 +11,13 @@ import { ICONES_MENU } from './IconesMenu';
 
 const ITENS = [
   { href: '/', rotulo: 'Aprender', icone: ICONES_MENU.aprender },
+  { href: '/cursos', rotulo: 'Cursos', icone: ICONES_MENU.cursos },
   { href: '/revisar', rotulo: 'Revisar', icone: ICONES_MENU.revisar },
   { href: '/caderno', rotulo: 'Caderno', icone: ICONES_MENU.caderno },
   { href: '/sobre', rotulo: 'Sobre', icone: ICONES_MENU.sobre },
 ];
 
-/** Layout de quem já estuda: menu lateral. O item Cursos entra no M8. */
+/** Layout de quem já estuda: menu lateral. */
 export function App({ children }: { children: ComponentChildren }) {
   const { path } = useLocation();
   const vencidos = conceitosVencidos(caderno.value, hoje()).length;

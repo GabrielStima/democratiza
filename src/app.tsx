@@ -9,12 +9,12 @@ import { JanelaMeta } from './home/JanelaMeta.tsx';
 import { Sobre } from './sobre/Sobre.tsx';
 import { RotaLicao } from './licao/LicaoPagina.tsx';
 import { Caderno } from './caderno/Caderno.tsx';
+import { Cursos } from './cursos/Cursos';
 import { Revisar } from './revisar/Revisar.tsx';
 import { RotaSessao } from './revisar/Sessao.tsx';
 import { ErrosConteudo } from './conteudo/ErrosConteudo.tsx';
 import { App as LayoutApp } from './layouts/App';
 import { Site as LayoutSite } from './layouts/Site';
-import { EmConstrucao } from './paginas/EmConstrucao';
 import { Erro404 } from './paginas/Erro404';
 
 /** Telas de desenvolvimento: existem só no `npm run dev` e nas prévias. */
@@ -51,10 +51,7 @@ export function Aplicacao() {
     <LocationProvider>
       <Router>
         <Route path="/" component={Inicio} />
-        <Route
-          path="/cursos"
-          component={() => noApp(<EmConstrucao titulo="Cursos" milestone="M8" />)}
-        />
+        <Route path="/cursos" component={() => noApp(<Cursos />)} />
         <Route path="/c/:curso" component={RotaCurso} />
         <Route path="/c/:curso/:unidade/:licao" component={RotaLicao} />
         <Route path="/caderno" component={() => noApp(<Caderno />)} />

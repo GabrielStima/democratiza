@@ -82,7 +82,7 @@ test.describe('com rascunhos ligados', () => {
     await expect(page.getByRole('link', { name: 'Revisar agora' })).toBeVisible();
     await expect(page.getByRole('link', { name: /Revisar.*6/ })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Ofensiva' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Cursos', exact: true })).toHaveCount(0);
+    await expect(page.getByRole('link', { name: 'Cursos', exact: true })).toHaveCount(1);
     expect(await graves(page)).toEqual([]);
   });
 
@@ -209,7 +209,7 @@ test.describe('com rascunhos ligados', () => {
     await carregar(page, 'Em andamento');
     await page.goto('/');
     const menu = page.getByRole('navigation', { name: 'Principal' });
-    await expect(menu.locator('a svg')).toHaveCount(4);
+    await expect(menu.locator('a svg')).toHaveCount(5);
     await expect(page.getByRole('link', { name: 'democratiza' })).toBeVisible();
   });
 
