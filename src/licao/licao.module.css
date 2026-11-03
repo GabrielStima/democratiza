@@ -246,6 +246,14 @@
   min-height: 96px;
   font-size: 22px;
 }
+.enormes .caixa {
+  min-height: 96px;
+  border-radius: var(--raio-g);
+  border-bottom-width: 6px;
+  font-family: var(--fonte-titulo);
+  font-size: 34px;
+  font-weight: 800;
+}
 .cabecaPratica {
   display: flex;
   align-items: center;
@@ -399,6 +407,16 @@
 .certaResp {
   background: var(--verde-feedback);
   color: var(--verde-texto);
+}
+.linhasResposta {
+  margin: var(--espaco-1) 0 0;
+  padding-left: var(--espaco-5);
+  font-weight: 600;
+}
+.ordemCerta {
+  margin: 0 0 var(--espaco-2);
+  padding-left: var(--espaco-5);
+  font-weight: 700;
 }
 .rotuloMini {
   display: block;

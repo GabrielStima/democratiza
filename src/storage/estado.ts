@@ -35,7 +35,13 @@ export const estadoSchema = z.object({
       pratica: z
         .object({
           resultados: z.array(
-            z.object({ ex: inteiro, ok: z.boolean(), rep: z.boolean(), m: inteiro, s: inteiro }),
+            z.object({
+              ex: inteiro,
+              ok: z.boolean(),
+              rep: z.boolean(),
+              m: z.union([inteiro, z.array(inteiro)]),
+              s: inteiro,
+            }),
           ),
         })
         .optional(),

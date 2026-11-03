@@ -1,0 +1,278 @@
+/* Classificar, Ordenar e o balão do Mito ou fato (design: Prática · novos tipos). */
+.instrucao {
+  margin: 0 0 var(--espaco-4);
+  color: var(--texto-suave);
+  font-size: 15px;
+}
+
+/* Classificar */
+.classificar {
+  display: flex;
+  flex-direction: column;
+}
+.soltos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  min-height: 58px;
+  outline: none;
+}
+.soltos:focus-visible {
+  box-shadow: var(--foco);
+  border-radius: var(--raio-p);
+}
+.todas {
+  color: var(--texto-suave);
+  font-size: 14px;
+  font-weight: 700;
+}
+.item {
+  min-height: 48px;
+  padding: var(--espaco-2) var(--espaco-4);
+  border: 2px solid var(--borda);
+  border-bottom-width: 5px;
+  border-radius: 14px;
+  background: var(--fundo);
+  color: var(--texto);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+.item:focus-visible {
+  outline: none;
+  box-shadow: var(--foco);
+}
+.item:disabled {
+  cursor: default;
+}
+.itemEscolhido {
+  background: var(--azul-claro);
+  border-color: var(--azul-borda);
+  color: var(--azul-escuro);
+}
+.itemColocado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  width: 100%;
+  border-color: var(--borda-forte);
+}
+.itemCerto {
+  background: var(--verde-claro);
+  border-color: var(--verde-ipe);
+  color: var(--verde-mata);
+}
+.itemErrado {
+  background: var(--coral-claro);
+  border-color: var(--coral);
+  color: var(--coral-escuro);
+}
+.marcaItem {
+  flex: none;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.zonas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espaco-4);
+}
+.zona {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  border: 2px solid var(--verde-borda);
+  border-radius: var(--raio-g);
+  background: var(--verde-fundo-suave);
+}
+.zona0 {
+  --cor-zona: var(--verde-mata);
+}
+.zona1 {
+  --cor-zona: var(--azul-escuro);
+  border-color: var(--azul-borda-clara);
+  background: var(--azul-fundo-suave);
+}
+.zona2 {
+  --cor-zona: var(--roxo-modulo);
+  border-color: var(--roxo-claro);
+  background: var(--roxo-fundo-suave);
+}
+.zona3 {
+  --cor-zona: var(--amarelo-forca);
+  border-color: var(--amarelo-claro);
+  background: var(--amarelo-fundo);
+}
+.zonaNome {
+  margin: 0;
+  color: var(--cor-zona);
+  font-family: var(--fonte-titulo);
+  font-size: 24px;
+}
+.zonaDica {
+  margin: 0;
+  color: var(--texto-suave);
+  font-size: 13px;
+}
+.colocados {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  min-height: 100px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.colocar {
+  min-height: 44px;
+  padding: var(--espaco-2) var(--espaco-3);
+  border: 2px dashed var(--azul-anil);
+  border-radius: var(--raio-p);
+  background: var(--azul-fundo-suave);
+  color: var(--azul-escuro);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.colocar:focus-visible {
+  outline: none;
+  box-shadow: var(--foco);
+}
+
+/* Ordenar */
+.ordenar {
+  display: flex;
+  flex-direction: column;
+}
+.etapas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.etapa {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: var(--espaco-3) var(--espaco-4);
+  border: 2px solid var(--borda);
+  border-bottom-width: 5px;
+  border-radius: var(--raio-m);
+  background: var(--fundo);
+}
+.etapaCerta {
+  background: var(--verde-claro);
+  border-color: var(--verde-ipe);
+}
+.etapaErrada {
+  background: var(--coral-claro);
+  border-color: var(--coral);
+}
+.numero {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--raio-pilula);
+  background: var(--azul-claro);
+  color: var(--azul-escuro);
+  font-family: var(--fonte-titulo);
+  font-size: 18px;
+  font-weight: 800;
+}
+.etapaCerta .numero {
+  background: var(--verde-botao);
+  color: var(--fundo);
+}
+.etapaErrada .numero {
+  background: var(--coral-botao);
+  color: var(--fundo);
+}
+.etapaTexto {
+  flex: 1;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+.marcaEtapa {
+  color: var(--coral-escuro);
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.setas {
+  display: flex;
+  gap: 6px;
+}
+.seta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 2px solid var(--borda-forte);
+  border-bottom-width: 4px;
+  border-radius: var(--raio-p);
+  background: var(--fundo);
+  color: var(--azul-anil);
+  cursor: pointer;
+}
+.seta:focus-visible {
+  outline: none;
+  box-shadow: var(--foco);
+}
+.seta:disabled {
+  border-color: var(--borda);
+  color: var(--cinza-seta);
+  cursor: default;
+}
+
+/* Mito ou fato: a Capi e o balão com a frase */
+.balaoLinha {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--espaco-4);
+  margin: 0 0 var(--espaco-5);
+}
+.balao {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px 24px;
+  border: 2px solid var(--borda);
+  border-radius: 24px 24px 24px 6px;
+}
+.balaoTopo {
+  color: var(--texto-suave);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.balao h1 {
+  margin: 0;
+  color: var(--verde-noite);
+  font-family: var(--fonte-titulo);
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+/* Sem o espaço de duas colunas, as categorias empilham. */
+@media (max-width: 720px) {
+  .zonas {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

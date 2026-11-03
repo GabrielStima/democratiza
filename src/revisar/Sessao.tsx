@@ -9,7 +9,8 @@ import { conceitosDoTreino } from '../engine/telasRevisao.ts';
 import { xpDoAcerto } from '../engine/xp.ts';
 import { Licao as LayoutLicao } from '../layouts/Licao';
 import { SairDaLicao } from '../licao/Janelas';
-import { formatarTempo } from '../licao/pratica.ts';
+import { formatarTempo, type Marcacao } from '../licao/pratica.ts';
+import { corrigir, estaPronto, marcacaoInicial } from '../licao/respostas.ts';
 import { FeedbackPratica, PerguntaPratica } from '../licao/Telas';
 import { useEscSair } from '../licao/useEscSair.ts';
 import { caderno, carregado, registrarConclusaoRevisao } from '../stores/index.ts';
@@ -25,7 +26,7 @@ import estilos from './revisar.module.css';
 
 interface Resposta {
   ok: boolean;
-  escolha: number;
+  escolha: Marcacao;
   s: number;
 }
 
@@ -117,7 +118,7 @@ function Sessao({ modo, chave }: { modo: ModoSessao; chave: string }) {
   const ids = useMemo(() => conceitosDaRota(modo, chave), [modo, chave]);
   const [itens, setItens] = useState<ItemSessao[] | null>(null);
   const [respostas, setRespostas] = useState<Resposta[]>([]);
-  const [escolha, setEscolha] = useState<number | null>(null);
+  const [escolha, setEscolha] = useState<Marcacao | null>(null);
   const [verificado, setVerificado] = useState(false);
   const [fim, setFim] = useState<DadosFim | null>(null);
   const [saindo, setSaindo] = useState(false);
@@ -186,11 +187,13 @@ function Sessao({ modo, chave }: { modo: ModoSessao; chave: string }) {
   const indice = respostas.length - (verificado ? 1 : 0);
   const item = itens[indice];
   const ultima = respostas[indice];
+  const valor = item ? (escolha ?? marcacaoInicial(item.apresentacao)) : null;
+  const pronto = item !== undefined && estaPronto(item.apresentacao, valor);
 
   function verificar() {
-    if (!item || escolha === null) return;
+    if (!item || valor === null || !pronto) return;
     const s = Math.min(120, Math.round((performance.now() - inicio.current) / 1000));
-    setRespostas([...respostas, { ok: escolha === item.apresentacao.correta, escolha, s }]);
+    setRespostas([...respostas, { ok: corrigir(item.apresentacao, valor), escolha: valor, s }]);
     setVerificado(true);
   }
 
@@ -282,7 +285,7 @@ function Sessao({ modo, chave }: { modo: ModoSessao; chave: string }) {
                 <FeedbackPratica
                   ok={ultima.ok}
                   xp={modo === 'revisao' && ultima.ok ? xpDoAcerto(true) : null}
-                  textoCerto={item.apresentacao.opcoes[item.apresentacao.correta] ?? ''}
+                  ap={item.apresentacao}
                   ex={item.ex}
                   avisoRevisao={modo === 'revisao'}
                 />
@@ -298,7 +301,7 @@ function Sessao({ modo, chave }: { modo: ModoSessao; chave: string }) {
               Continuar
             </Botao3D>
           ) : (
-            <Botao3D desativado={escolha === null} onClick={verificar}>
+            <Botao3D desativado={!pronto} onClick={verificar}>
               Verificar
             </Botao3D>
           )}
@@ -313,7 +316,7 @@ function Sessao({ modo, chave }: { modo: ModoSessao; chave: string }) {
             total={itens.length}
             feitos={respostas.length}
             apresentacao={item.apresentacao}
-            escolha={escolha}
+            escolha={valor}
             aoEscolher={setEscolha}
             verificado={verificado}
             podeRever={false}

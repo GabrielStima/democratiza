@@ -9,8 +9,8 @@ export interface Resultado {
   ok: boolean;
   /** true quando é a segunda vez que a pergunta aparece (depois de um erro). */
   rep: boolean;
-  /** Posição da opção marcada. */
-  m: number;
+  /** Resposta dada: a opção marcada ou, em classificar e ordenar, a lista (ver `Marcacao`). */
+  m: Marcacao;
   /** Segundos gastos na pergunta (no máximo 120). */
   s: number;
 }
@@ -72,21 +72,54 @@ export function estadoDaPratica(indices: number[], resultados: Resultado[]): Est
   };
 }
 
-export interface Apresentacao {
+/**
+ * O que a pessoa marcou. Um número nos exercícios de escolha única (posição da opção);
+ * uma lista em `classificar` (categoria de cada item, na ordem do JSON) e em `ordenar`
+ * (a etapa que ficou em cada posição, contando as etapas na ordem certa do JSON).
+ */
+export type Marcacao = number | number[];
+
+interface ApresentacaoBase {
   /** Rótulo curto acima da pergunta. */
   rotulo: string;
   enunciado: string;
-  opcoes: string[];
-  correta: number;
-  /** Duas opções grandes lado a lado (verdadeiro ou falso). */
-  grandes: boolean;
 }
 
-/** Como um exercício aparece na Prática; null para os tipos que ainda não têm tela. */
+/** Escolha única: múltipla escolha, verdadeiro ou falso, quem resolve e mito ou fato. */
+export interface ApresentacaoOpcoes extends ApresentacaoBase {
+  forma: 'opcoes';
+  opcoes: string[];
+  correta: number;
+  /** Duas opções grandes lado a lado (verdadeiro ou falso, mito ou fato). */
+  grandes: boolean;
+  /** Mostra o enunciado num balão da Capi, com este texto no alto (mito ou fato). */
+  balao?: string;
+  /** Títulos do rodapé, quando não são "Mandou bem!" e "Resposta certa: …". */
+  tituloCerto?: string;
+  tituloErrado?: string;
+}
+
+export interface ApresentacaoClassificar extends ApresentacaoBase {
+  forma: 'classificar';
+  categorias: { nome: string; dica: string }[];
+  /** `categoria` é a posição da categoria certa em `categorias`. */
+  itens: { texto: string; categoria: number }[];
+}
+
+export interface ApresentacaoOrdenar extends ApresentacaoBase {
+  forma: 'ordenar';
+  /** Na ordem certa; a tela as mostra embaralhadas. */
+  etapas: string[];
+}
+
+export type Apresentacao = ApresentacaoOpcoes | ApresentacaoClassificar | ApresentacaoOrdenar;
+
+/** Como um exercício aparece na Prática; null para o tipo que ainda não tem tela (`correntes`, M11). */
 export function apresentar(ex: Exercicio): Apresentacao | null {
   switch (ex.tipo) {
     case 'multipla_escolha':
       return {
+        forma: 'opcoes',
         rotulo: ex.titulo_curto ?? 'Pergunta',
         enunciado: ex.pergunta,
         opcoes: ex.opcoes,
@@ -95,6 +128,7 @@ export function apresentar(ex: Exercicio): Apresentacao | null {
       };
     case 'verdadeiro_falso':
       return {
+        forma: 'opcoes',
         rotulo: ex.titulo_curto ?? 'Verdadeiro ou falso',
         enunciado: ex.afirmacao,
         opcoes: ['Verdadeiro', 'Falso'],
@@ -103,18 +137,51 @@ export function apresentar(ex: Exercicio): Apresentacao | null {
       };
     case 'quem_resolve':
       return {
+        forma: 'opcoes',
         rotulo: ex.titulo_curto ?? 'Quem resolve?',
         enunciado: ex.situacao,
         opcoes: ex.opcoes,
         correta: ex.correta,
         grandes: false,
       };
+    case 'mito_ou_fato': {
+      const certa = ex.correta === 'mito' ? 'é mito' : 'é fato';
+      return {
+        forma: 'opcoes',
+        rotulo: ex.titulo_curto ?? 'Mito ou fato?',
+        enunciado: `“${ex.frase}”`,
+        opcoes: ['Mito', 'Fato'],
+        correta: ex.correta === 'mito' ? 0 : 1,
+        grandes: true,
+        balao: 'Uma frase que circula por aí',
+        tituloCerto: `Isso mesmo, ${certa}!`,
+        tituloErrado: `Era ${ex.correta}`,
+      };
+    }
+    case 'classificar':
+      return {
+        forma: 'classificar',
+        rotulo: ex.titulo_curto ?? 'Classificar',
+        enunciado: ex.pergunta,
+        categorias: ex.categorias,
+        itens: ex.itens.map((i) => ({
+          texto: i.texto,
+          categoria: ex.categorias.findIndex((c) => c.nome === i.categoria),
+        })),
+      };
+    case 'ordenar':
+      return {
+        forma: 'ordenar',
+        rotulo: ex.titulo_curto ?? 'Ordenar',
+        enunciado: ex.pergunta,
+        etapas: ex.etapas,
+      };
     default:
       return null;
   }
 }
 
-/** Posições dos exercícios que têm tela hoje (os outros tipos entram nos M9 e M11). */
+/** Posições dos exercícios que têm tela hoje (só o `correntes` fica de fora, até o M11). */
 export function indicesSuportados(licao: Licao): number[] {
   return licao.pratica.flatMap((ex, i) => (apresentar(ex) ? [i] : []));
 }

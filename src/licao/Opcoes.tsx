@@ -22,6 +22,8 @@ interface Props {
   estados?: Partial<Record<number, EstadoOpcao>>;
   /** Duas opções grandes lado a lado (verdadeiro ou falso). */
   grandes?: boolean;
+  /** Ainda maiores, com a fonte de título (mito ou fato). */
+  enormes?: boolean;
 }
 
 /** Escolha única com botões de rádio de verdade: setas, Espaço e leitor de tela funcionam. */
@@ -34,9 +36,12 @@ export function Opcoes({
   travado,
   estados = {},
   grandes = false,
+  enormes = false,
 }: Props) {
   return (
-    <fieldset class={grandes ? `${estilos.opcoes} ${estilos.grandes}` : estilos.opcoes}>
+    <fieldset
+      class={`${estilos.opcoes} ${grandes ? estilos.grandes : ''} ${enormes ? estilos.enormes : ''}`}
+    >
       <legend class="so-leitor">{legenda}</legend>
       {opcoes.map((texto, i) => {
         const estado = estados[i];

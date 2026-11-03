@@ -3,7 +3,7 @@ import { Botao3D } from '../componentes/Botao3D';
 import { Capi } from '../componentes/Capi';
 import { catalogo, carregarLicao } from '../conteudo/index.ts';
 import { listarLicoes } from '../engine/progresso.ts';
-import { apresentar, type Apresentacao } from '../licao/pratica.ts';
+import { apresentar, type ApresentacaoOpcoes } from '../licao/pratica.ts';
 import { PRINCIPIOS } from '../textos/principios.ts';
 import { abrirMeta } from '../stores/ui.ts';
 import estilos from './home.module.css';
@@ -114,7 +114,7 @@ const GAMIFICACAO = [
 ] as const;
 
 interface Pergunta {
-  apresentacao: Apresentacao;
+  apresentacao: ApresentacaoOpcoes;
   explicacao: string;
 }
 
@@ -129,7 +129,7 @@ function usePerguntaRapida(): Pergunta | null {
       .then((licao) => {
         for (const ex of licao?.pratica ?? []) {
           const apresentacao = apresentar(ex);
-          if (apresentacao && ativo) {
+          if (apresentacao?.forma === 'opcoes' && !apresentacao.balao && ativo) {
             setPergunta({ apresentacao, explicacao: ex.explicacao });
             return;
           }

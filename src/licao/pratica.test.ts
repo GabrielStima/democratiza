@@ -99,9 +99,67 @@ describe('apresentar', () => {
     };
     expect(apresentar(m)?.rotulo).toBe('Curto');
   });
-  it('tipos sem tela ainda devolvem null', () => {
-    const o: Exercicio = { tipo: 'ordenar', ...base, pergunta: 'p', etapas: ['a', 'b', 'c'] };
+  it('só o tipo correntes (M11) ainda não tem tela', () => {
+    const o: Exercicio = {
+      tipo: 'correntes',
+      ...base,
+      argumento: 'a',
+      leituras: [
+        { nome: 'x', resumo: 'r', fonte: base.fonte },
+        { nome: 'y', resumo: 'r', fonte: base.fonte },
+      ],
+      correta: 0,
+    };
     expect(apresentar(o)).toBeNull();
+  });
+  it('mito ou fato vira duas opções grandes com os títulos do rodapé', () => {
+    const o: Exercicio = { tipo: 'mito_ou_fato', ...base, frase: 'Uma frase', correta: 'mito' };
+    expect(apresentar(o)).toMatchObject({
+      forma: 'opcoes',
+      opcoes: ['Mito', 'Fato'],
+      correta: 0,
+      grandes: true,
+      enunciado: '“Uma frase”',
+      tituloCerto: 'Isso mesmo, é mito!',
+      tituloErrado: 'Era mito',
+    });
+    const f = apresentar({ ...o, correta: 'fato' });
+    expect(f).toMatchObject({
+      correta: 1,
+      tituloCerto: 'Isso mesmo, é fato!',
+      tituloErrado: 'Era fato',
+    });
+  });
+  it('classificar guarda a categoria certa de cada item como posição', () => {
+    const o: Exercicio = {
+      tipo: 'classificar',
+      ...base,
+      pergunta: 'p',
+      categorias: [
+        { nome: 'A', dica: 'a' },
+        { nome: 'B', dica: 'b' },
+      ],
+      itens: [
+        { texto: 'um', categoria: 'B' },
+        { texto: 'dois', categoria: 'A' },
+      ],
+    };
+    expect(apresentar(o)).toMatchObject({
+      forma: 'classificar',
+      rotulo: 'Classificar',
+      itens: [
+        { texto: 'um', categoria: 1 },
+        { texto: 'dois', categoria: 0 },
+      ],
+    });
+  });
+  it('ordenar mantém as etapas na ordem certa', () => {
+    const o: Exercicio = { tipo: 'ordenar', ...base, pergunta: 'p', etapas: ['a', 'b', 'c'] };
+    expect(apresentar(o)).toMatchObject({
+      forma: 'ordenar',
+      rotulo: 'Ordenar',
+      etapas: ['a', 'b', 'c'],
+    });
   });
 });
 

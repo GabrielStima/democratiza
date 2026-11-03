@@ -15,8 +15,10 @@ import {
   estadoDaPratica,
   formatarTempo,
   indicesSuportados,
+  type Marcacao,
   type Resultado,
 } from './pratica.ts';
+import { corrigir, estaPronto, marcacaoInicial } from './respostas.ts';
 import {
   FeedbackPratica,
   LicaoConcluida,
@@ -68,7 +70,7 @@ export function PraticaLicao({ id, licao, posicao, salvo, palpite, aoVoltar }: P
 
   const [resultados, setResultados] = useState<Resultado[]>(() => salvo?.pratica?.resultados ?? []);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
-  const [escolha, setEscolha] = useState<number | null>(null);
+  const [escolha, setEscolha] = useState<Marcacao | null>(null);
   const [conclusao, setConclusao] = useState<{
     dados: DadosConcluida;
     erros: ErroParaRever[];
@@ -85,6 +87,8 @@ export function PraticaLicao({ id, licao, posicao, salvo, palpite, aoVoltar }: P
   const atual = feedback ? { ex: feedback.ex, rep: feedback.rep } : ep.atual;
   const exercicio = atual ? licao.pratica[atual.ex] : undefined;
   const apresentacao = exercicio ? apresentar(exercicio) : null;
+  const valor = apresentacao ? (escolha ?? marcacaoInicial(apresentacao)) : null;
+  const pronto = apresentacao !== null && estaPronto(apresentacao, valor);
 
   function sair() {
     route('/');
@@ -155,10 +159,10 @@ export function PraticaLicao({ id, licao, posicao, salvo, palpite, aoVoltar }: P
   }, [feedback === null, vendoErros, conclusao === null]);
 
   function verificar() {
-    if (!atual || !apresentacao || escolha === null) return;
-    const ok = escolha === apresentacao.correta;
+    if (!atual || !apresentacao || valor === null || !pronto) return;
+    const ok = corrigir(apresentacao, valor);
     const s = Math.min(120, Math.round((performance.now() - inicio.current) / 1000));
-    const novos = [...resultados, { ex: atual.ex, ok, rep: atual.rep, m: escolha, s }];
+    const novos = [...resultados, { ex: atual.ex, ok, rep: atual.rep, m: valor, s }];
     setResultados(novos);
     setFeedback({ ex: atual.ex, rep: atual.rep, ok, xp: ok ? xpDoAcerto(!atual.rep) : 0 });
     // Grava na hora: a resposta já valeu, recarregar não dá uma segunda chance.
@@ -276,7 +280,7 @@ export function PraticaLicao({ id, licao, posicao, salvo, palpite, aoVoltar }: P
                 <FeedbackPratica
                   ok={feedback.ok}
                   xp={refeita ? null : feedback.xp}
-                  textoCerto={apresentacao.opcoes[apresentacao.correta] ?? ''}
+                  ap={apresentacao}
                   ex={exercicio}
                 />
               ),
@@ -291,7 +295,7 @@ export function PraticaLicao({ id, licao, posicao, salvo, palpite, aoVoltar }: P
               Continuar
             </Botao3D>
           ) : (
-            <Botao3D desativado={escolha === null} onClick={verificar}>
+            <Botao3D desativado={!pronto} onClick={verificar}>
               Verificar
             </Botao3D>
           )}
@@ -306,7 +310,7 @@ export function PraticaLicao({ id, licao, posicao, salvo, palpite, aoVoltar }: P
             total={ep.fila.length}
             feitos={resultados.length}
             apresentacao={apresentacao}
-            escolha={escolha}
+            escolha={valor}
             aoEscolher={setEscolha}
             verificado={noFeedback}
             podeRever={cards.length > 0}
