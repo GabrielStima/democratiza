@@ -21,4 +21,20 @@ describe('avisos', () => {
     dispensarAviso(primeiro!.id);
     expect(avisos.value).toHaveLength(0);
   });
+
+  it('com duração 0 fica até ser dispensado e guarda o botão', () => {
+    const aoClicar = vi.fn();
+    mostrarAviso('Nova versão disponível.', 0, { rotulo: 'Atualizar', aoClicar });
+    vi.advanceTimersByTime(60_000);
+    expect(avisos.value).toHaveLength(1);
+    expect(avisos.value[0]?.acao?.rotulo).toBe('Atualizar');
+    avisos.value[0]?.acao?.aoClicar();
+    expect(aoClicar).toHaveBeenCalledOnce();
+  });
+
+  it('não repete um aviso que já está na tela', () => {
+    mostrarAviso('Oi');
+    mostrarAviso('Oi');
+    expect(avisos.value).toHaveLength(1);
+  });
 });

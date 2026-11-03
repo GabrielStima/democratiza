@@ -8,6 +8,18 @@ export function Avisos() {
       {avisos.value.map((a) => (
         <div key={a.id} class={estilos.aviso}>
           <span>{a.texto}</span>
+          {a.acao && (
+            <button
+              type="button"
+              class={estilos.acao}
+              onClick={() => {
+                a.acao?.aoClicar();
+                dispensarAviso(a.id);
+              }}
+            >
+              {a.acao.rotulo}
+            </button>
+          )}
           <button
             type="button"
             class={estilos.fechar}
