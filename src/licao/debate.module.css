@@ -1,0 +1,69 @@
+.selo {
+  display: inline-block;
+  margin-bottom: var(--espaco-3);
+  padding: 4px 12px;
+  background: var(--roxo-claro);
+  border-radius: var(--raio-pilula);
+  color: var(--roxo-modulo);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.argumento {
+  margin: 0 0 var(--espaco-5);
+  padding: var(--espaco-4) var(--espaco-5);
+  background: var(--roxo-fundo-suave);
+  border-left: 5px solid var(--roxo-modulo);
+  border-radius: 0 16px 16px 0;
+}
+.argumento p {
+  margin: 0;
+  color: var(--verde-noite);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.quadro {
+  margin-top: var(--espaco-5);
+}
+.quadroTitulo {
+  margin: 0 0 var(--espaco-3);
+  font-size: 22px;
+}
+.leituras {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--espaco-4);
+  margin: 0 0 var(--espaco-4);
+  padding: 0;
+  list-style: none;
+}
+.leitura {
+  padding: var(--espaco-4);
+  border: 2px solid var(--borda);
+  border-radius: 16px;
+}
+.leitura h3 {
+  margin: 0 0 var(--espaco-2);
+  color: var(--roxo-modulo);
+  font-size: 18px;
+}
+.leitura p {
+  margin: 0 0 var(--espaco-2);
+  line-height: 1.55;
+}
+.referencia {
+  color: var(--texto-suave);
+  font-size: 14px;
+}
+.aviso {
+  margin: 0;
+  padding: var(--espaco-3) var(--espaco-4);
+  background: var(--roxo-claro);
+  border-radius: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+}

@@ -129,7 +129,12 @@ function usePerguntaRapida(): Pergunta | null {
       .then((licao) => {
         for (const ex of licao?.pratica ?? []) {
           const apresentacao = apresentar(ex);
-          if (apresentacao?.forma === 'opcoes' && !apresentacao.balao && ativo) {
+          if (
+            apresentacao?.forma === 'opcoes' &&
+            !apresentacao.balao &&
+            !apresentacao.debate &&
+            ativo
+          ) {
             setPergunta({ apresentacao, explicacao: ex.explicacao });
             return;
           }

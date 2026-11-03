@@ -97,6 +97,19 @@ export interface ApresentacaoOpcoes extends ApresentacaoBase {
   /** Títulos do rodapé, quando não são "Mandou bem!" e "Resposta certa: …". */
   tituloCerto?: string;
   tituloErrado?: string;
+  /** Debate entre correntes (só em Módulos): o argumento e as leituras comparadas. */
+  debate?: Debate;
+}
+
+export interface Leitura {
+  nome: string;
+  resumo: string;
+  fonte: { descricao: string; link?: string | undefined };
+}
+
+export interface Debate {
+  argumento: string;
+  leituras: Leitura[];
 }
 
 export interface ApresentacaoClassificar extends ApresentacaoBase {
@@ -114,7 +127,10 @@ export interface ApresentacaoOrdenar extends ApresentacaoBase {
 
 export type Apresentacao = ApresentacaoOpcoes | ApresentacaoClassificar | ApresentacaoOrdenar;
 
-/** Como um exercício aparece na Prática; null para o tipo que ainda não tem tela (`correntes`, M11). */
+/** Pergunta fixa do debate entre correntes: associa o argumento a quem o defende. */
+export const PERGUNTA_DO_DEBATE = 'De qual leitura vem este argumento?';
+
+/** Como um exercício aparece na Prática; null se o tipo não tiver tela. */
 export function apresentar(ex: Exercicio): Apresentacao | null {
   switch (ex.tipo) {
     case 'multipla_escolha':
@@ -158,6 +174,17 @@ export function apresentar(ex: Exercicio): Apresentacao | null {
         tituloErrado: `Era ${ex.correta}`,
       };
     }
+    case 'correntes':
+      return {
+        forma: 'opcoes',
+        rotulo: ex.titulo_curto ?? 'Debate entre correntes',
+        // A pergunta é sempre "quem defende o quê", nunca "qual leitura é a melhor".
+        enunciado: PERGUNTA_DO_DEBATE,
+        opcoes: ex.leituras.map((l) => l.nome),
+        correta: ex.correta,
+        grandes: false,
+        debate: { argumento: ex.argumento, leituras: ex.leituras },
+      };
     case 'classificar':
       return {
         forma: 'classificar',
@@ -181,7 +208,7 @@ export function apresentar(ex: Exercicio): Apresentacao | null {
   }
 }
 
-/** Posições dos exercícios que têm tela hoje (só o `correntes` fica de fora, até o M11). */
+/** Posições dos exercícios que têm tela. */
 export function indicesSuportados(licao: Licao): number[] {
   return licao.pratica.flatMap((ex, i) => (apresentar(ex) ? [i] : []));
 }

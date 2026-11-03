@@ -2,6 +2,7 @@ import { BarraProgresso } from '../componentes/BarraProgresso';
 import { Capi } from '../componentes/Capi';
 import type { Exercicio } from '../content-schema/exercicio.ts';
 import estilos from './licao.module.css';
+import { ArgumentoDoDebate, QuadroDasLeituras, SeloDebate } from './Debate';
 import { Classificar, Ordenar } from './NovosTipos';
 import { Opcoes } from './Opcoes';
 import type { Apresentacao, Marcacao } from './pratica.ts';
@@ -56,12 +57,16 @@ export function PerguntaPratica({
           </div>
         </div>
       ) : (
-        <h1 class={estilos.titulo}>{ap.enunciado}</h1>
+        <>
+          {ap.forma === 'opcoes' && ap.debate && <SeloDebate />}
+          <h1 class={estilos.titulo}>{ap.enunciado}</h1>
+        </>
       )}
+      {ap.forma === 'opcoes' && ap.debate && <ArgumentoDoDebate texto={ap.debate.argumento} />}
       {ap.forma === 'opcoes' && (
         <Opcoes
           nome="pratica"
-          legenda={ap.enunciado}
+          legenda={ap.debate ? `${ap.enunciado} “${ap.debate.argumento}”` : ap.enunciado}
           opcoes={ap.opcoes}
           valor={typeof escolha === 'number' ? escolha : null}
           aoEscolher={aoEscolher}
@@ -71,6 +76,7 @@ export function PerguntaPratica({
           enormes={ap.balao !== undefined}
         />
       )}
+      {ap.forma === 'opcoes' && ap.debate && verificado && <QuadroDasLeituras debate={ap.debate} />}
       {ap.forma === 'classificar' && Array.isArray(escolha) && (
         <Classificar ap={ap} valor={escolha} aoMudar={aoEscolher} travado={verificado} />
       )}
@@ -265,6 +271,9 @@ export function ReverErros({ erros }: { erros: ErroParaRever[] }) {
               {e.apresentacao.rotulo} · Pergunta {e.numero} de {e.total}
             </p>
             <h2>{e.apresentacao.enunciado}</h2>
+            {e.apresentacao.forma === 'opcoes' && e.apresentacao.debate && (
+              <ArgumentoDoDebate texto={e.apresentacao.debate.argumento} />
+            )}
             <div class={estilos.marcou}>
               <span class={estilos.rotuloMini}>Você marcou</span>
               <Linhas linhas={descreverMarcacao(e.apresentacao, e.marcou)} />
