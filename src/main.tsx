@@ -5,6 +5,7 @@ import '@fontsource/baloo-2/latin-800.css';
 import '@fontsource-variable/nunito/wght.css';
 import '../styles/global.css';
 import { Aplicacao } from './app';
+import { registrarServiceWorker } from './pwa/registrar.ts';
 import { iniciarStores } from './stores/index.ts';
 
 async function iniciar() {
@@ -15,6 +16,7 @@ async function iniciar() {
   await iniciarStores();
   const raiz = document.getElementById('app');
   if (raiz) render(<Aplicacao />, raiz);
+  registrarServiceWorker();
 }
 
 void iniciar();

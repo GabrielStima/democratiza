@@ -33,20 +33,35 @@ export function RotaLicao() {
   const { params } = useRoute();
   const { curso = '', unidade = '', licao = '' } = params;
   const id = `${curso}/${unidade}/${licao}`;
-  const [dados, setDados] = useState<Licao | null | undefined>(undefined);
+  const [dados, setDados] = useState<Licao | null | undefined | 'falhou'>(undefined);
 
   useEffect(() => {
     let ativo = true;
     setDados(undefined);
     void carregarLicao(curso, unidade, licao)
       .then((l) => ativo && setDados(l))
-      .catch(() => ativo && setDados(null));
+      .catch(() => ativo && setDados('falhou'));
     return () => {
       ativo = false;
     };
   }, [id]);
 
   const lugar = localizar(curso, unidade, licao);
+  if (dados === 'falhou') {
+    return (
+      <LayoutSite>
+        <section role="alert" style={{ padding: 'var(--espaco-6)', textAlign: 'center' }}>
+          <h1>Não foi possível abrir a lição</h1>
+          <p>
+            Sem internet, só abrem as lições que você já abriu antes neste aparelho. Conecte-se e
+            tente de novo. Seu progresso continua salvo.
+          </p>
+          {/* O navegador não repete um import dinâmico que falhou; só recarregar a página tenta de novo. */}
+          <Botao3D onClick={() => window.location.reload()}>Tentar de novo</Botao3D>
+        </section>
+      </LayoutSite>
+    );
+  }
   if (dados === null || !lugar) {
     return (
       <LayoutSite>
