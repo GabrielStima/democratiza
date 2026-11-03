@@ -44,3 +44,6 @@ blob-report/
 
 # Saídas geradas pelo Claude fora do repositório
 Claude outputs/
+
+# os ícones do PWA não são o "Icon\r" do macOS
+!public/icons/
