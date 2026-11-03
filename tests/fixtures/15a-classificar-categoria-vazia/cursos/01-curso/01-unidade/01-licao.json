@@ -1,0 +1,69 @@
+{
+  "titulo": "Lição",
+  "status": "rascunho",
+  "ensina": [
+    "alfa"
+  ],
+  "situacao": {
+    "texto": "s",
+    "palpites": [
+      "1",
+      "2",
+      "3"
+    ]
+  },
+  "explicacao": [
+    {
+      "titulo": "t",
+      "texto": "texto",
+      "glossario": {},
+      "fonte": {
+        "descricao": "Fixture de teste, fonte de exemplo, p. 1"
+      },
+      "checagem": {
+        "tipo": "multipla_escolha",
+        "pergunta": "p?",
+        "opcoes": [
+          "a",
+          "b",
+          "c"
+        ],
+        "correta": 0,
+        "reexplicacao": "r"
+      }
+    }
+  ],
+  "pratica": [
+    {
+      "tipo": "classificar",
+      "pergunta": "p",
+      "categorias": [
+        {
+          "nome": "A",
+          "dica": "a"
+        },
+        {
+          "nome": "B",
+          "dica": "b"
+        }
+      ],
+      "itens": [
+        {
+          "texto": "um",
+          "categoria": "A"
+        },
+        {
+          "texto": "dois",
+          "categoria": "A"
+        }
+      ],
+      "conceitos": [
+        "alfa"
+      ],
+      "explicacao": "x",
+      "fonte": {
+        "descricao": "Fixture de teste, fonte de exemplo, p. 1"
+      }
+    }
+  ]
+}

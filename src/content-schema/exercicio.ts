@@ -81,6 +81,13 @@ export const classificarSchema = z
   })
   .superRefine((o, ctx) => {
     const nomes = new Set(o.categorias.map((c) => c.nome));
+    if (nomes.size !== o.categorias.length) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['categorias'],
+        message: 'duas categorias têm o mesmo nome',
+      });
+    }
     o.itens.forEach((item, i) => {
       if (!nomes.has(item.categoria)) {
         ctx.addIssue({
@@ -90,14 +97,40 @@ export const classificarSchema = z
         });
       }
     });
+    o.categorias.forEach((c, i) => {
+      if (!o.itens.some((item) => item.categoria === c.nome)) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['categorias', i],
+          message: `nenhum item pertence à categoria "${c.nome}"`,
+        });
+      }
+    });
+    if (new Set(o.itens.map((item) => item.texto)).size !== o.itens.length) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['itens'],
+        message: 'dois itens têm o mesmo texto',
+      });
+    }
   });
 
-export const ordenarSchema = z.strictObject({
-  tipo: z.literal('ordenar'),
-  ...base,
-  pergunta: texto,
-  etapas: z.array(texto).min(3, 'use ao menos 3 etapas, escritas na ordem certa'),
-});
+export const ordenarSchema = z
+  .strictObject({
+    tipo: z.literal('ordenar'),
+    ...base,
+    pergunta: texto,
+    etapas: z.array(texto).min(3, 'use ao menos 3 etapas, escritas na ordem certa'),
+  })
+  .superRefine((o, ctx) => {
+    if (new Set(o.etapas).size !== o.etapas.length) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['etapas'],
+        message: 'duas etapas têm o mesmo texto',
+      });
+    }
+  });
 
 export const mitoOuFatoSchema = z.strictObject({
   tipo: z.literal('mito_ou_fato'),

@@ -88,6 +88,22 @@ describe('regras do build', () => {
     expect(e[0]?.campo).toBe('pratica[0].tipo');
   });
 
+  it('classificar: toda categoria recebe ao menos um item', () => {
+    const e = achar('15a-classificar-categoria-vazia', 'nenhum item pertence à categoria "B"');
+    expect(e[0]?.campo).toBe('pratica[0].categorias[1]');
+  });
+
+  it('classificar: itens e categorias não se repetem', () => {
+    expect(achar('15b-classificar-item-repetido', 'dois itens têm o mesmo texto')).toHaveLength(1);
+    expect(
+      achar('15c-classificar-categoria-repetida', 'duas categorias têm o mesmo nome'),
+    ).toHaveLength(1);
+  });
+
+  it('ordenar: as etapas não se repetem', () => {
+    expect(achar('16-ordenar-etapa-repetida', 'duas etapas têm o mesmo texto')).toHaveLength(1);
+  });
+
   it('7. id repetido na mesma unidade', () => {
     expect(achar('07a-id-repetido', 'já existe outra lição com o id "licao"')).toHaveLength(1);
   });
