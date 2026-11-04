@@ -4,8 +4,17 @@ import { BarraProgresso } from '../componentes/BarraProgresso';
 import { Cartao } from '../componentes/Cartao';
 import { Selo } from '../componentes/Selo';
 import { catalogo } from '../conteudo/index.ts';
-import { dadosDoCurso, type LicaoDoCurso, type UnidadeDoCurso } from '../engine/telas.ts';
+import {
+  dadosDoCurso,
+  type DadosCurso,
+  type LicaoDoCurso,
+  type UnidadeDoCurso,
+} from '../engine/telas.ts';
 import { App as LayoutApp } from '../layouts/App';
+import { ehMobile } from '../layouts/mobile.ts';
+import { Capi } from '../componentes/Capi';
+import { BannerUnidade, Trilha } from '../trilha/Trilha';
+import { nosDaUnidade } from '../trilha/nos.ts';
 import { Site as LayoutSite } from '../layouts/Site';
 import { Erro404 } from '../paginas/Erro404';
 import { caderno, estado } from '../stores/index.ts';
@@ -86,11 +95,129 @@ function Unidade({ u }: { u: UnidadeDoCurso }) {
   );
 }
 
+function Bloqueio({ d }: { d: DadosCurso }) {
+  return (
+    <div class={estilos.bloqueio} role="note">
+      <p>
+        <strong>Este curso ainda está bloqueado. Faltam estes conceitos:</strong>
+      </p>
+      <ul>
+        {d.faltantes.map((f) => (
+          <li key={f.id}>
+            {f.nome}
+            {f.cursoTitulo && <span class={estilos.mudo}> · aprenda em {f.cursoTitulo}</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/** "Conceitos do curso" e "O que este curso libera": ao lado no desktop, embaixo no celular. */
+function Conceitos({ d }: { d: DadosCurso }) {
+  return (
+    <>
+      <Cartao>
+        <h2 class={estilos.cartaoH}>Conceitos do curso</h2>
+        <p class={estilos.grande}>
+          {d.conceitos.aprendidos} de {d.conceitos.total}
+        </p>
+        {d.conceitos.nomes.length > 0 && (
+          <ul class={estilos.etiquetasLista}>
+            {d.conceitos.nomes.map((n) => (
+              <li key={n}>{n}</li>
+            ))}
+            {d.conceitos.mais > 0 && <li>+{d.conceitos.mais}</li>}
+          </ul>
+        )}
+        <a href="/caderno">Ver no caderno</a>
+      </Cartao>
+      {d.libera.length > 0 && (
+        <Cartao>
+          <h2 class={estilos.cartaoH}>O que este curso libera</h2>
+          <ul class={estilos.libera}>
+            {d.libera.map((c) => (
+              <li key={c.id}>
+                <a href={`/c/${c.id}`}>{c.titulo}</a>
+              </li>
+            ))}
+          </ul>
+        </Cartao>
+      )}
+    </>
+  );
+}
+
 function Pagina({ id }: { id: string }) {
   const curso = catalogo.cursos.find((c) => c.id === id);
   if (!curso) return <Erro404 />;
   const d = dadosDoCurso(curso, estado.value, caderno.value, catalogo);
   const visitante = estado.value === null;
+  if (ehMobile.value) {
+    let inicio = 0;
+    return (
+      <div class={estilos.mobile}>
+        <nav aria-label="Caminho" class={estilos.caminho}>
+          <a href="/cursos">Cursos</a> / <span aria-current="page">{curso.titulo}</span>
+        </nav>
+        <header class={`${estilos.cabecalho} ${estilos.cabecalhoMobile}`}>
+          <div class={estilos.cabecaLinha}>
+            <div class={estilos.cabecaTexto}>
+              <Selo nivel={curso.nivel} />
+              <h1>{curso.titulo}</h1>
+            </div>
+            <Capi tamanho={72} />
+          </div>
+          <p>{curso.descricao}</p>
+          <div class={estilos.barraLinha}>
+            <BarraProgresso
+              valor={d.progresso.percentual}
+              rotulo={`Progresso em ${curso.titulo}`}
+            />
+            <span class={estilos.mudo}>
+              {d.progresso.feitas} de {d.progresso.total} lições
+            </span>
+          </div>
+          {d.continuar &&
+            (visitante ? (
+              <Botao3D larga onClick={() => abrirMeta('primeira')}>
+                {d.continuar.rotulo}
+              </Botao3D>
+            ) : (
+              <Botao3D larga href={d.continuar.destino}>
+                {d.continuar.rotulo}
+              </Botao3D>
+            ))}
+          {!d.liberado && <Bloqueio d={d} />}
+        </header>
+        <section aria-label="Unidades" class={estilos.unidadesMobile}>
+          {d.unidades.map((u) => {
+            const nos = u.status === 'atual' ? nosDaUnidade(u) : [];
+            const comeco = inicio;
+            inicio += nos.length;
+            return (
+              <div key={u.id} class={estilos.unidadeMobile}>
+                <BannerUnidade
+                  numero={u.numero}
+                  titulo={u.titulo}
+                  estado={u.status}
+                  aviso={u.aviso}
+                />
+                {nos.length > 0 && (
+                  <Trilha
+                    nos={nos}
+                    inicio={comeco}
+                    aoAbrirAtual={visitante ? () => abrirMeta('primeira') : undefined}
+                  />
+                )}
+              </div>
+            );
+          })}
+        </section>
+        <Conceitos d={d} />
+      </div>
+    );
+  }
   return (
     <div class={estilos.pagina}>
       <div class={estilos.principal}>
@@ -111,23 +238,7 @@ function Pagina({ id }: { id: string }) {
             ) : (
               <Botao3D href={d.continuar.destino}>{d.continuar.rotulo}</Botao3D>
             ))}
-          {!d.liberado && (
-            <div class={estilos.bloqueio} role="note">
-              <p>
-                <strong>Este curso ainda está bloqueado. Faltam estes conceitos:</strong>
-              </p>
-              <ul>
-                {d.faltantes.map((f) => (
-                  <li key={f.id}>
-                    {f.nome}
-                    {f.cursoTitulo && (
-                      <span class={estilos.mudo}> · aprenda em {f.cursoTitulo}</span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          {!d.liberado && <Bloqueio d={d} />}
         </header>
         <section aria-labelledby="h-unidades">
           <h2 id="h-unidades" class={estilos.secaoH}>
@@ -139,33 +250,7 @@ function Pagina({ id }: { id: string }) {
         </section>
       </div>
       <aside class={estilos.lateral}>
-        <Cartao>
-          <h2 class={estilos.cartaoH}>Conceitos do curso</h2>
-          <p class={estilos.grande}>
-            {d.conceitos.aprendidos} de {d.conceitos.total}
-          </p>
-          {d.conceitos.nomes.length > 0 && (
-            <ul class={estilos.etiquetasLista}>
-              {d.conceitos.nomes.map((n) => (
-                <li key={n}>{n}</li>
-              ))}
-              {d.conceitos.mais > 0 && <li>+{d.conceitos.mais}</li>}
-            </ul>
-          )}
-          <a href="/caderno">Ver no caderno</a>
-        </Cartao>
-        {d.libera.length > 0 && (
-          <Cartao>
-            <h2 class={estilos.cartaoH}>O que este curso libera</h2>
-            <ul class={estilos.libera}>
-              {d.libera.map((c) => (
-                <li key={c.id}>
-                  <a href={`/c/${c.id}`}>{c.titulo}</a>
-                </li>
-              ))}
-            </ul>
-          </Cartao>
-        )}
+        <Conceitos d={d} />
       </aside>
     </div>
   );

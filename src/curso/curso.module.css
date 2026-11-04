@@ -199,3 +199,61 @@ a.licao:hover {
   margin: 0;
   padding-left: var(--espaco-5);
 }
+
+/* Celular: abertura do curso, banners de unidade com a trilha, cartões embaixo. */
+.mobile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  min-width: 0;
+}
+.mobile .caminho {
+  margin-bottom: 0;
+}
+.mobile .caminho a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--toque-minimo);
+}
+.cabecalhoMobile {
+  align-items: stretch;
+  margin-bottom: 0;
+  padding: var(--espaco-5);
+  background: var(--fundo-faixa);
+  border-radius: var(--raio-xg);
+}
+.cabecalhoMobile h1 {
+  font-size: 30px;
+}
+.cabecaLinha {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+}
+.cabecaTexto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+  min-width: 0;
+}
+.barraLinha {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+.unidadesMobile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+.unidadeMobile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+.barraLinha > div:first-child {
+  flex: 1;
+}
