@@ -2,8 +2,11 @@ import { useState } from 'preact/hooks';
 import { BarraProgresso } from '../componentes/BarraProgresso';
 import { Botao3D } from '../componentes/Botao3D';
 import { Capi } from '../componentes/Capi';
+import { BarraProgressoGrossa } from '../componentes/BarraProgressoGrossa';
 import { Cartao } from '../componentes/Cartao';
+import { CartaoResultado, ResultadoEmLinha } from '../componentes/CartaoResultado';
 import { Janela } from '../componentes/Janela';
+import { PainelFeedback } from '../componentes/PainelFeedback';
 import { Selo } from '../componentes/Selo';
 import { mostrarAviso } from '../componentes/avisos';
 import estilos from './Estilo.module.css';
@@ -126,6 +129,30 @@ export function Estilo() {
             </Botao3D>
           </div>
         </Janela>
+      </section>
+
+      <section aria-labelledby="g-mobile">
+        <h2 id="g-mobile">Mobile</h2>
+        <p>
+          Componentes do celular (abaixo de 1024 px). A barra do topo e a barra de abas aparecem nas
+          telas do app quando a janela é estreita; no /_dev há um alternador de largura.
+        </p>
+        <h3>Barra de progresso grossa</h3>
+        <BarraProgressoGrossa valor={55} rotulo="Exemplo: 55% da lição" />
+        <h3>Painel de feedback</h3>
+        <div class={estilos.linha}>
+          <PainelFeedback tom="certa" titulo="Mandou bem! +10 XP">
+            <p>Lei estadual vale só no estado onde foi aprovada.</p>
+          </PainelFeedback>
+          <PainelFeedback tom="errada" titulo="Resposta certa: só em Minas Gerais" />
+          <PainelFeedback tom="quase" titulo="Quase! E tudo bem, aqui não perde ponto." />
+        </div>
+        <h3>Cartões de resultado</h3>
+        <ResultadoEmLinha>
+          <CartaoResultado rotulo="Total de XP" valor="55" cor="ouro" />
+          <CartaoResultado rotulo="Acertos" valor="5/6" cor="verde" />
+          <CartaoResultado rotulo="Tempo" valor="5:48" cor="azul" />
+        </ResultadoEmLinha>
       </section>
     </div>
   );

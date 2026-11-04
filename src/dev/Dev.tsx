@@ -114,7 +114,54 @@ export function Dev() {
       </section>
 
       <SecaoEstado />
+
+      <SecaoLargura />
     </div>
+  );
+}
+
+const LARGURAS = [390, 768, 1440] as const;
+
+/** Mostra uma rota do site dentro de um quadro com a largura escolhida (mobile, tablet, desktop). */
+function SecaoLargura() {
+  const [largura, setLargura] = useState<number>(390);
+  const [rota, setRota] = useState('/');
+  return (
+    <section aria-labelledby="d-largura">
+      <h2 id="d-largura">Largura</h2>
+      <p class={estilos.resumo}>
+        O quadro abre o site na largura escolhida, com o mesmo progresso deste navegador.
+      </p>
+      <div class={estilos.linha}>
+        {LARGURAS.map((l) => (
+          <Botao3D
+            key={l}
+            variante={l === largura ? 'primario' : 'neutro'}
+            tamanho="pequeno"
+            onClick={() => setLargura(l)}
+          >
+            {l} px
+          </Botao3D>
+        ))}
+        <label>
+          Rota{' '}
+          <input
+            type="text"
+            value={rota}
+            onInput={(e) => setRota((e.currentTarget as HTMLInputElement).value || '/')}
+          />
+        </label>
+      </div>
+      <div style={{ overflow: 'auto', marginTop: 16 }}>
+        <iframe
+          title={`Site em ${largura} px`}
+          src={rota}
+          width={largura}
+          height={844}
+          style={{ border: '2px solid var(--borda)', borderRadius: 16, background: '#fff' }}
+        />
+      </div>
+    </section>
   );
 }
 
