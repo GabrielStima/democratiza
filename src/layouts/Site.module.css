@@ -75,3 +75,36 @@
 .linksRodape a {
   color: #fff;
 }
+
+/* Celular: cabeçalho com a marca e o botão; rodapé em coluna. */
+@media (max-width: 1023.98px) {
+  .interno {
+    flex-wrap: nowrap;
+    padding: 6px var(--espaco-4);
+    gap: var(--espaco-3);
+  }
+  .marca {
+    font-size: 22px;
+  }
+  .menu {
+    display: none;
+  }
+  .principal {
+    padding: var(--espaco-5) var(--espaco-4);
+  }
+  .rodape .interno {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--espaco-5) var(--espaco-4);
+    padding-bottom: calc(var(--espaco-5) + env(safe-area-inset-bottom));
+  }
+  .linksRodape {
+    flex-direction: column;
+    gap: 0;
+  }
+  .linksRodape a {
+    display: flex;
+    align-items: center;
+    min-height: var(--toque-minimo);
+  }
+}
