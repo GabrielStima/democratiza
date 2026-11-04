@@ -89,4 +89,8 @@
   /* Layout */
   --largura-site: 1160px;
   --largura-licao: 820px;
+  /* Mobile (abaixo de 1024 px): alturas das barras fixas e alvo de toque mínimo. */
+  --altura-barra-topo: 52px;
+  --altura-abas: 68px;
+  --toque-minimo: 44px;
 }
