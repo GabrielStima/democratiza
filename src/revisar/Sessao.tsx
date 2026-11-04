@@ -277,6 +277,8 @@ function Sessao({ modo, chave }: { modo: ModoSessao; chave: string }) {
   return (
     <LayoutLicao
       {...comum}
+      progresso={Math.max(8, (respostas.length / itens.length) * 100)}
+      rotuloProgresso={`Pergunta ${Math.min(indice + 1, itens.length)} de ${itens.length}`}
       feedback={
         verificado && item && ultima
           ? {

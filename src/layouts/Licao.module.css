@@ -122,3 +122,41 @@
 .feedback p {
   margin: 0 0 var(--espaco-2);
 }
+
+/* Celular: só o X e a barra grossa no topo; o rodapé respeita a área segura. */
+.topoMobile {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  padding: 10px max(var(--espaco-4), env(safe-area-inset-right)) 6px
+    max(var(--espaco-4), env(safe-area-inset-left));
+  padding-top: max(10px, env(safe-area-inset-top));
+}
+.topoMobile .fechar {
+  margin-left: -10px;
+  color: var(--cinza-seta);
+}
+@media (max-width: 1023.98px) {
+  .principal {
+    padding: var(--espaco-4);
+  }
+  .rodapeInterno {
+    gap: var(--espaco-3);
+    padding: 12px max(var(--espaco-4), env(safe-area-inset-right))
+      max(var(--espaco-4), env(safe-area-inset-bottom))
+      max(var(--espaco-4), env(safe-area-inset-left));
+  }
+  .rodapeInterno > span:empty {
+    display: none;
+  }
+  .rodapeInterno > :not(:last-child) {
+    flex: none;
+    min-width: 112px;
+  }
+  .rodapeInterno > :last-child {
+    flex: 1;
+  }
+  .feedback {
+    padding: var(--espaco-4) var(--espaco-4) 0;
+  }
+}

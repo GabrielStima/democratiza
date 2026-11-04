@@ -272,6 +272,8 @@ export function PraticaLicao({ id, licao, posicao, salvo, palpite, aoVoltar }: P
     <LayoutLicao
       {...comum}
       fases={fasesDoPasso([{ tipo: 'pratica' }], 0)}
+      progresso={Math.max(8, (resultados.length / Math.max(1, ep.fila.length)) * 100)}
+      rotuloProgresso={`Exercício ${Math.min(resultados.length - (noFeedback ? 1 : 0) + 1, ep.fila.length)} de ${ep.fila.length}`}
       feedback={
         feedback && exercicio && apresentacao
           ? {

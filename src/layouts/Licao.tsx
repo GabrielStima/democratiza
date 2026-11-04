@@ -1,6 +1,15 @@
 import type { ComponentChildren } from 'preact';
 import type { Fase } from '../licao/fluxo.ts';
+import { BarraProgressoGrossa } from '../componentes/BarraProgressoGrossa';
 import estilos from './Licao.module.css';
+import { ehMobile } from './mobile.ts';
+
+/** Progresso do topo no celular, calculado das fases (cada fase feita vale 25%). */
+export function progressoDasFases(fases: Fase[]): number {
+  if (fases.length === 0) return 0;
+  if (fases.every((f) => f.estado === 'feita')) return 100;
+  return Math.round((fases.filter((f) => f.estado === 'feita').length / fases.length) * 100) + 8;
+}
 
 interface Props {
   /** "Unidade 1 · Lição 2" */
@@ -11,6 +20,10 @@ interface Props {
   fases?: Fase[];
   /** Tela final sem o topo (Revisão concluída). */
   semTopo?: boolean;
+  /** Celular: avanço da barra grossa (0 a 100). Sem isso, vem das fases. */
+  progresso?: number;
+  /** Celular: texto da barra para leitor de tela, ex.: "Exercício 3 de 6". */
+  rotuloProgresso?: string;
   aoFechar: () => void;
   /** Botões do rodapé (Voltar e o principal). */
   rodape: ComponentChildren;
@@ -26,6 +39,8 @@ export function Licao({
   rascunho,
   fases = [],
   semTopo = false,
+  progresso,
+  rotuloProgresso,
   aoFechar,
   rodape,
   feedback,
@@ -34,7 +49,34 @@ export function Licao({
   return (
     <div class={estilos.pagina}>
       {rascunho && <div class={estilos.faixa}>Rascunho</div>}
-      {!semTopo && (
+      {!semTopo && ehMobile.value && (
+        <header class={estilos.topoMobile}>
+          <button
+            type="button"
+            class={estilos.fechar}
+            aria-label="Sair da lição"
+            onClick={aoFechar}
+          >
+            <svg
+              aria-hidden="true"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3.2"
+              stroke-linecap="round"
+            >
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+          <BarraProgressoGrossa
+            valor={progresso ?? progressoDasFases(fases)}
+            rotulo={`${posicao} · ${nome}${rotuloProgresso ? ` · ${rotuloProgresso}` : ''}`}
+          />
+        </header>
+      )}
+      {!semTopo && !ehMobile.value && (
         <header class={estilos.topo}>
           <div class={estilos.interno}>
             <button
