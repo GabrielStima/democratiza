@@ -1,7 +1,7 @@
 # Democratiza — Especificação de execução
 
 > Como construir o site, em ordem, tela a tela. Complementa o [`ARQUITETURA.md`](ARQUITETURA.md), que explica **o quê e por quê**; este documento diz **o que entregar em cada etapa**.
-> **Não há fases: todo o planejamento é o MVP.** São 13 milestones (M0 a M12) e o site só é apontado para o domínio no último.
+> **Não há fases: todo o planejamento é o MVP.** São 18 milestones (M0 a M17) e o site só é apontado para o domínio no último. Os M0 a M11 entregam o site completo no desktop; os M12 a M16 levam o mesmo site para o celular, como no design *Site (mobile)*.
 > Todo o conteúdo usado nas etapas é **Lorem Ipsum** (seção 2). O conteúdo real entra por último, só adicionando pastas e JSONs em `content/`.
 > Regras de código e de commits: [`AGENTS.md`](AGENTS.md).
 
@@ -11,15 +11,15 @@
 
 ### Convenções
 - **Milestone (M0, M1…):** um bloco de trabalho que termina com algo que dá para abrir, clicar e conferir. Os milestones são sequenciais; cada um só começa quando o anterior está pronto.
-- **Design de referência:** cada tela cita o nome da prancha no arquivo de design *"Democratiza — Design"*, página *Site (desktop)*. Ex.: *"Lição · 4. Checagem (pergunta)"*. As telas de apoio (janelas, estados vazios, novos exercícios) estão nas faixas *"Apoio"* abaixo das telas principais.
+- **Design de referência:** cada tela cita o nome da prancha no arquivo de design *"Democratiza — Design"*, páginas *Site (desktop)* e *Site (mobile)* (as pranchas do mobile têm o mesmo nome das do desktop). Ex.: *"Lição · 4. Checagem (pergunta)"*. As telas de apoio (janelas, estados vazios, novos exercícios) estão nas faixas *"Apoio"* abaixo das telas principais.
 - **Tamanho:** P ≈ 1 a 2 dias, M ≈ 3 a 5 dias, G ≈ 1 a 2 semanas, para uma pessoa trabalhando com IA. São estimativas grosseiras, só para comparar um milestone com outro.
-- **Telas:** o design foi feito em 1440 px de largura. Entregar bem de **1024 px para cima**. Abaixo disso o layout não pode quebrar (nada cortado, sem rolagem horizontal), mas sem acabamento: a versão para celular está fora do planejamento atual.
+- **Telas:** o desktop foi desenhado em 1440 px e deve ficar bom de **1024 px para cima**. O celular foi desenhado em 390 px e deve ficar bom de **360 a 767 px** (a faixa de 768 a 1023 px está em aberto, seção 6). Até o M12, abaixo de 1024 px o layout não pode quebrar (nada cortado, sem rolagem horizontal), mas fica sem acabamento; a partir do M12 vale o layout mobile.
 - **Pranchas interativas:** algumas pranchas funcionam como protótipo (clicar, escolher, verificar). Os estados "certa" e "errada" são alcançados clicando.
 
 ### Definição de pronto (vale para toda tela)
 1. `tsc --noEmit`, ESLint e Prettier sem erros.
 2. A lógica nova tem testes Vitest e o fluxo novo tem ao menos um teste Playwright.
-3. A tela confere com a prancha em 1440 px (conferência a olho, não precisa ser idêntica ao pixel) e usa só tokens de `tokens.css`, sem cores soltas no código.
+3. A tela confere com a prancha em 1440 px (conferência a olho, não precisa ser idêntica ao pixel). A partir do M12, a tela também confere com a prancha mobile em 390 px e usa só tokens de `tokens.css`, sem cores soltas no código.
 4. Tudo funciona só com o teclado (Tab, Enter, Espaço, Esc), com foco visível, e o axe-core não aponta problema sério.
 5. Sem erro no console. JS inicial abaixo de 150 KB (gzip).
 6. A prévia do Cloudflare Pages abre e mostra a tela com o conteúdo Lorem.
@@ -65,7 +65,7 @@ Só o nome "Comece por aqui" é real, porque é a decisão de produto. Todo o re
 ### Quando o conteúdo real chegar
 1. Escrever as pastas reais em `content/` (a decisão "conteúdo exato e ordem dos cursos" ainda está em aberto).
 2. Apagar as pastas Lorem.
-3. Rodar o build: ele aponta o que sobrou quebrado. O M12 só fecha com ao menos uma unidade real `revisado`.
+3. Rodar o build: ele aponta o que sobrou quebrado. O M17 só fecha com ao menos uma unidade real `revisado`.
 
 ---
 
@@ -85,7 +85,12 @@ Só o nome "Comece por aqui" é real, porque é a decisão de produto. Todo o re
 | **M9** | Novos exercícios | `classificar`, `ordenar`, `mito_ou_fato` | G |
 | **M10** | Offline | PWA, instalação, aviso de atualização | M |
 | **M11** | Módulos e debate | Prática "debate entre correntes" | M |
-| **M12** | Lançamento | Conteúdo real, domínio, qualidade, publicação | M |
+| **M12** | Base mobile | Pontos de quebra, barra do topo, barra de abas, layout da lição, folhas | M |
+| **M13** | Trilha: Home, Curso e Cursos (celular) | Trilha de lições, Home (4 variantes), meta diária, Curso, Cursos | G |
+| **M14** | Lição no celular | Situação, Explicação, Checagem, Prática, Concluída, Sair, Rever | G |
+| **M15** | Caderno, Revisar, Sobre e exercícios (celular) | Caderno, Revisar, Sobre, 404, 3 novos exercícios, debate | G |
+| **M16** | Qualidade e instalação no celular | Viewports no Playwright, aparelhos reais, PWA, Lighthouse mobile | M |
+| **M17** | Lançamento | Conteúdo real, domínio, qualidade, publicação | M |
 
 ### Mapa: prancha de design → milestone
 | Prancha | Milestone |
@@ -123,6 +128,43 @@ Só o nome "Comece por aqui" é real, porque é a decisão de produto. Todo o re
 | Lição · 7c. Prática (debate entre correntes) | M11 |
 | Método de ensino | Só documentação (não vira tela) |
 
+### Mapa: prancha mobile → milestone
+Página *Site (mobile)*. Cada prancha tem o mesmo nome da versão desktop; a tabela diz em que milestone a versão **mobile** é feita.
+
+| Prancha (mobile) | Milestone |
+|---|---|
+| Home · visitante (sem progresso) | M13 |
+| Home · escolha da meta diária (primeira visita) | M13 |
+| Home · quem já tem progresso | M13 |
+| Home · com um curso só | M13 |
+| Curso · página do curso (trilha de lições) | M13 |
+| Cursos · catálogo | M13 |
+| Lição · 1. Situação | M14 |
+| Lição · 2. Explicação (card 1 de 2) | M14 |
+| Lição · 3. Explicação (card 2 de 2) | M14 |
+| Lição · 4. Checagem (pergunta) | M14 |
+| Lição · 5. Checagem (resposta) | M14 |
+| Lição · 6. Fim da explicação | M14 |
+| Lição · 7a. Prática (sem resposta) | M14 |
+| Lição · 7b. Prática (resposta errada) | M14 |
+| Lição · 8. Concluída | M14 |
+| Lição · Sair da lição (confirmação) | M14 |
+| Lição · Rever explicação (sobre a Prática) | M14 |
+| Lição · Rever o que errei | M14 |
+| Lição · 7c. Prática (debate entre correntes) | M15 |
+| Caderno de conceitos | M15 |
+| Caderno · vazio | M15 |
+| Revisar | M15 |
+| Revisar · nada para revisar hoje | M15 |
+| Revisar · revisão concluída | M15 |
+| Sobre | M15 |
+| Sobre · confirmações e avisos | M15 |
+| Página não encontrada (404) | M15 |
+| Prática · Classificar (novo tipo) | M15 |
+| Prática · Ordenar (novo tipo) | M15 |
+| Prática · Mito ou fato (novo tipo) | M15 |
+| Guia de estilo, Método de ensino e peças do Instagram | Não têm versão mobile |
+
 ---
 
 ## 4. Milestones
@@ -141,7 +183,7 @@ Só o nome "Comece por aqui" é real, porque é a decisão de produto. Todo o re
 - Cloudflare Pages ligado ao repositório: prévia por branch, `main` publica em `*.pages.dev`.
 
 **Tarefas suas (fora do código)**
-- Registrar `democratiza.app.br` no Registro.br, se ainda não foi feito. O domínio só é apontado para o site no M12.
+- Registrar `democratiza.app.br` no Registro.br, se ainda não foi feito. O domínio só é apontado para o site no M17.
 - Criar o repositório público e a conta no Cloudflare.
 
 #### Tela · Guia de estilo (só dev)
@@ -482,15 +524,111 @@ Só o nome "Comece por aqui" é real, porque é a decisão de produto. Todo o re
 
 ---
 
-### M12 · Lançamento  `[M]`
+### M12 · Base mobile (layout e navegação)  `[M]`
+**Objetivo:** abaixo de 1024 px o app troca de layout e passa a ter a cara do design *Site (mobile)*. Este milestone entrega só a casca; as telas vêm nos M13 a M15.
+
+**Entregas**
+- **Pontos de quebra:** de 1024 px para cima vale o layout desktop, como está. Abaixo de 1024 px vale o layout mobile (design em **390 px**; entregar bem de **360 a 767 px**). A troca acontece sem perder o estado da tela (a lição em andamento, o palpite, a busca). Entre 768 e 1023 px ver a decisão em aberto da seção 6.
+- **Base técnica:** `viewport-fit=cover` e `env(safe-area-inset-*)` na barra de abas e nos rodapés fixos; alvos de toque de **no mínimo 44 px**; campos de texto com 16 px (o iOS não dá zoom); nada que dependa só de `hover` (o `[[termo]]` do glossário abre também por toque).
+- **Layout app (mobile):** substitui o menu lateral.
+  - **Barra do topo:** a Capi num botão que leva a **Cursos**, mais a **ofensiva** (chama + dias) e o **XP de hoje** (raio + número), cada um com `aria-label` ("7 dias seguidos", "30 XP hoje").
+  - **Barra de abas** fixa embaixo, só com ícones grandes: Aprender, Cursos, Revisar (com a bolinha coral do número de conceitos vencidos), Caderno e Sobre. A aba atual tem fundo verde-claro e borda verde; todas têm `aria-label` e a atual leva `aria-current="page"`.
+- **Layout lição (mobile):** o topo vira só o **X** e uma **barra de progresso grossa** (16 px, verde, com brilho), que no lugar das pílulas de fase mostra o avanço da lição e, na Prática, o avanço dos exercícios (o texto "Etapa 2 de 4 · Explicação" ou "Exercício 3 de 6" vai no `aria-label`). O rodapé é fixo, com o botão 3D de largura total.
+- **Layout site (mobile):** cabeçalho com a logo e o botão **Começar**, e rodapé em coluna.
+- **`Janela` no celular** vira uma **folha que sobe de baixo** (as janelas do Sair da lição, Rever explicação, Meta diária e confirmações do Sobre). Mantém foco preso, Esc e fechar tocando fora. O **`Aviso`** aparece acima da barra de abas.
+- **Componentes novos:** `BarraTopo`, `BarraAbas`, `BarraProgressoGrossa`, `PainelFeedback` (ícone circular ✓ ou ✗, título, texto, fonte), `CartaoResultado` (faixa colorida no topo com o rótulo e o valor grande embaixo).
+- **Tokens:** só tokens de `tokens.css`. As cores do design mobile que ainda não tiverem token (dourado do XP e do título da conclusão, laranja da ofensiva) entram em `tokens.css` e na página `/_estilo` antes de serem usadas.
+- **`/_estilo`** ganha a seção "Mobile" com os componentes novos; o `/_dev` ganha um alternador de largura (390 · 768 · 1440).
+
+**Pronto quando:** abrir qualquer rota em 390 px mostra barra do topo, barra de abas e o conteúdo provisório sem rolagem horizontal; passar de 1023 para 1024 px troca de layout sem perder o estado.
+
+---
+
+### M13 · Trilha: Home, Curso e Cursos no celular  `[G]`
+**Objetivo:** a tela principal do celular é a **trilha de lições**, o caminho em zigue-zague que mostra onde a pessoa está e o que vem a seguir.
+
+#### Componente · Trilha de lições
+- **Banner de unidade:** faixa arredondada com "Unidade N" e o nome. Verde na unidade atual, verde com ✓ e "Concluída" na feita, **cinza** na bloqueada. Na atual, o botão com ícone de livro (**Guia da unidade**) leva à página do Curso.
+- **Nós:** círculos de 72 px com borda inferior de 8 px, em coluna, deslocados em zigue-zague (0, −46, −64, −46, 0, +46, +64, +46 px, repetindo).
+  - **Feita:** verde com ✓. **Atual:** verde com estrela, anel claro em volta, balão **"Começar"** acima e a Capi do lado oposto ao deslocamento. **Bloqueada:** cinza com cadeado. **Desafio da unidade:** troféu, cinza até liberar.
+  - Só a feita e a atual são links. Cada nó tem `aria-label` com o nome da lição e o estado ("Legislativo: quem faz as leis (agora)"). Lição bloqueada não faz nada e explica o motivo ao focar.
+- **Regras:** os nós vêm do catálogo (ordem da pasta), nunca escritos à mão. O nó atual é a lição em andamento ou, sem ela, a próxima lição; tocar nele faz o papel do antigo cartão "Continuar".
+
+#### Telas · Home no celular
+- **Design:** *Home · visitante (sem progresso)*, *Home · escolha da meta diária (primeira visita)*, *Home · quem já tem progresso* e *Home · com um curso só*, todas na página *Site (mobile)*.
+- **Visitante:** as mesmas seções da Home desktop em coluna única. A pergunta rápida tem as 3 opções em grade e funciona de verdade. Um botão **Começar** fixo no cabeçalho.
+- **Meta diária:** folha de baixo com as três opções (Leve, Regular, Intenso), como no M5.
+- **Com progresso:** dois cartões lado a lado no topo, **Meta de hoje** (barra amarela e "30 / 50 XP"; tocar reabre a meta) e **Revisão** (número de conceitos vencidos em coral, link para Revisar; sem vencidos mostra "Nada para revisar hoje"); depois a **trilha** da unidade atual e, embaixo, o banner cinza da próxima unidade com 2 nós bloqueados. Abaixo da trilha: ofensiva (semana), **Seus cursos**, **Para explorar** e **Seu caderno**, com as mesmas regras do M5.
+- **Um curso só:** a mesma trilha, o cartão **"Seu progresso no curso"** no lugar de "Seus cursos", e o resto igual.
+
+#### Tela · Curso no celular
+- **Design:** *Curso · página do curso* (mobile, "trilha de lições").
+- **Mostra:** caminho "Cursos / Comece por aqui"; bloco de abertura com selo, título, Capi, barra e o botão **Continuar**; as **unidades** como banners (a atual aberta com a trilha, as feitas e as bloqueadas só o banner); **Conceitos do curso** e **O que este curso libera** em cartões, um embaixo do outro.
+
+#### Tela · Cursos no celular
+- **Design:** *Cursos · catálogo* (mobile).
+- **Mostra:** o mesmo conteúdo do M8 em coluna única: busca em largura total, três blocos e um cartão por curso com os quatro estados.
+
+**Pronto quando:** os perfis de demonstração produzem a trilha certa (feitas, atual, bloqueadas) e tocar no nó atual abre a lição; no desktop nada muda.
+
+---
+
+### M14 · Lição no celular  `[G]`
+**Objetivo:** a lição inteira funciona no polegar, do "Começar" à tela de conclusão.
+
+**Telas** (todas na página *Site (mobile)*, mesmos nomes do desktop)
+- **Situação, Explicação (cards 1 e 2), Checagem (pergunta e resposta) e Fim da explicação:** coluna única; palpites e opções em largura total (58 px de altura mínima, borda inferior grossa); o escolhido fica azul. O rodapé fixo tem **Voltar** e o botão principal. Na checagem, o feedback usa o `PainelFeedback`: ✓ verde em "Isso!" e, na errada, ícone amarelo em "Quase! E tudo bem, aqui não perde ponto."
+- **Prática (sem resposta, resposta errada):** a barra do topo mostra o avanço; abaixo, o rótulo do exercício e o link **Rever explicação**; a pergunta aparece num balão ao lado da Capi; as opções vêm embaixo. O **rodapé fixo muda de cor** depois de verificar: verde-claro com ✓ ("Mandou bem! +10 XP") ou coral-claro com ✗ ("Resposta certa: …"), com explicação, fonte e o botão **Continuar**. `verdadeiro_falso` mostra "Verdadeiro" e "Falso" em duas colunas.
+- **Sair da lição** e **Rever explicação:** folhas de baixo, com as regras do M3 e do M4.
+- **Lição concluída:** tela de comemoração, sem o topo da lição: a Capi num círculo amarelo, confete **decorativo** (`aria-hidden`), "Lição concluída!" em dourado, três `CartaoResultado` (**Total de XP**, **Acertos**, **Tempo**), os conceitos novos, o "Desbloqueado: …" e, no rodapé fixo, **Continuar** e **Rever o que errei**.
+- **Rever o que errei:** mesmo conteúdo do M4 em coluna única.
+
+**Regras**
+- Nada na lição pede digitar, então o teclado virtual não aparece. O rodapé fixo respeita a área segura embaixo.
+- Nenhum gesto é obrigatório (nada de deslizar para avançar); tudo se faz por toque nos botões.
+- A animação da folha e qualquer movimento do confete ficam desligados com `prefers-reduced-motion`.
+- Retomar, XP, caixas de revisão e ofensiva funcionam exatamente como no desktop: a lógica é a mesma, só muda a tela.
+
+**Pronto quando:** a lição-modelo roda de ponta a ponta em 390 px com 1 erro, com o XP e os acertos conferindo com o desktop.
+
+---
+
+### M15 · Caderno, Revisar, Sobre e exercícios no celular  `[G]`
+**Telas** (página *Site (mobile)*)
+- **Caderno:** busca em largura total e filtros por curso numa linha que rola na horizontal (é o único elemento que rola de lado). O cartão do conceito **abre no próprio lugar**, embaixo do item tocado (acordeão), com "No dia a dia", "Não confunda com", "Aprendido em", fonte e os botões **Rever explicação** e **Praticar agora**. *Caderno · vazio* igual ao M6.
+- **Revisar:** cartão verde "N conceitos para revisar", a lista do que entra hoje, as 5 forças em linha, três cartões de **Próximas revisões** e **Quer treinar mais?**. *Revisar · nada para revisar hoje* e *Revisar · revisão concluída* (com `CartaoResultado`) como no M6. A sessão de revisão reaproveita a Prática do M14.
+- **Sobre:** coluna única, botões em largura total, bibliografia. *Sobre · confirmações e avisos* vira folhas de baixo (substituir, apagar, arquivo inválido). Para **Salvar backup**, usar o compartilhamento do aparelho quando houver (Web Share API) e, se não houver, baixar o arquivo; **Abrir backup** usa o seletor de arquivos do sistema.
+- **Página não encontrada (404).**
+- **Novos exercícios:** *Classificar* (escolher a função e tocar na categoria), *Ordenar* (setas subir e descer) e *Mito ou fato* (dois botões grandes) no celular, com o mesmo fluxo e as mesmas regras do M9.
+- **Debate entre correntes:** o argumento, as opções e, depois de verificar, o quadro "As duas leituras, lado a lado" com as leituras uma embaixo da outra, e o aviso de que não há leitura certa. Mesmas regras do M11.
+
+**Pronto quando:** cada prancha mobile desta lista confere em 390 px e os testes de backup (substituir, apagar, arquivo inválido) passam também no celular.
+
+---
+
+### M16 · Qualidade e instalação no celular  `[M]`
+**Objetivo:** provar que o mobile funciona em aparelho de verdade, antes de lançar.
+
+**Entregas**
+- **Playwright com viewports:** projetos em **390×844**, **360×740** e **768×1024**, além do desktop. Os fluxos principais (primeira visita, uma lição completa com erro, revisão, backup) rodam em todos. Um teste percorre todas as rotas e confere que **não há rolagem horizontal**.
+- **Acessibilidade:** axe-core nas telas mobile; alvos de toque de 44 px conferidos; zoom do texto em 200% sem cortar nada; modo paisagem sem quebrar a lição (o rodapé fixo continua alcançável).
+- **Aparelhos reais:** checklist feita à mão em um iPhone (Safari) e em um Android (Chrome): área segura, barra de abas, folhas, teclado na busca, rolagem e retomar a lição.
+- **Instalação (PWA):** `display: standalone` e `theme_color` conferidos no celular; instalar pelo Chrome (Android) e "Adicionar à tela inicial" (iOS); abrir uma lição já visitada sem internet.
+- **Desempenho:** Lighthouse **mobile** (CPU 4× mais lenta, rede 4G simulada) com nota ≥ 90 em Desempenho e Acessibilidade nas telas principais; JS inicial continua abaixo de 150 KB (gzip); a Capi em tamanhos adequados para cada uso.
+
+**Pronto quando:** a suíte fica verde nos quatro tamanhos e a checklist passa nos dois aparelhos reais.
+
+---
+
+### M17 · Lançamento  `[M]`
 **Objetivo:** o site no ar, em `democratiza.app.br`, com conteúdo real.
 
 **Entregas**
 - **Conteúdo real:** ao menos a primeira unidade do "Comece por aqui" escrita, com as fontes conferidas à mão e `status: "revisado"`. As pastas Lorem que restarem são apagadas.
 - **Domínio:** apontar `democratiza.app.br` para o Cloudflare Pages.
-- **Acessibilidade e desempenho:** Lighthouse CI com nota ≥ 90 em Desempenho e Acessibilidade nas telas principais; revisão com leitor de tela na lição inteira; `prefers-reduced-motion` respeitado.
+- **Acessibilidade e desempenho:** Lighthouse CI, em desktop e em mobile, com nota ≥ 90 em Desempenho e Acessibilidade nas telas principais; revisão com leitor de tela na lição inteira; `prefers-reduced-motion` respeitado.
 - **Medição e suporte:** Cloudflare Web Analytics (sem cookies); texto do link "Sugerir correção" revisado.
-- **Teste final:** o fluxo completo do ARQUITETURA, seção 10, rodando no Playwright contra o site publicado.
+- **Teste final:** o fluxo completo do ARQUITETURA, seção 10, rodando no Playwright contra o site publicado, em desktop e em 390 px.
 - **Divulgação:** ver seção 8.
 
 **Pronto quando:** qualquer pessoa abre `democratiza.app.br`, faz uma lição real, volta no dia seguinte e revisa.
@@ -523,12 +661,15 @@ Mantidos: o selo "Funciona até sem internet" (o modo offline entra no M10, ante
 | 4 | **"Desafio da unidade"** é uma lição `tipo: "desafio"`, sem situação nem explicação, só Prática com os conceitos da unidade. |
 | 5 | **Sair da lição pelo X** pede confirmação ("Seu avanço fica salvo"). |
 | 6 | **Estimativa de minutos:** 1 min por card + 30 s por exercício, arredondado para cima. Ajustar depois de medir com pessoas reais. |
+| 7 | **O mobile é feito depois do desktop (M12 a M16).** A lógica não muda; só a apresentação. |
+| 8 | **No celular a Home e o Curso mostram a trilha de lições** (nós em zigue-zague), e a barra de abas fica embaixo, só com ícones. |
+| ⏳ | **Em aberto, não implementar:** (a) a faixa de **768 a 1023 px** (tablet) usa o layout mobile centralizado ou o desktop espremido; (b) a **trilha** passa a valer também no desktop, ou fica só no mobile (por ora, só no mobile); (c) o título dourado e a cor da ofensiva do design mobile viram tokens novos? |
 
 ---
 
 ## 7. Telas novas no arquivo de design
 
-Todas as telas que faltavam foram desenhadas, em faixas *"Apoio"* abaixo das telas principais da página *Site (desktop)*.
+Todas as telas que faltavam foram desenhadas, em faixas *"Apoio"* abaixo das telas principais da página *Site (desktop)*. A página *Site (mobile)* tem as mesmas telas, com as mesmas faixas.
 
 | Faixa | Telas | Milestone |
 |---|---|---|
@@ -546,7 +687,7 @@ Os protótipos dos novos exercícios funcionam por clique/toque. O arrastar e so
 Não depende do código. As peças da página *Instagram* do arquivo de design podem ser publicadas assim que o conteúdo que elas citam estiver conferido.
 
 - Antes de publicar qualquer peça, conferir à mão as fontes escritas nela (no post "Mito ou fato": CF art. 77 §2º, Lei 9.504/1997 art. 2º e Código Eleitoral art. 224; no story: CF art. 46 §1º; no carrossel: CF arts. 27, 29, 44 e 66).
-- O link na bio só vale depois do M12.
+- O link na bio só vale depois do M17.
 - Novas peças seguem a mesma regra do site: fato verificável, fonte escrita na peça, sem opinião e sem partido.
 
 ---
@@ -556,9 +697,13 @@ Não depende do código. As peças da página *Instagram* do arquivo de design p
 ```
 M0 Fundação ─► M1 Pipeline ─► M2 Motor ─► M3 Lição 1 ─► M4 Lição 2 ─► M5 Home/Curso
                                                                            │
-   M12 Lançamento ◄─ M11 Módulos ◄─ M10 Offline ◄─ M9 Exercícios ◄─ M8 Cursos ◄─ M7 Sobre ◄─ M6 Caderno/Revisar
+   M11 Módulos ◄─ M10 Offline ◄─ M9 Exercícios ◄─ M8 Cursos ◄─ M7 Sobre ◄─ M6 Caderno/Revisar
         │
-   ★ NO AR
+   M12 Base mobile ─► M13 Trilha ─► M14 Lição mobile ─► M15 Caderno/Revisar/Sobre mobile ─► M16 Qualidade mobile
+                                                                                                │
+                                                                                      M17 Lançamento
+                                                                                                │
+                                                                                            ★ NO AR
 ```
 
-Por que essa ordem: o M1 e o M2 vêm antes de qualquer tela porque todas dependem do formato do conteúdo e da lógica de progresso. A Lição (M3 e M4) vem antes da Home porque é o coração do produto: se ela não for boa, o resto não importa, e dá para validar com o `/_dev` sem precisar da Home. O Caderno e a Revisão (M6) vêm logo depois porque a promessa do produto é "você não esquece". O M12 fica por último para que o site apareça no domínio já completo.
+Por que essa ordem: o M1 e o M2 vêm antes de qualquer tela porque todas dependem do formato do conteúdo e da lógica de progresso. A Lição (M3 e M4) vem antes da Home porque é o coração do produto: se ela não for boa, o resto não importa, e dá para validar com o `/_dev` sem precisar da Home. O Caderno e a Revisão (M6) vêm logo depois porque a promessa do produto é "você não esquece". O mobile (M12 a M16) vem depois de todo o desktop porque a lógica, o conteúdo e as telas já estão prontos e testados: o celular só troca a apresentação, sem mexer em regra nenhuma. O M17 fica por último para que o site apareça no domínio já completo, nos dois tamanhos.
