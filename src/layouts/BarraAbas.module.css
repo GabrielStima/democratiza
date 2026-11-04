@@ -1,0 +1,56 @@
+.abas {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+  min-height: var(--altura-abas);
+  padding: 8px max(8px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom))
+    max(8px, env(safe-area-inset-left));
+  background: var(--fundo);
+  border-top: 2px solid var(--linha);
+}
+.aba {
+  position: relative;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  color: var(--texto-mudo);
+  text-decoration: none;
+}
+.aba svg {
+  width: 30px;
+  height: 30px;
+}
+.ativa {
+  background: var(--verde-claro);
+  border-color: var(--verde-ipe);
+  color: var(--verde-mata);
+}
+.aba:focus-visible {
+  outline: none;
+  box-shadow: var(--foco);
+}
+.contagem {
+  position: absolute;
+  top: 2px;
+  right: 10px;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  background: var(--coral-botao);
+  border: 2px solid var(--fundo);
+  border-radius: var(--raio-pilula);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+}

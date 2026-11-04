@@ -86,3 +86,16 @@
   min-width: 0;
   padding: var(--espaco-6) var(--espaco-6) var(--espaco-7);
 }
+
+/* Celular: barra do topo + conteúdo + barra de abas fixa embaixo. */
+.paginaMobile {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.principalMobile {
+  flex: 1;
+  min-width: 0;
+  padding: var(--espaco-4) var(--espaco-4)
+    calc(var(--altura-abas) + var(--espaco-5) + env(safe-area-inset-bottom));
+}

@@ -1,0 +1,46 @@
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  min-height: var(--altura-barra-topo);
+  padding: 6px max(var(--espaco-4), env(safe-area-inset-right)) 6px
+    max(var(--espaco-4), env(safe-area-inset-left));
+  padding-top: max(6px, env(safe-area-inset-top));
+  background: var(--fundo);
+  border-bottom: 2px solid var(--linha);
+}
+.curso {
+  width: 46px;
+  height: var(--toque-minimo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--fundo-faixa);
+  border: 2px solid var(--borda);
+  border-bottom-width: 4px;
+  border-radius: var(--raio-p);
+}
+.numeros {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.numero {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-height: var(--toque-minimo);
+  font-family: var(--fonte-titulo);
+  font-size: 19px;
+  font-weight: 800;
+}
+.chama {
+  color: var(--laranja-borda);
+}
+.raio {
+  color: var(--amarelo-icone);
+}
