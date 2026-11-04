@@ -191,3 +191,16 @@
   margin-top: auto;
   padding-top: var(--espaco-2);
 }
+
+/* Celular: busca em largura total e alvos de toque maiores. */
+@media (max-width: 1023.98px) {
+  .busca {
+    width: 100%;
+  }
+  .busca input {
+    height: 50px;
+  }
+  .acao > * {
+    width: 100%;
+  }
+}
