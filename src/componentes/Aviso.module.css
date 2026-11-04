@@ -51,3 +51,13 @@
   outline: 3px solid #fff;
   outline-offset: 2px;
 }
+
+/* Celular: o aviso fica acima da barra de abas, quando ela existe. */
+@media (max-width: 1023.98px) {
+  .regiao {
+    bottom: calc(var(--espaco-4) + env(safe-area-inset-bottom));
+  }
+  :global(body[data-abas]) .regiao {
+    bottom: calc(var(--altura-abas) + var(--espaco-3) + env(safe-area-inset-bottom));
+  }
+}

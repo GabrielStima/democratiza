@@ -25,3 +25,34 @@
 .larga {
   max-width: 680px;
 }
+
+/* Celular: a janela vira uma folha que sobe de baixo. */
+@media (max-width: 1023.98px) {
+  .fundo {
+    align-items: flex-end;
+    padding: 0;
+  }
+  .caixa,
+  .larga {
+    max-width: none;
+    max-height: 92vh;
+    padding: var(--espaco-5) var(--espaco-4) calc(var(--espaco-5) + env(safe-area-inset-bottom));
+    border-radius: var(--raio-xg) var(--raio-xg) 0 0;
+    animation: sobe 0.22s ease-out;
+  }
+  .caixa::before {
+    content: '';
+    display: block;
+    width: 44px;
+    height: 5px;
+    margin: -12px auto var(--espaco-4);
+    background: var(--borda-forte);
+    border-radius: var(--raio-pilula);
+  }
+}
+@keyframes sobe {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+}
