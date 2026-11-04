@@ -48,6 +48,7 @@ export function cursosComecados(estado: Estado, catalogo: Catalogo): CursoCatalo
 }
 
 export interface CartaoContinuar {
+  cursoId: string;
   cursoTitulo: string;
   nivel: Nivel;
   licaoTitulo: string;
@@ -113,6 +114,7 @@ export function dadosDaHome(
     const daUnidade = listarLicoes(cursoDoCartao).filter((l) => l.unidadeId === para.unidadeId);
     const estados = estadoDasLicoes(cursoDoCartao, estado.licoesConcluidas);
     continuar = {
+      cursoId: cursoDoCartao.id,
       cursoTitulo: cursoDoCartao.titulo,
       nivel: cursoDoCartao.nivel,
       licaoTitulo: para.licao.titulo,
