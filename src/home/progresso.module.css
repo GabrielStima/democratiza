@@ -491,3 +491,69 @@
   font-size: 12px;
   font-weight: 800;
 }
+
+/* Celular: atalhos no topo, trilha e cartões em coluna única. */
+.mobile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-5);
+  min-width: 0;
+}
+.atalhos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.atalho {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  min-height: var(--toque-minimo);
+  padding: 12px 14px;
+  background: var(--fundo);
+  border: 2px solid var(--borda);
+  border-bottom-width: 5px;
+  border-radius: 18px;
+  color: var(--texto);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+div.atalho {
+  cursor: default;
+}
+.atalhoTitulo {
+  font-size: 14px;
+  font-weight: 800;
+}
+.atalhoOuro {
+  color: var(--amarelo-texto);
+}
+.atalhoAzul {
+  color: var(--azul-escuro);
+}
+.atalhoNumero {
+  color: var(--coral-escuro);
+  font-family: var(--fonte-titulo);
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1;
+}
+.atalhoNota {
+  color: var(--texto-suave);
+  font-size: 12px;
+  font-weight: 800;
+}
+.atalho .trilhoMeta span {
+  display: block;
+  height: 100%;
+  background: var(--amarelo-ouro);
+  border-radius: var(--raio-pilula);
+}
+.trilhaSecao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}

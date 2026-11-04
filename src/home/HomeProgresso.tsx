@@ -3,9 +3,12 @@ import { Capi } from '../componentes/Capi';
 import { ROTULO_NIVEL, Selo } from '../componentes/Selo';
 import { catalogo } from '../conteudo/index.ts';
 import { hoje } from '../engine/relogio.ts';
-import { dadosDaHome, ondeAprender, type DadosHome } from '../engine/telas.ts';
+import { dadosDaHome, dadosDoCurso, ondeAprender, type DadosHome } from '../engine/telas.ts';
+import { ehMobile } from '../layouts/mobile.ts';
+import { BannerUnidade, Trilha } from '../trilha/Trilha';
+import { nosDaUnidade } from '../trilha/nos.ts';
 import type { Estado } from '../storage/estado.ts';
-import { caderno } from '../stores/index.ts';
+import { caderno, estado as estadoSalvo } from '../stores/index.ts';
 import { abrirMeta } from '../stores/ui.ts';
 import estilos from './progresso.module.css';
 
@@ -273,106 +276,233 @@ function Chama() {
   );
 }
 
-function Lateral({ d }: { d: DadosHome }) {
+function CartaoOfensiva({ d }: { d: DadosHome }) {
   const dias = d.ofensiva.dias;
   const recorde = d.ofensiva.recorde;
-  const v = d.revisao.vencidos;
+  return (
+    <section class={`${estilos.cartaoLateral} ${estilos.ofensiva}`}>
+      <h2 class="so-leitor">Ofensiva</h2>
+      <div class={estilos.ofensivaTopo}>
+        <Chama />
+        <div class={estilos.ofensivaDias}>
+          <strong>
+            {dias} {dias === 1 ? 'dia seguido' : 'dias seguidos'}
+          </strong>
+          <span>
+            {d.ofensiva.emRisco ? 'Estude hoje para manter · ' : ''}Recorde: {recorde}{' '}
+            {recorde === 1 ? 'dia' : 'dias'}
+          </span>
+        </div>
+      </div>
+      <ol class={estilos.semana}>
+        {d.ofensiva.semana.map((s) => (
+          <li key={s.dia} class={s.estudou ? estilos.estudou : ''}>
+            <span class={estilos.bolinha} aria-hidden="true" />
+            <span aria-hidden="true">{LETRA_DO_DIA(s.dia)}</span>
+            <span class="so-leitor">
+              {NOME_DO_DIA(s.dia)}: {s.estudou ? 'estudou' : 'não estudou'}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
+function CartaoMeta({ d }: { d: DadosHome }) {
   const percentualMeta = Math.min(100, Math.round((d.meta.xp / d.meta.meta) * 100));
   return (
-    <aside class={estilos.lateral} aria-label="Seu dia">
-      <section class={`${estilos.cartaoLateral} ${estilos.ofensiva}`}>
-        <h2 class="so-leitor">Ofensiva</h2>
-        <div class={estilos.ofensivaTopo}>
-          <Chama />
-          <div class={estilos.ofensivaDias}>
-            <strong>
-              {dias} {dias === 1 ? 'dia seguido' : 'dias seguidos'}
-            </strong>
-            <span>
-              {d.ofensiva.emRisco ? 'Estude hoje para manter · ' : ''}Recorde: {recorde}{' '}
-              {recorde === 1 ? 'dia' : 'dias'}
-            </span>
-          </div>
-        </div>
-        <ol class={estilos.semana}>
-          {d.ofensiva.semana.map((s) => (
-            <li key={s.dia} class={s.estudou ? estilos.estudou : ''}>
-              <span class={estilos.bolinha} aria-hidden="true" />
-              <span aria-hidden="true">{LETRA_DO_DIA(s.dia)}</span>
-              <span class="so-leitor">
-                {NOME_DO_DIA(s.dia)}: {s.estudou ? 'estudou' : 'não estudou'}
-              </span>
-            </li>
-          ))}
-        </ol>
-      </section>
+    <section class={estilos.cartaoLateral}>
+      <div class={estilos.linhaTitulo}>
+        <h2>Meta de hoje</h2>
+        <button type="button" class={estilos.valorMeta} onClick={() => abrirMeta('mudar')}>
+          {d.meta.xp} / {d.meta.meta} XP<span class="so-leitor"> (mudar a meta)</span>
+        </button>
+      </div>
+      <div
+        class={estilos.trilhoMeta}
+        role="progressbar"
+        aria-label="Meta diária"
+        aria-valuenow={percentualMeta}
+        aria-valuemin={0}
+        aria-valuemax={100}
+      >
+        <div style={{ width: `${percentualMeta}%` }} />
+      </div>
+      <p class={estilos.nota}>
+        {d.meta.atingida ? 'Meta de hoje batida! ' : ''}Soma o XP de todos os cursos.
+      </p>
+    </section>
+  );
+}
 
-      <section class={estilos.cartaoLateral}>
-        <div class={estilos.linhaTitulo}>
-          <h2>Meta de hoje</h2>
-          <button type="button" class={estilos.valorMeta} onClick={() => abrirMeta('mudar')}>
-            {d.meta.xp} / {d.meta.meta} XP<span class="so-leitor"> (mudar a meta)</span>
-          </button>
-        </div>
-        <div
+function CartaoRevisao({ d }: { d: DadosHome }) {
+  const v = d.revisao.vencidos;
+  return (
+    <section class={estilos.cartaoLateral}>
+      <h2>Revisão de hoje</h2>
+      {v > 0 ? (
+        <>
+          <p class={estilos.texto}>
+            {v === 1
+              ? '1 conceito está quase sendo esquecido'
+              : `${v} conceitos estão quase sendo esquecidos`}
+            {d.revisao.cursos > 1 ? `, vindos dos seus ${d.revisao.cursos} cursos.` : '.'}
+          </p>
+          <Botao3D href="/revisar" variante="neutro" tamanho="pequeno" larga>
+            Revisar agora
+          </Botao3D>
+        </>
+      ) : (
+        <p class={estilos.texto}>Nada para revisar hoje</p>
+      )}
+    </section>
+  );
+}
+
+function CartaoCaderno({ d }: { d: DadosHome }) {
+  return (
+    <section class={estilos.cartaoLateral}>
+      <div class={estilos.linhaTitulo}>
+        <h2>Seu caderno</h2>
+        <span class={estilos.valorVerde}>
+          {d.caderno.total} {d.caderno.total === 1 ? 'conceito' : 'conceitos'}
+        </span>
+      </div>
+      {d.caderno.recentes.length > 0 && (
+        <ul class={estilos.recentes}>
+          {d.caderno.recentes.map((n) => (
+            <li key={n}>{n}</li>
+          ))}
+        </ul>
+      )}
+      <a href="/caderno" class={estilos.linkAzul}>
+        Abrir caderno
+      </a>
+    </section>
+  );
+}
+
+function Lateral({ d }: { d: DadosHome }) {
+  return (
+    <aside class={estilos.lateral} aria-label="Seu dia">
+      <CartaoOfensiva d={d} />
+      <CartaoMeta d={d} />
+      <CartaoRevisao d={d} />
+      <CartaoCaderno d={d} />
+    </aside>
+  );
+}
+
+/** Dois cartões lado a lado no topo da Home do celular: a meta de hoje e a revisão. */
+function Atalhos({ d }: { d: DadosHome }) {
+  const pct = Math.min(100, Math.round((d.meta.xp / d.meta.meta) * 100));
+  const v = d.revisao.vencidos;
+  return (
+    <div class={estilos.atalhos}>
+      <button type="button" class={estilos.atalho} onClick={() => abrirMeta('mudar')}>
+        <span class={`${estilos.atalhoTitulo} ${estilos.atalhoOuro}`}>Meta de hoje</span>
+        <span
           class={estilos.trilhoMeta}
           role="progressbar"
           aria-label="Meta diária"
-          aria-valuenow={percentualMeta}
+          aria-valuenow={pct}
           aria-valuemin={0}
           aria-valuemax={100}
         >
-          <div style={{ width: `${percentualMeta}%` }} />
-        </div>
-        <p class={estilos.nota}>
-          {d.meta.atingida ? 'Meta de hoje batida! ' : ''}Soma o XP de todos os cursos.
-        </p>
-      </section>
-
-      <section class={estilos.cartaoLateral}>
-        <h2>Revisão de hoje</h2>
-        {v > 0 ? (
-          <>
-            <p class={estilos.texto}>
-              {v === 1
-                ? '1 conceito está quase sendo esquecido'
-                : `${v} conceitos estão quase sendo esquecidos`}
-              {d.revisao.cursos > 1 ? `, vindos dos seus ${d.revisao.cursos} cursos.` : '.'}
-            </p>
-            <Botao3D href="/revisar" variante="neutro" tamanho="pequeno" larga>
-              Revisar agora
-            </Botao3D>
-          </>
-        ) : (
-          <p class={estilos.texto}>Nada para revisar hoje</p>
-        )}
-      </section>
-
-      <section class={estilos.cartaoLateral}>
-        <div class={estilos.linhaTitulo}>
-          <h2>Seu caderno</h2>
-          <span class={estilos.valorVerde}>
-            {d.caderno.total} {d.caderno.total === 1 ? 'conceito' : 'conceitos'}
-          </span>
-        </div>
-        {d.caderno.recentes.length > 0 && (
-          <ul class={estilos.recentes}>
-            {d.caderno.recentes.map((n) => (
-              <li key={n}>{n}</li>
-            ))}
-          </ul>
-        )}
-        <a href="/caderno" class={estilos.linkAzul}>
-          Abrir caderno
+          <span style={{ width: `${pct}%` }} />
+        </span>
+        <span class={estilos.atalhoNota}>
+          {d.meta.xp} / {d.meta.meta} XP<span class="so-leitor"> (mudar a meta)</span>
+        </span>
+      </button>
+      {v > 0 ? (
+        <a href="/revisar" class={estilos.atalho}>
+          <span class={`${estilos.atalhoTitulo} ${estilos.atalhoAzul}`}>Revisão</span>
+          <span class={estilos.atalhoNumero}>{v}</span>
+          <span class={estilos.atalhoNota}>{v === 1 ? 'conceito' : 'conceitos'} para revisar</span>
         </a>
-      </section>
-    </aside>
+      ) : (
+        <div class={estilos.atalho}>
+          <span class={`${estilos.atalhoTitulo} ${estilos.atalhoAzul}`}>Revisão</span>
+          <span class={estilos.atalhoNota}>Nada para revisar hoje</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Trilha da unidade atual e, embaixo, a próxima unidade ainda bloqueada. */
+function TrilhaDaHome({ d }: { d: DadosHome }) {
+  const curso = d.continuar
+    ? catalogo.cursos.find((c) => c.id === d.continuar?.cursoId)
+    : undefined;
+  if (!d.continuar || !curso) return null;
+  const dc = dadosDoCurso(curso, estadoSalvo.value, caderno.value, catalogo);
+  const i = Math.max(
+    0,
+    dc.unidades.findIndex((u) => u.numero === d.continuar?.unidade),
+  );
+  const atual = dc.unidades[i];
+  const proxima = dc.unidades[i + 1];
+  if (!atual) return null;
+  const nos = nosDaUnidade(atual);
+  const previa = proxima ? nosDaUnidade(proxima).slice(0, 2) : [];
+  return (
+    <section aria-label="Sua trilha" class={estilos.trilhaSecao}>
+      <BannerUnidade
+        numero={atual.numero}
+        titulo={atual.titulo}
+        estado="atual"
+        guia={`/c/${curso.id}`}
+      />
+      <Trilha nos={nos} />
+      {proxima && (
+        <>
+          <BannerUnidade
+            numero={proxima.numero}
+            titulo={proxima.titulo}
+            estado="bloqueada"
+            aviso={proxima.aviso}
+          />
+          <Trilha
+            nos={previa.map((n) => ({ ...n, tipo: 'bloqueada' as const }))}
+            inicio={nos.length}
+          />
+        </>
+      )}
+    </section>
+  );
+}
+
+function HomeMobile({ d }: { d: DadosHome }) {
+  return (
+    <div class={estilos.mobile}>
+      <h1 class="so-leitor">Bom te ver de novo!</h1>
+      <Atalhos d={d} />
+      {d.continuar ? (
+        <TrilhaDaHome d={d} />
+      ) : (
+        <section class={estilos.progressoCurso}>
+          <h2 style={{ margin: 0 }}>Tudo feito por enquanto</h2>
+          <p class={estilos.aviso}>
+            Você terminou as lições liberadas. Revise seus conceitos para não esquecer.
+          </p>
+        </section>
+      )}
+      {d.umCursoSo && <ProgressoNoCurso d={d} />}
+      <CartaoOfensiva d={d} />
+      {!d.umCursoSo && <ListaDeCursos d={d} />}
+      {!d.umCursoSo && <ParaExplorar d={d} />}
+      <CartaoCaderno d={d} />
+    </div>
   );
 }
 
 /** Home de quem já tem progresso (inclui a variante de um curso só). */
 export function HomeProgresso({ estado }: { estado: Estado }) {
   const d = dadosDaHome(estado, caderno.value, catalogo, hoje());
+  if (ehMobile.value) return <HomeMobile d={d} />;
   return (
     <div class={estilos.pagina}>
       <div class={estilos.principal}>

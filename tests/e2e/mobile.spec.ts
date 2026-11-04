@@ -74,7 +74,7 @@ test.describe('M12 · base mobile', () => {
   test('a lição tem só o X e a barra de progresso no topo', async ({ page }) => {
     await carregar(page, 'Em andamento');
     await page.goto('/');
-    await page.getByRole('link', { name: 'Continuar', exact: true }).first().click();
+    await page.getByRole('link', { name: /^Começar: / }).click();
     await expect(page.getByRole('button', { name: 'Sair da lição' })).toBeVisible();
     await expect(page.getByRole('progressbar', { name: /Unidade \d+ · Lição \d+/ })).toBeVisible();
     await expect(page.getByRole('list', { name: 'Fases da lição' })).toHaveCount(0);
@@ -85,7 +85,7 @@ test.describe('M12 · base mobile', () => {
   test('a janela de sair da lição vira uma folha colada embaixo', async ({ page }) => {
     await carregar(page, 'Em andamento');
     await page.goto('/');
-    await page.getByRole('link', { name: 'Continuar', exact: true }).first().click();
+    await page.getByRole('link', { name: /^Começar: / }).click();
     await page.getByRole('button', { name: 'Sair da lição' }).click();
     const janela = page.getByRole('dialog', { name: 'Sair da lição?' });
     await expect(janela).toBeVisible();
