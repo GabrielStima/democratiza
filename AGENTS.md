@@ -6,7 +6,7 @@ Guia para quem escreve código neste repositório (pessoas e agentes de IA). Lei
 
 Documentos de referência (leia na ordem):
 1. [`ARQUITETURA.md`](ARQUITETURA.md): o quê e por quê (stack, conteúdo, regras de ensino, rotas, armazenamento).
-2. [`ESPECIFICACAO.md`](ESPECIFICACAO.md): o que entregar em cada milestone (M0 a M12), tela a tela, e a definição de pronto.
+2. [`ESPECIFICACAO.md`](ESPECIFICACAO.md): o que entregar em cada milestone (M0 a M17), tela a tela, e a definição de pronto.
 
 Não há fases: todo o planejamento é o MVP. Trabalhe um milestone por vez, em ordem.
 
@@ -63,7 +63,7 @@ clean-appledouble.mjs   remove arquivos ._* criados pelo macOS
 - Sem `console.log` esquecido, código comentado ou TODO sem dono.
 
 **Acessibilidade**
-- Tudo funciona só com teclado (Tab, Enter, Espaço, Esc), com foco visível.
+- Tudo funciona só com teclado (Tab, Enter, Espaço, Esc), com foco visível, e por toque no celular (nada depende só de `hover` ou de gesto).
 - Janelas prendem o foco e fecham com Esc. Estados não dependem só de cor.
 - axe-core sem problema sério; respeitar `prefers-reduced-motion`.
 
@@ -71,9 +71,11 @@ clean-appledouble.mjs   remove arquivos ._* criados pelo macOS
 - Lógica nova ganha teste Vitest; fluxo novo ganha ao menos um teste Playwright.
 - Cada regra de validação do build tem uma fixture em `tests/fixtures/`.
 - Escreva o teste junto com a mudança, no mesmo commit.
+- Do M12 em diante, tela nova ou alterada também é conferida em 390 px: sem rolagem horizontal e sem nada cortado.
 
 **Design**
-- A referência visual é o arquivo *"Democratiza — Design"*. Confira a tela em 1440 px; entregue bem de 1024 px para cima.
+- A referência visual é o arquivo *"Democratiza — Design"*, com as páginas *Site (desktop)* e *Site (mobile)*. Confira a tela desktop em 1440 px (bem de 1024 px para cima) e, do M12 em diante, a tela mobile em 390 px (bem de 360 a 767 px).
+- Abaixo de 1024 px vale o layout mobile (barra do topo + barra de abas); de 1024 px para cima, o desktop. Alvos de toque de no mínimo 44 px, e respeito à área segura (`env(safe-area-inset-*)`) em tudo que fica fixo na borda da tela.
 - Se o código e o design divergirem, pergunte antes de decidir.
 
 ## 5. Git: commits atômicos
