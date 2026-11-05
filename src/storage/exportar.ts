@@ -109,3 +109,34 @@ export function baixarBackup(backup: Backup, dia: string): void {
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
+
+export type DestinoBackup = 'compartilhado' | 'baixado' | 'cancelado';
+
+interface Compartilhavel {
+  canShare?: (dados: ShareData) => boolean;
+  share?: (dados: ShareData) => Promise<void>;
+}
+
+/**
+ * Oferece o backup pelo compartilhamento do aparelho (Web Share API). Sem esse recurso, ou se ele
+ * falhar por outro motivo que não seja a pessoa fechar a folha, baixa o arquivo como sempre.
+ */
+export async function compartilharBackup(
+  backup: Backup,
+  dia: string,
+  nav: Compartilhavel = navigator,
+): Promise<DestinoBackup> {
+  const arquivo = new File([JSON.stringify(backup, null, 2)], nomeDoArquivo(dia), {
+    type: 'application/json',
+  });
+  if (nav.share && nav.canShare?.({ files: [arquivo] })) {
+    try {
+      await nav.share({ files: [arquivo], title: 'Backup do Democratiza' });
+      return 'compartilhado';
+    } catch (erro) {
+      if (erro instanceof DOMException && erro.name === 'AbortError') return 'cancelado';
+    }
+  }
+  baixarBackup(backup, dia);
+  return 'baixado';
+}
