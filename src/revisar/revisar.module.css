@@ -378,3 +378,78 @@
   margin: 0 auto;
   text-align: center;
 }
+
+/* Celular: cartão verde, forças em linha e próximas revisões em cartões */
+.verdeForte {
+  background: var(--verde-botao);
+  border-bottom: 6px solid var(--verde-mata);
+  color: #fff;
+}
+.verdeForte .rotuloDestaque,
+.verdeForte p {
+  color: #fff;
+}
+.verdeForte .destaqueTexto button {
+  min-height: 0;
+  padding: 14px 28px;
+  border-color: #fff;
+  border-bottom-color: var(--verde-borda-botao);
+  color: var(--verde-mata);
+}
+.passosEmLinha {
+  flex-direction: row;
+  gap: var(--espaco-2);
+}
+.passosEmLinha li {
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  text-align: center;
+  font-size: 12px;
+}
+.proximasCartoes {
+  flex-direction: row;
+  gap: var(--espaco-2);
+}
+.proximasCartoes li {
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: var(--espaco-3) var(--espaco-2);
+  border: 2px solid var(--borda);
+  border-bottom-width: 4px;
+  border-radius: var(--raio-m);
+  text-align: center;
+}
+@media (max-width: 1023.98px) {
+  .destaque {
+    padding: var(--espaco-5) var(--espaco-4);
+    gap: var(--espaco-4);
+  }
+  .destaqueTexto {
+    flex-basis: 220px;
+  }
+  .destaqueTexto h2 {
+    font-size: 28px;
+  }
+  .verdeForte {
+    position: relative;
+  }
+  .verdeForte .destaqueTexto {
+    flex-basis: 100%;
+  }
+  .verdeForte .rotuloDestaque,
+  .verdeForte h2 {
+    padding-right: 68px;
+  }
+  .verdeForte .capi {
+    position: absolute;
+    top: var(--espaco-5);
+    right: var(--espaco-4);
+  }
+  .campo {
+    min-height: 50px;
+  }
+}

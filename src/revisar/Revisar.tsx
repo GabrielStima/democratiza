@@ -6,6 +6,7 @@ import { Forca } from '../componentes/Forca';
 import { catalogo } from '../conteudo/index.ts';
 import { hoje } from '../engine/relogio.ts';
 import { MAX_SESSAO } from '../engine/revisao.ts';
+import { ehMobile } from '../layouts/mobile.ts';
 import {
   PASSOS_DE_FORCA,
   dadosDaRevisao,
@@ -23,12 +24,13 @@ function ComoFunciona() {
         Cada conceito tem uma força de 1 a 5. Acertou, ele fica mais forte e demora mais para
         voltar. Errou, volta para o começo.
       </p>
-      <ul class={estilos.passos}>
+      <ul class={`${estilos.passos} ${ehMobile.value ? estilos.passosEmLinha : ''}`}>
         {PASSOS_DE_FORCA.map((p) => (
           <li key={p.caixa}>
             <span class={estilos.numeroPasso}>{p.caixa}</span>
             <span>
-              volta em <strong>{p.quando}</strong>
+              <span class={ehMobile.value ? 'so-leitor' : undefined}>volta em </span>
+              <strong>{p.quando}</strong>
             </span>
           </li>
         ))}
@@ -47,8 +49,8 @@ function Proximas({ d, comoTabela = false }: { d: DadosRevisao; comoTabela?: boo
       {d.proximas.length === 0 ? (
         <p>Nenhum conceito para revisar nos próximos dias.</p>
       ) : (
-        <ul class={estilos.proximas}>
-          {d.proximas.map((p) => (
+        <ul class={`${estilos.proximas} ${ehMobile.value ? estilos.proximasCartoes : ''}`}>
+          {(ehMobile.value ? d.proximas.slice(0, 3) : d.proximas).map((p) => (
             <li key={p.rotulo}>
               <span>{p.rotulo}</span>
               <strong>
@@ -140,6 +142,7 @@ export function Revisar() {
   const d = useMemo(() => dadosDaRevisao(caderno.value, catalogo, hoje()), [caderno.value]);
   const { route } = useLocation();
   const emDia = d.total === 0;
+  const mobile = ehMobile.value;
 
   return (
     <div class={estilos.pagina}>
@@ -157,11 +160,14 @@ export function Revisar() {
               <p>{proximoTexto(d)}</p>
             </div>
             <span class={estilos.capi}>
-              <Capi tamanho={140} rounded />
+              <Capi tamanho={mobile ? 72 : 140} rounded />
             </span>
           </section>
         ) : (
-          <section class={`${estilos.destaque} ${estilos.azul}`} aria-labelledby="h-dia">
+          <section
+            class={`${estilos.destaque} ${mobile ? estilos.verdeForte : estilos.azul}`}
+            aria-labelledby="h-dia"
+          >
             <div class={estilos.destaqueTexto}>
               <p class={estilos.rotuloDestaque}>Revisão de hoje</p>
               <h2 id="h-dia">
@@ -172,12 +178,12 @@ export function Revisar() {
                 · cerca de {d.minutos} {d.minutos === 1 ? 'minuto' : 'minutos'} · cada acerto vale
                 XP
               </p>
-              <Botao3D variante="neutro" onClick={() => route('/revisar/sessao')}>
+              <Botao3D variante="neutro" larga={mobile} onClick={() => route('/revisar/sessao')}>
                 Começar revisão
               </Botao3D>
             </div>
             <span class={estilos.capi}>
-              <Capi tamanho={140} />
+              <Capi tamanho={mobile ? 54 : 140} rounded={mobile} />
             </span>
           </section>
         )}
