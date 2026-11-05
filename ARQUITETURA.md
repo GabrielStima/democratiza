@@ -13,7 +13,7 @@
 | Público | Brasileiros leigos em política, começando do zero |
 | Plataforma | **Desktop primeiro.** Layout responsivo, mas o app pensado para celular fica para depois |
 | Proposta | 5 a 7 minutos por dia: primeiro entender o conceito, depois praticar, sempre com fonte específica |
-| Custo | ~R$ 40/ano (só o domínio). Site estático em hospedagem gratuita |
+| Custo | Só o domínio (R$ 133,98 por 2 anos na compra, com desconto de lançamento; conferir o valor da renovação). Site estático em hospedagem gratuita |
 | Backend | **Nenhum.** Tudo roda no navegador; progresso salvo localmente |
 | Linha editorial | Acadêmica e apartidária. Quem está começando aprende fatos, regras e consensos; debates entre correntes só aparecem nos Módulos (seção 4) |
 | Conteúdo | **Dirigido por pastas:** depois que o código estiver pronto, criar curso, unidade ou lição é só adicionar pastas e JSONs em `content/` (seção 6) |
@@ -452,7 +452,7 @@ As regras completas estão no [`AGENTS.md`](AGENTS.md). Em resumo: **commits at�
 
 ## 11. Roadmap
 
-Não há fases: **todo o planejamento é o MVP**. O trabalho está dividido em 13 milestones (M0 a M12), na ordem descrita na [`ESPECIFICACAO.md`](ESPECIFICACAO.md). As prévias do Cloudflare mostram o progresso desde o M0; o site só é apontado para `democratiza.app.br` no M12.
+Não há fases: **todo o planejamento é o MVP**. O trabalho está dividido em 18 milestones (M0 a M17), na ordem descrita na [`ESPECIFICACAO.md`](ESPECIFICACAO.md). As prévias do Cloudflare mostram o progresso desde o M0; o site só é apontado para `democratiza.org` no M17.
 
 | Bloco | Milestones | O que entrega |
 |---|---|---|
@@ -481,7 +481,7 @@ Não há fases: **todo o planejamento é o MVP**. O trabalho está dividido em 1
 |---|---|
 | Framework | ✅ Preact |
 | Hospedagem | ✅ Cloudflare Pages |
-| Domínio | ✅ democratiza.app.br (registro.br, cerca de R$ 40/ano) |
+| Domínio | ✅ democratiza.org, comprado na Hostinger, com o DNS no Cloudflare (nameservers do Cloudflare). Trocou o `.app.br` porque o Registro.br não deixou registrar: o CPF já estava vinculado à Hostinger |
 | Quem revisa o conteúdo | ✅ Gabriel + IA |
 | Código aberto | ✅ Repositório público no GitHub |
 | Organização | ✅ Curso → Unidade → Lição; cursos em três níveis (Introdução, Aprofundamentos, Módulos); conceitos num banco único |

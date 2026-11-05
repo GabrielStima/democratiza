@@ -2,7 +2,7 @@
 
 Guia para quem escreve código neste repositório (pessoas e agentes de IA). Leia antes de mexer em qualquer coisa.
 
-**Democratiza** é um site gratuito, no estilo Duolingo, que ensina política a brasileiros. É estático, sem backend; o progresso fica no navegador. Mascote: Capi. Domínio: democratiza.app.br.
+**Democratiza** é um site gratuito, no estilo Duolingo, que ensina política a brasileiros. É estático, sem backend; o progresso fica no navegador. Mascote: Capi. Domínio: democratiza.org.
 
 Documentos de referência (leia na ordem):
 1. [`ARQUITETURA.md`](ARQUITETURA.md): o quê e por quê (stack, conteúdo, regras de ensino, rotas, armazenamento).

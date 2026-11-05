@@ -183,7 +183,7 @@ Página *Site (mobile)*. Cada prancha tem o mesmo nome da versão desktop; a tab
 - Cloudflare Pages ligado ao repositório: prévia por branch, `main` publica em `*.pages.dev`.
 
 **Tarefas suas (fora do código)**
-- Registrar `democratiza.app.br` no Registro.br, se ainda não foi feito. O domínio só é apontado para o site no M17.
+- Registrar `democratiza.org` na Hostinger, se ainda não foi feito, e colocar o DNS no Cloudflare (adicionar o site no Cloudflare e trocar os nameservers na Hostinger). O domínio só é apontado para o site no M17.
 - Criar o repositório público e a conta no Cloudflare.
 
 #### Tela · Guia de estilo (só dev)
@@ -621,17 +621,17 @@ Página *Site (mobile)*. Cada prancha tem o mesmo nome da versão desktop; a tab
 ---
 
 ### M17 · Lançamento  `[M]`
-**Objetivo:** o site no ar, em `democratiza.app.br`, com conteúdo real.
+**Objetivo:** o site no ar, em `democratiza.org`, com conteúdo real.
 
 **Entregas**
 - **Conteúdo real:** ao menos a primeira unidade do "Comece por aqui" escrita, com as fontes conferidas à mão e `status: "revisado"`. As pastas Lorem que restarem são apagadas.
-- **Domínio:** apontar `democratiza.app.br` para o Cloudflare Pages.
+- **Domínio:** apontar `democratiza.org` para o Cloudflare Pages (Custom domains no projeto; como o DNS já está no Cloudflare, os registros são criados sozinhos).
 - **Acessibilidade e desempenho:** Lighthouse CI, em desktop e em mobile, com nota ≥ 90 em Desempenho e Acessibilidade nas telas principais; revisão com leitor de tela na lição inteira; `prefers-reduced-motion` respeitado.
 - **Medição e suporte:** Cloudflare Web Analytics (sem cookies); texto do link "Sugerir correção" revisado.
 - **Teste final:** o fluxo completo do ARQUITETURA, seção 10, rodando no Playwright contra o site publicado, em desktop e em 390 px.
 - **Divulgação:** ver seção 8.
 
-**Pronto quando:** qualquer pessoa abre `democratiza.app.br`, faz uma lição real, volta no dia seguinte e revisa.
+**Pronto quando:** qualquer pessoa abre `democratiza.org`, faz uma lição real, volta no dia seguinte e revisa.
 
 ---
 
