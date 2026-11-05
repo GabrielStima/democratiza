@@ -63,8 +63,15 @@ test.describe('debate entre correntes (com rascunhos ligados)', () => {
 
   test('responder só com o teclado e terminar a lição', async ({ page }) => {
     await ateODebate(page);
+    // Ao trocar de pergunta o app leva o foco ao conteúdo novo; só depois o teclado é da pessoa.
+    await expect(page.locator('main [tabindex="-1"]')).toBeFocused();
     await page.getByLabel('Leitura lorem (1990)').focus();
     await page.keyboard.press('Space');
+    // Espera a escolha chegar ao botão: apertar Enter antes disso não faz nada.
+    await expect(page.getByRole('button', { name: 'Verificar' })).not.toHaveAttribute(
+      'aria-disabled',
+      'true',
+    );
     await page.getByRole('button', { name: 'Verificar' }).focus();
     await page.keyboard.press('Enter');
     await expect(page.getByText(/Mandou bem!/)).toBeVisible();
