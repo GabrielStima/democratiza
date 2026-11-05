@@ -17,7 +17,14 @@ import {
   type ArmazemCaderno,
 } from '../storage/caderno.ts';
 import { estadoInicial, type Caderno, type Estado, type MetaDiaria } from '../storage/estado.ts';
-import { baixarBackup, gerarBackup, lerBackup, type LeituraBackup } from '../storage/exportar.ts';
+import {
+  baixarBackup,
+  compartilharBackup,
+  gerarBackup,
+  lerBackup,
+  type DestinoBackup,
+  type LeituraBackup,
+} from '../storage/exportar.ts';
 import { aplicarRenomeadosCaderno, type Renomeados } from '../storage/migracoes.ts';
 import {
   apagarEstado,
@@ -163,11 +170,19 @@ export async function apagarProgresso(): Promise<void> {
   }
 }
 
-/** Salva o backup como arquivo .json. */
-export function salvarBackup(): void {
+/**
+ * Salva o backup como arquivo .json. No celular (`compartilhar`), abre o compartilhamento do
+ * aparelho quando ele existir; no resto, baixa o arquivo.
+ */
+export async function salvarBackup(
+  opcoes: { compartilhar?: boolean } = {},
+): Promise<DestinoBackup> {
   const e = estado.value;
-  if (!e) return;
-  baixarBackup(gerarBackup(e, caderno.value, agora().toISOString()), hoje());
+  if (!e) return 'cancelado';
+  const backup = gerarBackup(e, caderno.value, agora().toISOString());
+  if (opcoes.compartilhar) return compartilharBackup(backup, hoje());
+  baixarBackup(backup, hoje());
+  return 'baixado';
 }
 
 /** Valida o texto de um backup sem mexer em nada (para mostrar o resumo antes de confirmar). */

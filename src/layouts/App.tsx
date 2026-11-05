@@ -52,7 +52,7 @@ export function App({ children }: { children: ComponentChildren }) {
               tamanho="pequeno"
               larga
               onClick={() => {
-                salvarBackup();
+                void salvarBackup();
                 mostrarAviso('Backup salvo. Guarde o arquivo em um lugar seguro.');
               }}
             >

@@ -4,6 +4,7 @@ import { Capi } from '../componentes/Capi';
 import { Selo } from '../componentes/Selo';
 import { mostrarAviso } from '../componentes/avisos.ts';
 import { bibliografia } from '../conteudo/index.ts';
+import { ehMobile } from '../layouts/mobile.ts';
 import { REPOSITORIO } from '../licao/fluxo.ts';
 import {
   apagarProgresso,
@@ -54,8 +55,9 @@ function SeusDados() {
   const [motivo, setMotivo] = useState('');
   const temProgresso = estado.value !== null;
 
-  function salvar() {
-    salvarBackup();
+  async function salvar() {
+    const destino = await salvarBackup({ compartilhar: ehMobile.value });
+    if (destino === 'cancelado') return;
     mostrarAviso('Backup salvo. Guarde o arquivo em um lugar seguro.');
   }
 
@@ -101,7 +103,7 @@ function SeusDados() {
         perder nada se limpar o navegador, salve um arquivo de backup e abra ele no outro lugar.
       </p>
       <div class={estilos.botoes}>
-        <Botao3D desativado={!temProgresso} onClick={salvar}>
+        <Botao3D desativado={!temProgresso} onClick={() => void salvar()}>
           Salvar backup
         </Botao3D>
         <Botao3D variante="neutro" onClick={() => entrada.current?.click()}>
@@ -132,7 +134,7 @@ function SeusDados() {
       />
       <JanelaApagar
         aberta={janela === 'apagar'}
-        aoSalvarAntes={salvar}
+        aoSalvarAntes={() => void salvar()}
         aoConfirmar={() => void apagar()}
         aoFechar={() => setJanela('nenhuma')}
       />
