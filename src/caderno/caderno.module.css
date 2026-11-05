@@ -319,3 +319,62 @@
   letter-spacing: 0.6px;
   text-transform: uppercase;
 }
+
+/* Celular: busca larga, filtros que rolam de lado e cartão aberto no próprio lugar */
+@media (max-width: 1023.98px) {
+  .cabecaComBusca {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--espaco-4);
+  }
+  .busca {
+    flex: none;
+    width: 100%;
+  }
+  .busca input {
+    min-height: 50px;
+  }
+  .filtros {
+    flex-wrap: nowrap;
+    margin-inline: calc(var(--espaco-4) * -1);
+    padding: 2px var(--espaco-4) 6px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+  .filtros::-webkit-scrollbar {
+    display: none;
+  }
+  .filtro {
+    flex: none;
+    scroll-snap-align: start;
+    white-space: nowrap;
+  }
+  .corpo {
+    display: block;
+  }
+  .lista {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-3);
+  }
+  .item {
+    height: auto;
+  }
+  .item[aria-expanded='true'] {
+    border-color: var(--verde-ipe);
+  }
+  .lista .cartao {
+    margin-top: var(--espaco-2);
+    padding: var(--espaco-4);
+  }
+  .cartao h2 {
+    font-size: 24px;
+  }
+  .acoes {
+    flex-direction: column;
+  }
+  .acoes > * {
+    width: 100%;
+  }
+}

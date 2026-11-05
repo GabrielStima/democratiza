@@ -11,6 +11,7 @@ import {
   itensDoCaderno,
   type ConceitoDoCaderno,
 } from '../engine/telasRevisao.ts';
+import { ehMobile } from '../layouts/mobile.ts';
 import { ReverExplicacao } from '../licao/Janelas';
 import { partirIdLicao } from '../engine/progresso.ts';
 import { caderno } from '../stores/index.ts';
@@ -20,7 +21,7 @@ function CursoDoConceito({ c }: { c: ConceitoDoCaderno }) {
   return <span class={`${estilos.curso} ${estilos[c.nivel]}`}>{c.cursoTitulo}</span>;
 }
 
-function CartaoDoConceito({ c }: { c: ConceitoDoCaderno }) {
+function CartaoDoConceito({ c, id }: { c: ConceitoDoCaderno; id?: string }) {
   const [cards, setCards] = useState<Card[] | null>(null);
   const [aberta, setAberta] = useState(false);
   const [falhou, setFalhou] = useState(false);
@@ -43,7 +44,7 @@ function CartaoDoConceito({ c }: { c: ConceitoDoCaderno }) {
   }
 
   return (
-    <article class={estilos.cartao} aria-label="Cartão do conceito">
+    <article id={id} class={estilos.cartao} aria-label="Cartão do conceito">
       <div class={estilos.cartaoTopo}>
         <CursoDoConceito c={c} />
         <span class={estilos.forcaTexto}>Força {c.caixa} de 5</span>
@@ -136,11 +137,13 @@ export function Caderno() {
   const [busca, setBusca] = useState('');
   const [cursoId, setCursoId] = useState<string | null>(null);
   const [escolhido, setEscolhido] = useState<string | null>(null);
+  const mobile = ehMobile.value;
 
   if (todos.length === 0) return <CadernoVazio />;
 
   const lista = filtrarCaderno(todos, busca, cursoId);
-  const selecionado = lista.find((c) => c.id === escolhido) ?? lista[0];
+  // No desktop o primeiro da lista já vem aberto; no celular tudo começa fechado (acordeão).
+  const selecionado = lista.find((c) => c.id === escolhido) ?? (mobile ? undefined : lista[0]);
 
   return (
     <div class={estilos.pagina}>
@@ -148,8 +151,7 @@ export function Caderno() {
         <header class={estilos.cabeca}>
           <h1>Seu caderno</h1>
           <p>
-            {todos.length} {todos.length === 1 ? 'conceito aprendido' : 'conceitos aprendidos'}.
-            Clique em um para ver o cartão completo.
+            {`${todos.length} ${todos.length === 1 ? 'conceito aprendido' : 'conceitos aprendidos'}. ${mobile ? 'Toque' : 'Clique'} em um para ver o cartão completo.`}
           </p>
         </header>
         <div role="search" class={estilos.busca}>
@@ -192,8 +194,13 @@ export function Caderno() {
                 <button
                   type="button"
                   class={estilos.item}
-                  aria-pressed={selecionado?.id === c.id}
-                  onClick={() => setEscolhido(c.id)}
+                  {...(mobile
+                    ? {
+                        'aria-expanded': selecionado?.id === c.id,
+                        'aria-controls': `cartao-${c.id}`,
+                      }
+                    : { 'aria-pressed': selecionado?.id === c.id })}
+                  onClick={() => setEscolhido(mobile && escolhido === c.id ? null : c.id)}
                 >
                   <span class={estilos.nome}>{c.nome}</span>
                   <span class={estilos.definicao}>{c.definicao}</span>
@@ -202,10 +209,13 @@ export function Caderno() {
                     <Forca caixa={c.caixa} />
                   </span>
                 </button>
+                {mobile && selecionado?.id === c.id && (
+                  <CartaoDoConceito key={c.id} id={`cartao-${c.id}`} c={c} />
+                )}
               </li>
             ))}
           </ul>
-          {selecionado && <CartaoDoConceito key={selecionado.id} c={selecionado} />}
+          {!mobile && selecionado && <CartaoDoConceito key={selecionado.id} c={selecionado} />}
         </div>
       )}
     </div>
