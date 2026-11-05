@@ -235,3 +235,19 @@
   gap: var(--espaco-3);
   margin-top: var(--espaco-2);
 }
+
+/* Celular: botões em largura total e janelas viradas em folhas de baixo */
+@media (max-width: 1023.98px) {
+  .botoes,
+  .acoes {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .acoes {
+    width: 100%;
+  }
+  .botoes > *,
+  .acoes > * {
+    width: 100%;
+  }
+}
