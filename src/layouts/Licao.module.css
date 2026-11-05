@@ -150,11 +150,14 @@
     display: none;
   }
   .rodapeInterno > :not(:last-child) {
-    flex: none;
+    flex: 0 1 auto;
     min-width: 112px;
+    padding-inline: 20px;
   }
   .rodapeInterno > :last-child {
-    flex: 1;
+    flex: 1 1 0;
+    min-width: 0;
+    padding-inline: 16px;
   }
   .feedback {
     padding: var(--espaco-4) var(--espaco-4) 0;
