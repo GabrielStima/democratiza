@@ -126,7 +126,7 @@ function LicaoCarregada({ id, licao, posicao }: { id: string; licao: Licao; posi
       return;
     }
     window.scrollTo(0, 0);
-    topo.current?.focus();
+    topo.current?.focus({ preventScroll: true });
   }, [indice]);
 
   useEscSair(() => setSaindo(true), saindo);

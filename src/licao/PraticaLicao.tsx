@@ -155,7 +155,7 @@ export function PraticaLicao({ id, licao, posicao, salvo, palpite, aoVoltar }: P
       return;
     }
     window.scrollTo(0, 0);
-    topo.current?.focus();
+    topo.current?.focus({ preventScroll: true });
   }, [feedback === null, vendoErros, conclusao === null]);
 
   function verificar() {
