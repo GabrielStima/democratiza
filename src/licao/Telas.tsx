@@ -1,5 +1,7 @@
 import { BarraProgresso } from '../componentes/BarraProgresso';
 import { Capi } from '../componentes/Capi';
+import { CartaoResultado, ResultadoEmLinha } from '../componentes/CartaoResultado';
+import { ehMobile } from '../layouts/mobile.ts';
 import type { Exercicio } from '../content-schema/exercicio.ts';
 import estilos from './licao.module.css';
 import { ArgumentoDoDebate, QuadroDasLeituras, SeloDebate } from './Debate';
@@ -33,6 +35,7 @@ export function PerguntaPratica({
   aoRever: () => void;
 }) {
   const ap = apresentacao;
+  const mobile = ehMobile.value;
   return (
     <section>
       <div class={estilos.cabecaPratica}>
@@ -45,12 +48,22 @@ export function PerguntaPratica({
           </button>
         )}
       </div>
-      <div class={estilos.barra}>
-        <BarraProgresso valor={(feitos / total) * 100} rotulo="Progresso da prática" />
-      </div>
-      {ap.forma === 'opcoes' && ap.balao ? (
-        <div class={novos.balaoLinha}>
-          <Capi tamanho={110} alt="" />
+      {!mobile && (
+        <div class={estilos.barra}>
+          <BarraProgresso valor={(feitos / total) * 100} rotulo="Progresso da prática" />
+        </div>
+      )}
+      {mobile && !(ap.forma === 'opcoes' && ap.balao) ? (
+        <div class={`${novos.balaoLinha} ${novos.balaoCompacto}`}>
+          <Capi tamanho={72} alt="" />
+          <div class={novos.balao}>
+            {ap.forma === 'opcoes' && ap.debate && <SeloDebate />}
+            <h1>{ap.enunciado}</h1>
+          </div>
+        </div>
+      ) : ap.forma === 'opcoes' && ap.balao ? (
+        <div class={`${novos.balaoLinha} ${mobile ? novos.balaoCompacto : ''}`}>
+          <Capi tamanho={mobile ? 72 : 110} alt="" />
           <div class={novos.balao}>
             <span class={novos.balaoTopo}>{ap.balao}</span>
             <h1>{ap.enunciado}</h1>
@@ -178,29 +191,54 @@ export interface DadosConcluida {
   cursosLiberados: string[];
 }
 
+const CONFETES = ['verde', 'ouro', 'azul', 'coral', 'ouro', 'verde', 'azul', 'coral'] as const;
+
 export function LicaoConcluida({ d, nome }: { d: DadosConcluida; nome: string }) {
+  const mobile = ehMobile.value;
   return (
     <section class={estilos.concluida}>
-      <Capi tamanho={120} />
-      <h1 class={estilos.titulo}>Lição concluída!</h1>
+      {mobile ? (
+        <div class={estilos.celebracao}>
+          {/* Confete só decora: some para o leitor de tela e para quem pede menos movimento. */}
+          <span class={estilos.confetes} aria-hidden="true">
+            {CONFETES.map((cor, i) => (
+              <span key={i} class={`${estilos.confete} ${estilos[`confete-${cor}`]}`} />
+            ))}
+          </span>
+          <span class={estilos.circuloCapi}>
+            <Capi tamanho={112} rounded />
+          </span>
+        </div>
+      ) : (
+        <Capi tamanho={120} />
+      )}
+      <h1 class={`${estilos.titulo} ${mobile ? estilos.tituloOuro : ''}`}>Lição concluída!</h1>
       <p class={estilos.texto}>{nome}</p>
       {d.refeita && <p class={estilos.aviso}>Lição refeita. O XP só conta na primeira vez.</p>}
-      <ul class={estilos.numeros}>
-        <li class={estilos.numero}>
-          <span class={estilos.numeroValor}>{d.xpGanho}</span>
-          <span class={estilos.numeroRotulo}>XP ganho</span>
-        </li>
-        <li class={estilos.numero}>
-          <span class={estilos.numeroValor}>
-            {d.acertos} de {d.total}
-          </span>
-          <span class={estilos.numeroRotulo}>Acertos</span>
-        </li>
-        <li class={estilos.numero}>
-          <span class={estilos.numeroValor}>{d.tempo}</span>
-          <span class={estilos.numeroRotulo}>Tempo</span>
-        </li>
-      </ul>
+      {mobile ? (
+        <ResultadoEmLinha>
+          <CartaoResultado rotulo="Total de XP" valor={String(d.xpGanho)} cor="ouro" />
+          <CartaoResultado rotulo="Acertos" valor={`${d.acertos} de ${d.total}`} cor="verde" />
+          <CartaoResultado rotulo="Tempo" valor={d.tempo} cor="azul" />
+        </ResultadoEmLinha>
+      ) : (
+        <ul class={estilos.numeros}>
+          <li class={estilos.numero}>
+            <span class={estilos.numeroValor}>{d.xpGanho}</span>
+            <span class={estilos.numeroRotulo}>XP ganho</span>
+          </li>
+          <li class={estilos.numero}>
+            <span class={estilos.numeroValor}>
+              {d.acertos} de {d.total}
+            </span>
+            <span class={estilos.numeroRotulo}>Acertos</span>
+          </li>
+          <li class={estilos.numero}>
+            <span class={estilos.numeroValor}>{d.tempo}</span>
+            <span class={estilos.numeroRotulo}>Tempo</span>
+          </li>
+        </ul>
+      )}
       {d.novos.length > 0 && (
         <>
           <h2 class={estilos.secao}>

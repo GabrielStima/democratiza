@@ -276,3 +276,16 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* Celular: pergunta num balão ao lado da Capi */
+.balaoCompacto {
+  align-items: center;
+  gap: var(--espaco-3);
+}
+.balaoCompacto .balao {
+  padding: 14px 16px;
+  border-radius: 20px 20px 20px 6px;
+}
+.balaoCompacto .balao h1 {
+  font-size: 22px;
+}

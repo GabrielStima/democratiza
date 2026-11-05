@@ -455,3 +455,118 @@
 .concluida img {
   margin: 0 auto;
 }
+
+/* Celular: lição concluída (comemoração) */
+.celebracao {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: var(--espaco-4) 0 var(--espaco-3);
+}
+.circuloCapi {
+  display: grid;
+  place-items: center;
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  background: var(--amarelo-claro);
+  box-shadow: 0 6px 0 var(--amarelo-ouro);
+}
+.confetes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.confete {
+  position: absolute;
+  width: 10px;
+  height: 16px;
+  border-radius: 3px;
+  animation: cair 2.4s ease-in-out infinite alternate;
+}
+.confete:nth-child(1) {
+  top: 4%;
+  left: 12%;
+  transform: rotate(20deg);
+}
+.confete:nth-child(2) {
+  top: 18%;
+  left: 26%;
+  transform: rotate(-30deg);
+  animation-delay: 0.3s;
+}
+.confete:nth-child(3) {
+  top: 2%;
+  left: 40%;
+  transform: rotate(55deg);
+  animation-delay: 0.6s;
+}
+.confete:nth-child(4) {
+  top: 14%;
+  right: 24%;
+  transform: rotate(-15deg);
+  animation-delay: 0.2s;
+}
+.confete:nth-child(5) {
+  top: 4%;
+  right: 10%;
+  transform: rotate(40deg);
+  animation-delay: 0.5s;
+}
+.confete:nth-child(6) {
+  top: 56%;
+  left: 8%;
+  transform: rotate(-50deg);
+  animation-delay: 0.1s;
+}
+.confete:nth-child(7) {
+  top: 60%;
+  right: 8%;
+  transform: rotate(25deg);
+  animation-delay: 0.4s;
+}
+.confete:nth-child(8) {
+  top: 84%;
+  left: 22%;
+  transform: rotate(-20deg);
+  animation-delay: 0.7s;
+}
+.confete-verde {
+  background: var(--verde-ipe);
+}
+.confete-ouro {
+  background: var(--amarelo-ouro);
+}
+.confete-azul {
+  background: var(--azul-anil);
+}
+.confete-coral {
+  background: var(--coral);
+}
+@keyframes cair {
+  to {
+    translate: 0 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .confete {
+    animation: none;
+  }
+}
+.tituloOuro {
+  color: var(--amarelo-icone);
+}
+@media (max-width: 1023.98px) {
+  .contador {
+    min-width: 0;
+  }
+  .linkRever {
+    flex: none;
+    min-height: 44px;
+    padding: 0 var(--espaco-1);
+    white-space: nowrap;
+  }
+  .concluida ul[aria-label='Resultado'] {
+    margin-bottom: var(--espaco-5);
+  }
+}
