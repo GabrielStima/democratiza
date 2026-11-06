@@ -1,8 +1,8 @@
 # Democratiza — Arquitetura e Funcionalidades
 
-> Um "Duolingo de política" para brasileiros: lições curtas, gamificadas e acadêmicas sobre política.
+> Um site gamificado para brasileiros aprenderem política: lições curtas, com prática diária, e conteúdo acadêmico.
 > Documento vivo — atualize sempre que uma decisão mudar.
-> O que construir, em que ordem e tela a tela está em [`ESPECIFICACAO.md`](ESPECIFICACAO.md).
+> O que construir, em que ordem e tela a tela está em [`ESPECIFICACAO.md`](ESPECIFICACAO.md). Os limites legais do projeto estão em [`LEGALIDADE.md`](LEGALIDADE.md).
 
 ---
 
@@ -53,11 +53,19 @@
 democratiza/
 ├── ARQUITETURA.md
 ├── ESPECIFICACAO.md                      # milestones e entregas tela a tela
+├── LEGALIDADE.md                         # limites legais e checklists de conformidade
 ├── AGENTS.md                             # regras para quem programa (pessoas e IA), incluindo commits
 ├── CLAUDE.md                             # só aponta para o AGENTS.md
+├── LICENSE                               # MIT, para o código (M16)
+├── MARCA.md                              # nome, logo e Capi fora das licenças abertas (M16)
 ├── .gitignore
+├── .github/
+│   ├── ISSUE_TEMPLATE/erro-no-conteudo.yml   # usado pelo "Encontrou um erro?" (M16)
+│   └── pull_request_template.md          # checklist editorial antes do `revisado` (M16)
 ├── clean-appledouble.mjs                 # remove os arquivos ._* criados pelo macOS (ver AGENTS.md)
 ├── content/                              # TODO O CONTEÚDO (ver seção 6)
+│   ├── LICENSE                           # CC BY-NC-SA 4.0, para o conteúdo (M16)
+│   ├── legal/                            # privacidade.md e termos.md (M16)
 │   ├── conceitos/                        # banco único, usado por todos os cursos
 │   │   ├── democracia.json
 │   │   └── soberania-popular.json
@@ -73,12 +81,14 @@ democratiza/
 │       ├── 02-<um-aprofundamento>/
 │       └── 03-<um-modulo>/
 ├── public/
+│   ├── fonts/                            # Baloo 2 e Nunito em woff2 + OFL.txt
 │   ├── icons/                            # ícones PWA (192, 512, maskable)
 │   └── manifest.webmanifest
 ├── src/
 │   ├── main.tsx
 │   ├── app/                              # rotas e layout
-│   ├── pages/                            # HomeVisitante, HomeAluno, Cursos, Curso, Licao, LicaoFim, Revisar, Caderno, Sobre
+│   ├── assets/marca/                     # logo e Capi (fora das licenças abertas)
+│   ├── pages/                            # HomeVisitante, HomeAluno, Cursos, Curso, Licao, LicaoFim, Revisar, Caderno, Sobre, Privacidade, Termos
 │   ├── components/                       # Botao3D, EtapasDaLicao, CardExplicacao, CartaoConceito, Capi...
 │   ├── exercises/                        # um componente por tipo de exercício
 │   ├── engine/                           # xp.ts, ofensiva.ts, revisao.ts, desbloqueio.ts
@@ -87,7 +97,10 @@ democratiza/
 │   ├── dev/                              # telas só de desenvolvimento: /_estilo e /_dev (seção 7.1)
 │   └── styles/tokens.css
 ├── vite-plugins/conteudo.ts              # lê content/, valida e monta o catálogo (seção 6)
-├── scripts/novo.ts                       # cria esqueletos: npm run novo -- licao comece-por-aqui/o-que-e-democracia
+├── scripts/
+│   ├── novo.ts                           # cria esqueletos: npm run novo -- licao comece-por-aqui/o-que-e-democracia
+│   ├── checar-marcas.ts                  # npm run checar-marcas (M16)
+│   └── marcas-vetadas.json               # termos que não podem aparecer no repositório
 └── tests/
 ```
 
@@ -95,7 +108,7 @@ democratiza/
 
 ## 4. Método de ensino
 
-No inglês você acumula palavras. Na política você acumula **conceitos**, e o que importa é entender como eles se ligam. Por isso, diferente do Duolingo, toda lição tem uma etapa de **explicação** antes dos exercícios.
+Num curso de idiomas você acumula palavras. Na política você acumula **conceitos**, e o que importa é entender como eles se ligam. Por isso, diferente dos aplicativos de idiomas, toda lição tem uma etapa de **explicação** antes dos exercícios.
 
 ### O ciclo de uma lição (5 a 7 minutos)
 
@@ -123,11 +136,11 @@ O "Comece por aqui" é o ponto de entrada recomendado. Os outros cursos ficam li
 1. Cada lição ensina **de 1 a 3 conceitos**, nunca mais.
 2. Errar na explicação e na checagem **nunca** tira ponto.
 3. Toda explicação mostra uma **fonte específica**: obra, autor, ano e página, ou lei e artigo.
-4. **Uma pergunta só tem resposta certa quando é sobre fato, consenso acadêmico ou o que um autor ou corrente defende.**
+4. **Uma pergunta só tem resposta certa quando é sobre fato, consenso acadêmico ou o que um autor ou corrente defende.** Nenhuma pergunta levanta a opinião da pessoa sobre eleição, partido, candidato ou governo (`LEGALIDADE.md`, seção 3).
 5. **Debates entre correntes só aparecem em Módulos**, quando a pessoa já tem base para entender cada lado. Em Introdução e Aprofundamentos, se um tema tiver debate, o texto pode apenas avisar ("estudiosos discutem isso; você vai ver no Módulo X"), sem explorar. O build bloqueia o tipo de exercício `correntes` fora de Módulos.
 
 ### O conceito como unidade de conhecimento
-O **conceito** substitui a "palavra" do Duolingo. Os conceitos ficam num **banco único** (`content/conceitos/`), compartilhado por todos os cursos: "democracia" existe uma vez só e qualquer curso pode usá-lo. Cada conceito tem definição em uma frase, exemplo do dia a dia, "não confunda com", pré-requisitos e fonte.
+O **conceito** substitui a "palavra" dos cursos de idiomas. Os conceitos ficam num **banco único** (`content/conceitos/`), compartilhado por todos os cursos: "democracia" existe uma vez só e qualquer curso pode usá-lo. Cada conceito tem definição em uma frase, exemplo do dia a dia, "não confunda com", pré-requisitos e fonte.
 
 Os conceitos formam um **grafo de pré-requisitos**. O build garante que nenhuma lição usa um conceito que ainda não foi ensinado antes dela.
 
@@ -235,7 +248,7 @@ A fonte fica **escrita direto no lugar onde é usada**: uma descrição específ
 }
 ```
 
-- **`status`:** `rascunho` ou `revisado`. Rascunhos aparecem só no ambiente local (`npm run dev`); **só lições revisadas vão para o site no ar**. É o fluxo "a IA escreve, o Gabriel valida".
+- **`status`:** `rascunho` ou `revisado`. Rascunhos aparecem só no ambiente local (`npm run dev`); **só lições revisadas vão para o site no ar**. É o fluxo "a IA escreve, o Gabriel valida", seguindo o checklist do `LEGALIDADE.md`, seção 11.
 - **`tipo`:** omitido = lição normal. `"desafio"` = lição de fechamento da unidade: sem `situacao` nem `explicacao`, só uma `pratica` com exercícios dos conceitos da unidade.
 - **`checagem` em cada card:** opcional, **menos no último card, onde é obrigatória**. É essa que fecha a situação e mostra o palpite da pessoa.
 - **IDs:** não ficam escritos no JSON. O id de cada curso, unidade e lição é o **nome da pasta ou do arquivo sem o número** (ex.: `comece-por-aqui/o-que-e-democracia/o-poder-vem-do-povo`).
@@ -314,7 +327,7 @@ Exemplo de erro de build:
 1. `npm run novo -- licao comece-por-aqui/o-que-e-democracia` cria o arquivo da lição com o esqueleto preenchido e `status: "rascunho"`.
 2. Escreve (ou pede para a IA escrever) o conteúdo e as fontes.
 3. `npm run dev` mostra a lição no navegador e recarrega a cada vez que o arquivo é salvo. Erros aparecem na tela.
-4. Confere as fontes, muda para `status: "revisado"` e preenche `revisao`.
+4. Confere as fontes e o checklist "Antes de marcar `revisado`" do `LEGALIDADE.md`, muda para `status: "revisado"` e preenche `revisao`.
 5. `git push`. O GitHub Actions valida, o Cloudflare publica e em cerca de 1 minuto está no ar.
 
 ### Cuidados
@@ -339,7 +352,9 @@ Exemplo de erro de build:
 | Lição concluída | (dentro da lição) | XP, acertos, tempo, conceitos que foram para o caderno, o que foi desbloqueado; botão "Rever o que errei" |
 | Revisar | `/revisar` | Resumo do que vence hoje, agenda das próximas revisões e a sessão de revisão (que reaproveita a tela da Prática), com os conceitos vencidos de **todos** os cursos. Também permite treinar um curso inteiro |
 | Caderno | `/caderno` | Conceitos aprendidos, de todos os cursos |
-| Sobre | `/sobre` | Princípios, como ensinamos, backup (salvar, abrir, apagar progresso), bibliografia completa (gerada a partir das fontes das lições), como sugerir correção |
+| Sobre | `/sobre` | Princípios, como ensinamos, como escrevemos (aviso de uso de IA), backup (salvar, abrir, apagar progresso), bibliografia completa (gerada a partir das fontes das lições), como sugerir correção, links para Privacidade, Termos e Licenças |
+| Privacidade | `/privacidade` | Política de privacidade em linguagem simples (M16) |
+| Termos | `/termos` | Termos de uso e licenças (M16) |
 | Meta diária | janela sobre `/` na primeira visita | Escolher 20, 50 ou 100 XP antes da primeira lição |
 | Guia de estilo | `/_estilo` | Só em desenvolvimento: tokens e componentes |
 | Ferramentas | `/_dev` | Só em desenvolvimento: carregar progresso de demonstração e limpar tudo |
@@ -360,9 +375,10 @@ A pessoa pode fazer **vários cursos em paralelo**; sem servidor, isso não cust
 ### 7.4 Gamificação (versão enxuta, tudo calculado no navegador)
 - **XP:** só na Prática e na Revisão. +10 por acerto de primeira, +5 se acertar depois de errar.
 - **Erro na Prática:** a pessoa vê a resposta certa e a explicação, e a pergunta volta **uma vez** no fim da fila da lição (acertando, +5). O conceito vai para a caixa 1 da revisão. Na tela final, "Acertos" conta só os de primeira.
-- **Ofensiva (dias seguidos):** +1 por dia com ao menos 1 lição ou revisão concluída. Usa a data local do aparelho.
+- **Ofensiva (dias seguidos):** +1 por dia com ao menos 1 lição ou revisão concluída. Usa a data local do aparelho. O nome que aparece na interface é revisto no M17.
 - **Meta diária:** 20 / 50 / 100 XP, escolhida na primeira visita.
 - **Caderno de conceitos:** a "coleção" do usuário.
+- **Sem pressão:** nenhum texto de culpa ou urgência, nenhuma notificação, contagem regressiva ou recompensa aleatória (`LEGALIDADE.md`, seção 8).
 - **Fica para depois:** vidas, níveis, emblemas e perfil.
 
 ### 7.5 Revisão espaçada
@@ -394,10 +410,10 @@ Por **conceito**, não por pergunta. Sistema Leitner de 5 caixas em IndexedDB, i
 ### 7.7 PWA / offline
 - Manifest com nome, cores (`theme_color: #12A150`) e ícones da Capi.
 - Service worker guarda o app e as lições já abertas; o catálogo fica sempre disponível.
-- Lembretes: sem servidor não há push de verdade. Fica para depois.
+- Lembretes: sem servidor não há push de verdade. Fica para depois (e, se um dia entrarem, passam antes pelo `LEGALIDADE.md`).
 
 ### 7.8 Sugerir correção
-Cada explicação tem um link "Encontrou um erro?" que abre uma issue pré-preenchida no GitHub com o id da lição e do card.
+Cada explicação tem um link "Encontrou um erro?" que abre uma issue pré-preenchida no GitHub com o id da lição e do card. O modelo da issue avisa que o relato é público e pede para não escrever dados pessoais nem propaganda política.
 
 ### 7.9 Métricas (opcional)
 Cloudflare Web Analytics (grátis, sem cookies). Nunca rastrear respostas individuais.
@@ -418,21 +434,22 @@ Cloudflare Web Analytics (grátis, sem cookies). Nunca rastrear respostas indivi
 | `--nevoa` | `#F3F8F1` | Fundos de seção |
 
 - **Fontes:** Baloo 2 (títulos) + Nunito (texto), hospedadas junto com o site.
-- **Botões 3D:** `border-bottom: 5px solid <tom escuro>`, raio 16 px, texto em caixa alta.
+- **Botões 3D:** `border-bottom: 5px solid <tom escuro>`, raio 16 px, texto em caixa alta. A assinatura do botão é revista no M17.
 - **Acessibilidade:** contraste mínimo 4,5:1, alvos de clique ≥ 44 px, navegação por teclado, `prefers-reduced-motion` respeitado, português simples.
+- **Identidade própria:** a mecânica é livre, mas o conjunto visual não pode lembrar o de outro aplicativo (`LEGALIDADE.md`, seção 6; M17).
 
-**Arquivo de design:** "Democratiza — Design", com duas páginas: *Site (desktop)*, que é a referência visual de cada tela da `ESPECIFICACAO.md`, e *Instagram*, com o material de divulgação.
+**Arquivo de design:** "Democratiza — Design", com as páginas *Site (desktop)* e *Site (mobile)*, que são a referência visual de cada tela da `ESPECIFICACAO.md`, e *Instagram*, com o material de divulgação.
 
 ### 8.1 Material de divulgação (Instagram)
-A página *Instagram* traz: foto de perfil, post de lançamento, post "Mito ou fato" (2 imagens), carrossel "Quem faz as leis no Brasil?" (5 imagens) e story de quiz. Vale a mesma regra do site: só fato verificável, com a fonte escrita na própria peça, sem opinião e sem partido. Como os posts reaproveitam conteúdo das lições, as fontes e os números de cada peça precisam ser conferidos antes de publicar.
+A página *Instagram* traz: foto de perfil, post de lançamento, post "Mito ou fato" (2 imagens), carrossel "Quem faz as leis no Brasil?" (5 imagens) e story de quiz. Vale a mesma regra do site: só fato verificável, com a fonte escrita na própria peça, sem opinião e sem partido. Como os posts reaproveitam conteúdo das lições, as fontes e os números de cada peça precisam ser conferidos antes de publicar. As regras eleitorais das redes (só figurinha de quiz, nada de enquete sobre eleição, nada de impulsionar sem decisão registrada) estão na seção 8 da `ESPECIFICACAO.md` e na seção 3 do `LEGALIDADE.md`.
 
 ---
 
 ## 9. Qualidade e processo editorial
 
 - **Fontes específicas sempre:** lei + artigo, ou obra + autor + ano + página, com link quando houver. Ficam junto de cada explicação para serem conferidas à mão.
-- **Quem escreve e revisa:** Gabriel + IA. A IA rascunha e indica as fontes; o Gabriel confere e muda o `status` para `revisado`.
-- Evitar citar políticos em atividade por nome — foco em conceitos, instituições e regras.
+- **Quem escreve e revisa:** Gabriel + IA. A IA rascunha e indica as fontes; o Gabriel confere com o checklist do `LEGALIDADE.md` e muda o `status` para `revisado`.
+- **Não citar políticos em atividade, pré-candidatos, candidatos ou partidos por nome** — foco em conceitos, instituições e regras. Fatos históricos sensíveis são narrados pelo processo, com fonte oficial e sem adjetivos sobre pessoas (`LEGALIDADE.md`, seção 4.2).
 
 ---
 
@@ -443,7 +460,8 @@ GitHub Actions em todo push:
 2. `vitest` — XP, ofensiva (virada de dia e fuso), Leitner, desbloqueio por conceitos, migrações
 3. `playwright` — abrir site → fazer lição → ver Home com progresso → exportar/importar
 4. Lighthouse CI — performance e acessibilidade ≥ 90
-5. Deploy automático da `main` no Cloudflare Pages
+5. `npm run checar-marcas` — nenhuma marca de terceiros no repositório (a partir do M16)
+6. Deploy automático da `main` no Cloudflare Pages
 
 ### Fluxo de trabalho
 As regras completas estão no [`AGENTS.md`](AGENTS.md). Em resumo: **commits atômicos** no padrão Conventional Commits, `main` sempre publicável, e, ao terminar um fluxo, rodar `node clean-appledouble.mjs` **antes** de commitar, para remover os arquivos `._*` que o macOS cria.
@@ -452,7 +470,7 @@ As regras completas estão no [`AGENTS.md`](AGENTS.md). Em resumo: **commits at�
 
 ## 11. Roadmap
 
-Não há fases: **todo o planejamento é o MVP**. O trabalho está dividido em 18 milestones (M0 a M17), na ordem descrita na [`ESPECIFICACAO.md`](ESPECIFICACAO.md). As prévias do Cloudflare mostram o progresso desde o M0; o site só é apontado para `democratiza.org` no M17.
+Não há fases: **todo o planejamento é o MVP**. O trabalho está dividido em 20 milestones (M0 a M19), na ordem descrita na [`ESPECIFICACAO.md`](ESPECIFICACAO.md). As prévias do Cloudflare mostram o progresso desde o M0; o site só é apontado para `democratiza.org` no M19.
 
 | Bloco | Milestones | O que entrega |
 |---|---|---|
@@ -460,9 +478,12 @@ Não há fases: **todo o planejamento é o MVP**. O trabalho está dividido em 1
 | Lição | M3 e M4 | Situação, Explicação, Checagem, Prática e Lição concluída |
 | Navegação e revisão | M5 a M8 | Home, Curso, Caderno, Revisar, Sobre, Cursos e desbloqueio |
 | Acabamento | M9 a M11 | Novos exercícios, uso offline, Módulos com debate entre correntes |
-| Lançamento | M12 | Conteúdo real, domínio, qualidade e publicação |
+| Celular | M12 a M15 | O mesmo site no celular: navegação, trilha, lição e demais telas |
+| Conformidade | M16 e M17 | Privacidade, Termos, licenças, aviso de IA, sem marca de terceiros e identidade visual própria |
+| Qualidade mobile | M18 | Testes em vários tamanhos, aparelhos reais, instalação e desempenho |
+| Lançamento | M19 | Conteúdo real, domínio, qualidade e publicação |
 
-**Fora do planejamento atual:** versão pensada para celular, modo escuro, cursos sobre temas atuais (só depois que a base de conceitos estiver sólida) e sincronização entre aparelhos, que exigiria backend (Supabase ou Firebase, plano grátis).
+**Fora do planejamento atual:** modo escuro, cursos sobre temas atuais (só depois que a base de conceitos estiver sólida) e sincronização entre aparelhos, que exigiria backend (Supabase ou Firebase, plano grátis) e uma nova avaliação no `LEGALIDADE.md`.
 
 ---
 
@@ -493,7 +514,7 @@ Não há fases: **todo o planejamento é o MVP**. O trabalho está dividido em 1
 | Fontes | ✅ Campo `fonte` em cada explicação, conceito e exercício: descrição específica + link opcional |
 | Conteúdo enquanto não existe o real | ✅ Lorem Ipsum em cursos fictícios, todos `rascunho` |
 | Rascunhos nas prévias | ✅ Aparecem no `npm run dev` e nas prévias do Cloudflare; na `main` só `revisado` |
-| Fases do projeto | ✅ Não há fases: todo o planejamento é o MVP (milestones M0 a M12) |
+| Fases do projeto | ✅ Não há fases: todo o planejamento é o MVP (milestones M0 a M19) |
 | Revisar | ✅ Faz parte do MVP |
 | Refazer uma lição concluída | ✅ Não dá XP (o XP só vem da primeira vez) |
 | Treino livre de um curso e "Praticar agora" do Caderno | ✅ Sem XP e sem mexer nas caixas de revisão |
@@ -501,4 +522,13 @@ Não há fases: **todo o planejamento é o MVP**. O trabalho está dividido em 1
 | Sair da lição pelo X | ✅ Pede confirmação; o avanço fica salvo |
 | Estimativa de minutos de uma lição | ✅ 1 min por card + 30 s por exercício (ajustar depois de medir) |
 | Commits | ✅ Atômicos, no padrão Conventional Commits (ver `AGENTS.md`) |
+| Conformidade legal | ✅ M16 (páginas legais, licenças, aviso de IA, sem marca de terceiros) e M17 (identidade própria), antes da qualidade mobile e do lançamento. Fundamentos no `LEGALIDADE.md` |
+| Forma jurídica | ✅ Pessoa física enquanto não houver dinheiro entrando; associação civil sem fins econômicos se houver doações ou patrocínio |
+| Licenças | ✅ MIT (código), CC BY-NC-SA 4.0 (conteúdo), OFL (fontes); nome, logo e Capi reservados (`MARCA.md`) |
+| Marca de terceiros | ✅ Nenhuma menção em texto público; o CI confere |
+| Uso de IA | ✅ Revisão humana sempre e aviso no Sobre, nos Termos e em cada explicação |
+| Verificação de idade | ✅ Não há; justificativa registrada no `LEGALIDADE.md`, seção 8 |
+| Impulsionar posts | ✅ Não, sem uma nova decisão registrada aqui. Nunca no período de campanha eleitoral |
+| Enquetes nas redes | ✅ Só figurinha de quiz; nunca enquete sobre eleição, candidato, partido ou governo |
+| Identidade própria (M17) | ⏳ Nova forma da trilha, novo feedback da Prática, nova assinatura do botão 3D e novo nome da ofensiva |
 | Conteúdo exato e ordem dos cursos | ⏳ A definir com calma |

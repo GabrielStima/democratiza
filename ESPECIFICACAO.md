@@ -1,7 +1,7 @@
 # Democratiza — Especificação de execução
 
 > Como construir o site, em ordem, tela a tela. Complementa o [`ARQUITETURA.md`](ARQUITETURA.md), que explica **o quê e por quê**; este documento diz **o que entregar em cada etapa**.
-> **Não há fases: todo o planejamento é o MVP.** São 18 milestones (M0 a M17) e o site só é apontado para o domínio no último. Os M0 a M11 entregam o site completo no desktop; os M12 a M16 levam o mesmo site para o celular, como no design *Site (mobile)*.
+> **Não há fases: todo o planejamento é o MVP.** São 20 milestones (M0 a M19) e o site só é apontado para o domínio no último. Os M0 a M11 entregam o site completo no desktop; os M12 a M15 levam o mesmo site para o celular, como no design *Site (mobile)*; o M16 e o M17 ajustam o projeto ao que a lei pede (fundamentos no [`LEGALIDADE.md`](LEGALIDADE.md)); o M18 fecha a qualidade no celular e o M19 lança.
 > Todo o conteúdo usado nas etapas é **Lorem Ipsum** (seção 2). O conteúdo real entra por último, só adicionando pastas e JSONs em `content/`.
 > Regras de código e de commits: [`AGENTS.md`](AGENTS.md).
 
@@ -24,6 +24,7 @@
 5. Sem erro no console. JS inicial abaixo de 150 KB (gzip).
 6. A prévia do Cloudflare Pages abre e mostra a tela com o conteúdo Lorem.
 7. Commits atômicos no padrão do `AGENTS.md`, e `node clean-appledouble.mjs` rodado **antes** de commitar.
+8. Todo texto novo voltado ao público segue o [`LEGALIDADE.md`](LEGALIDADE.md): sem marca de terceiros, sem opinião sobre partidos, candidatos ou governos, e sem pergunta que levante a opinião de quem usa sobre eleições. A partir do M16, `npm run checar-marcas` passa.
 
 ---
 
@@ -65,7 +66,7 @@ Só o nome "Comece por aqui" é real, porque é a decisão de produto. Todo o re
 ### Quando o conteúdo real chegar
 1. Escrever as pastas reais em `content/` (a decisão "conteúdo exato e ordem dos cursos" ainda está em aberto).
 2. Apagar as pastas Lorem.
-3. Rodar o build: ele aponta o que sobrou quebrado. O M17 só fecha com ao menos uma unidade real `revisado`.
+3. Rodar o build: ele aponta o que sobrou quebrado. O M19 só fecha com ao menos uma unidade real `revisado`.
 
 ---
 
@@ -89,8 +90,10 @@ Só o nome "Comece por aqui" é real, porque é a decisão de produto. Todo o re
 | **M13** | Trilha: Home, Curso e Cursos (celular) | Trilha de lições, Home (4 variantes), meta diária, Curso, Cursos | G |
 | **M14** | Lição no celular | Situação, Explicação, Checagem, Prática, Concluída, Sair, Rever | G |
 | **M15** | Caderno, Revisar, Sobre e exercícios (celular) | Caderno, Revisar, Sobre, 404, 3 novos exercícios, debate | G |
-| **M16** | Qualidade e instalação no celular | Viewports no Playwright, aparelhos reais, PWA, Lighthouse mobile | M |
-| **M17** | Lançamento | Conteúdo real, domínio, qualidade, publicação | M |
+| **M16** | Conformidade legal | Privacidade, Termos, licenças, aviso de uso de IA, checagem de marcas | M |
+| **M17** | Identidade própria | Trilha, feedback da Prática, botão 3D e nomes da interface revisados | G |
+| **M18** | Qualidade e instalação no celular | Viewports no Playwright, aparelhos reais, PWA, Lighthouse mobile | M |
+| **M19** | Lançamento | Conteúdo real, domínio, qualidade, publicação | M |
 
 ### Mapa: prancha de design → milestone
 | Prancha | Milestone |
@@ -126,6 +129,8 @@ Só o nome "Comece por aqui" é real, porque é a decisão de produto. Todo o re
 | Prática · Ordenar (novo tipo) | M9 |
 | Prática · Mito ou fato (novo tipo) | M9 |
 | Lição · 7c. Prática (debate entre correntes) | M11 |
+| Privacidade e Termos (sem prancha própria; usam o layout de texto do *Sobre*) | M16 |
+| Pranchas revisadas pela identidade própria (trilha, Prática, Lição concluída, botões) | M17 |
 | Método de ensino | Só documentação (não vira tela) |
 
 ### Mapa: prancha mobile → milestone
@@ -163,6 +168,8 @@ Página *Site (mobile)*. Cada prancha tem o mesmo nome da versão desktop; a tab
 | Prática · Classificar (novo tipo) | M15 |
 | Prática · Ordenar (novo tipo) | M15 |
 | Prática · Mito ou fato (novo tipo) | M15 |
+| Privacidade e Termos (layout de texto do *Sobre*) | M16 |
+| Pranchas revisadas pela identidade própria | M17 |
 | Guia de estilo, Método de ensino e peças do Instagram | Não têm versão mobile |
 
 ---
@@ -183,7 +190,7 @@ Página *Site (mobile)*. Cada prancha tem o mesmo nome da versão desktop; a tab
 - Cloudflare Pages ligado ao repositório: prévia por branch, `main` publica em `*.pages.dev`.
 
 **Tarefas suas (fora do código)**
-- Registrar `democratiza.org` na Hostinger, se ainda não foi feito, e colocar o DNS no Cloudflare (adicionar o site no Cloudflare e trocar os nameservers na Hostinger). O domínio só é apontado para o site no M17.
+- Registrar `democratiza.org` na Hostinger, se ainda não foi feito, e colocar o DNS no Cloudflare (adicionar o site no Cloudflare e trocar os nameservers na Hostinger). O domínio só é apontado para o site no M19.
 - Criar o repositório público e a conta no Cloudflare.
 
 #### Tela · Guia de estilo (só dev)
@@ -606,7 +613,78 @@ Página *Site (mobile)*. Cada prancha tem o mesmo nome da versão desktop; a tab
 
 ---
 
-### M16 · Qualidade e instalação no celular  `[M]`
+### M16 · Conformidade legal  `[M]`
+**Objetivo:** o site cumpre o que a lei pede para um projeto como o nosso e deixa isso visível: como os dados são tratados, quais são os termos, sob que licença está cada coisa, como a IA é usada e nenhuma marca de terceiros. Os fundamentos de cada item estão no [`LEGALIDADE.md`](LEGALIDADE.md); este milestone só diz o que construir.
+
+**Entregas**
+- **Páginas legais**, no layout site, com versão desktop e mobile (sem prancha própria: usam o layout de texto do *Sobre*):
+  - **`/privacidade` · Política de privacidade**, em português simples, pensando em quem tem 16 anos. Diz: que não há conta, cadastro nem cookie de rastreamento; que o progresso fica só no aparelho (`localStorage` e IndexedDB) e como apagá-lo (Sobre → Apagar meu progresso); que a hospedagem (Cloudflare) recebe o endereço IP e dados técnicos de cada acesso, inclusive fora do Brasil, e o Cloudflare Web Analytics conta visitas sem cookies; a base legal (legítimo interesse, LGPD art. 7º, IX) e que o IP não é usado para traçar perfil; que o link "Encontrou um erro?" leva ao GitHub, onde o relato fica público e segue as regras do GitHub; os direitos de quem usa e um canal de contato; a data da última atualização.
+  - **`/termos` · Termos de uso.** Diz: que o Democratiza é educativo, gratuito e apartidário; que os cursos são **cursos livres**, sem certificado e sem relação com o MEC; que o conteúdo não substitui a leitura das leis e das fontes oficiais e é oferecido "no estado em que se encontra", sujeito a correção; como sugerir correções; as licenças (abaixo); que o nome, a logo e a Capi não podem ser usados para propaganda política nem para sugerir apoio do projeto a partido, candidato ou governo; como o conteúdo é escrito (aviso de IA, abaixo); a data da última atualização.
+  - Os textos ficam em `content/legal/privacidade.md` e `content/legal/termos.md` (conteúdo é dado). O plugin de conteúdo converte para HTML no build; nenhuma dependência nova vai para o navegador.
+  - Links **Privacidade**, **Termos** e **Licenças** no rodapé do layout site, no pé do menu lateral (desktop) e no fim do Sobre (desktop e mobile).
+- **Aviso de uso de IA:**
+  - nova seção **"Como escrevemos"** no Sobre (âncora `#como-escrevemos`), também resumida nos Termos. Texto-base: *"Os rascunhos das lições são escritos com apoio de inteligência artificial. Antes de ir para o ar, cada lição é conferida, frase por frase, com as fontes citadas nela. Achou um erro? Use o link 'Encontrou um erro?' que aparece em cada explicação."*;
+  - no pé de cada card de explicação, ao lado de "Encontrou um erro?", o link **"Como este conteúdo é feito"**, que abre `/sobre#como-escrevemos`;
+  - imagem, áudio ou vídeo gerado por IA (no site ou nas redes) leva o rótulo "Feito com IA" junto da peça.
+- **Licenças no repositório:**
+  - `LICENSE` na raiz: MIT, para o código;
+  - `content/LICENSE`: Creative Commons BY-NC-SA 4.0, para os textos, perguntas e esquemas;
+  - `public/fonts/OFL.txt`: a licença SIL Open Font License das fontes Baloo 2 e Nunito, que precisa ir junto dos arquivos;
+  - `MARCA.md` na raiz: o nome "Democratiza", a logo e a Capi **não** estão sob MIT nem CC. Os arquivos da marca ficam em `src/assets/marca/` (e nos ícones do PWA), citados nesse arquivo;
+  - no rodapé do site: "Conteúdo sob CC BY-NC-SA 4.0 · Código sob MIT", com link para `/termos#licencas`.
+- **Sem marca de terceiros:**
+  - remover qualquer menção ao aplicativo de idiomas que inspirou a mecânica (README, `package.json`, manifest do PWA, meta tags, comentários, textos da interface, documentos do repositório e descrições do GitHub);
+  - script **`npm run checar-marcas`**, rodado no CI: procura (sem diferenciar maiúsculas) os termos de `scripts/marcas-vetadas.json` em todo o repositório, menos `node_modules`, `dist` e o próprio arquivo de termos, e falha mostrando arquivo e linha.
+- **Revisão editorial com checklist:**
+  - `.github/pull_request_template.md` traz o checklist "Antes de marcar `revisado`" do `LEGALIDADE.md` (seção 11). PR que muda alguma lição para `revisado` tem o checklist marcado;
+  - o esqueleto do `npm run novo -- licao` traz, em comentário no topo do arquivo gerado, o link para esse checklist. *(Se o JSON não aceitar comentário, o link vai no texto do PR template e no `AGENTS.md`.)*
+- **Correções pelo GitHub:**
+  - modelo de issue `.github/ISSUE_TEMPLATE/erro-no-conteudo.yml`, usado pelo link "Encontrou um erro?", com o aviso *"Este relato é público. Não escreva dados pessoais nem propaganda política."*;
+  - regra de moderação (escrita no `LEGALIDADE.md`): issue com propaganda, ataque pessoal ou dado pessoal é ocultada e fechada.
+- **Mecânicas sem pressão (ECA Digital):**
+  - revisar todos os textos ligados à ofensiva, à meta diária e à revisão: nenhum texto de culpa ou urgência ("você vai perder…", "não desista agora!"), nenhuma contagem regressiva;
+  - confirmar que não existe notificação, rolagem infinita, reprodução automática nem recompensa aleatória. Se algum dia for criado, passa antes pelo `LEGALIDADE.md`;
+  - registrar o resultado na seção 8 do `LEGALIDADE.md`.
+- **Avaliação de enquadramento no ECA Digital:** completar a seção 8 do `LEGALIDADE.md` com o guia da ANPD sobre escopo e obrigações gerais do ECA Digital. Se o guia pedir algo além do que está aqui, abrir a tarefa e fazê-la antes do M19.
+- **Divulgação:** aplicar as regras da seção 8 desta especificação às peças já desenhadas na página *Instagram* (o story de quiz usa a figurinha de **quiz**, com resposta certa, e não a de enquete).
+
+**Tarefas suas (fora do código)**
+- Fazer a busca do nome "Democratiza" no INPI (classe 41, educação) e, se estiver livre, pedir o registro da marca mista (nome + Capi).
+- Pedir a um advogado (ou a um núcleo de prática jurídica de faculdade) uma leitura dos Termos e da Política antes do M19.
+- Só se for impulsionar posts: fazer a autorização de anúncios sobre temas sociais, eleições ou política na Meta.
+
+**Testes:** Vitest para o `checar-marcas` (uma fixture com um termo vetado faz o script falhar); Playwright confere que `/privacidade` e `/termos` abrem nos dois layouts e que os links do rodapé e do Sobre levam a elas; axe-core nas duas páginas.
+
+**Pronto quando:** as duas páginas estão no ar nas prévias, linkadas de todos os lugares acima; o aviso de IA aparece no Sobre e em cada card de explicação; as licenças e o `MARCA.md` estão no repositório; `npm run checar-marcas` roda no CI e passa; os itens de código do checklist "Antes do lançamento" do `LEGALIDADE.md` estão marcados.
+
+---
+
+### M17 · Identidade própria  `[G]`
+**Objetivo:** a mecânica (XP, ofensiva, revisão espaçada, trilha) é livre e pode continuar. O que não pode é o **conjunto visual** parecer cópia de outro aplicativo, porque isso abre espaço para alegação de concorrência desleal e de aproveitamento do *trade dress*. Este milestone dá ao Democratiza uma cara inconfundivelmente sua. Ver `LEGALIDADE.md`, seção 6.
+
+**Primeiro o design, depois o código.** As escolhas daqui estão em aberto (seção 6, item ⏳ d). Nada é implementado antes de o Gabriel aprovar as pranchas revisadas no arquivo de design, nas páginas *Site (desktop)* e *Site (mobile)*.
+
+**O que revisar** (em ordem de prioridade)
+1. **Trilha de lições (M13).** É o ponto mais parecido: nós redondos com borda inferior grossa em zigue-zague, balão "Começar" sobre o nó atual, mascote ao lado e botão de livro ("Guia da unidade") no banner da unidade. Buscar uma forma ligada à identidade do projeto (por exemplo, um caminho que lembre um mapa ou uma linha do tempo, com marcos) e trocar o balão e o botão do banner por soluções próprias.
+2. **Rodapé de feedback da Prática (M4 e M14).** O rodapé inteiro em verde ou coral com "Mandou bem!" é muito característico. Rever a forma (por exemplo, um cartão de feedback junto da pergunta, com a Capi) e escrever textos próprios de acerto e erro.
+3. **Botão 3D (M0).** Pode manter o volume, mas a assinatura muda: proporção da borda inferior, raio e o texto em caixa alta não podem ser idênticos.
+4. **Nomes da interface.** "Ofensiva" é o mesmo termo que o outro aplicativo usa em português. Trocar por um nome próprio (por exemplo, "dias seguidos", "sequência" ou um nome ligado à Capi) em todas as telas, no Sobre e na Home do visitante. Só muda o texto da interface; os nomes internos do código (`ofensiva.ts`, `ofensiva` no estado) podem ficar.
+5. **Paleta.** Conferir que o verde principal e as combinações com ele não reproduzem as do outro aplicativo; se for preciso, puxar a identidade para o verde e amarelo nacionais e as cores da Capi.
+6. **Telas de comemoração.** Conferir também a *Lição · 8. Concluída* no celular (confete, título dourado, cartões de resultado com faixa colorida).
+
+**Entregas**
+- Pranchas revisadas e aprovadas no arquivo de design (desktop e mobile).
+- `tokens.css` e `/_estilo` atualizados; `Botao3D`, `PainelFeedback`, `CartaoResultado`, a Trilha, a `BarraTopo` e o rodapé da Prática ajustados.
+- O novo nome da ofensiva em todos os textos da interface.
+- Uma nota no `LEGALIDADE.md`, seção 6, dizendo o que mudou e por quê, com a data.
+
+**Regras:** a lógica não muda (XP, caixas, desbloqueio, retomar). Tudo o que já passa nos testes, no axe-core e na conferência em 390 e 1440 px continua passando.
+
+**Pronto quando:** postas lado a lado, a trilha, a Prática e a Lição concluída não se confundem com as do outro aplicativo; o Gabriel aprovou; a suíte de testes está verde nos dois tamanhos.
+
+---
+
+### M18 · Qualidade e instalação no celular  `[M]`
 **Objetivo:** provar que o mobile funciona em aparelho de verdade, antes de lançar.
 
 **Entregas**
@@ -620,11 +698,12 @@ Página *Site (mobile)*. Cada prancha tem o mesmo nome da versão desktop; a tab
 
 ---
 
-### M17 · Lançamento  `[M]`
+### M19 · Lançamento  `[M]`
 **Objetivo:** o site no ar, em `democratiza.org`, com conteúdo real.
 
 **Entregas**
 - **Conteúdo real:** ao menos a primeira unidade do "Comece por aqui" escrita, com as fontes conferidas à mão e `status: "revisado"`. As pastas Lorem que restarem são apagadas.
+- **Conformidade:** o checklist "Antes do lançamento" do `LEGALIDADE.md` (seção 11) inteiro marcado, incluindo a leitura dos Termos e da Política e a busca no INPI.
 - **Domínio:** apontar `democratiza.org` para o Cloudflare Pages (Custom domains no projeto; como o DNS já está no Cloudflare, os registros são criados sozinhos).
 - **Acessibilidade e desempenho:** Lighthouse CI, em desktop e em mobile, com nota ≥ 90 em Desempenho e Acessibilidade nas telas principais; revisão com leitor de tela na lição inteira; `prefers-reduced-motion` respeitado.
 - **Medição e suporte:** Cloudflare Web Analytics (sem cookies); texto do link "Sugerir correção" revisado.
@@ -661,9 +740,14 @@ Mantidos: o selo "Funciona até sem internet" (o modo offline entra no M10, ante
 | 4 | **"Desafio da unidade"** é uma lição `tipo: "desafio"`, sem situação nem explicação, só Prática com os conceitos da unidade. |
 | 5 | **Sair da lição pelo X** pede confirmação ("Seu avanço fica salvo"). |
 | 6 | **Estimativa de minutos:** 1 min por card + 30 s por exercício, arredondado para cima. Ajustar depois de medir com pessoas reais. |
-| 7 | **O mobile é feito depois do desktop (M12 a M16).** A lógica não muda; só a apresentação. |
-| 8 | **No celular a Home e o Curso mostram a trilha de lições** (nós em zigue-zague), e a barra de abas fica embaixo, só com ícones. |
-| ⏳ | **Em aberto, não implementar:** (a) a faixa de **768 a 1023 px** (tablet) usa o layout mobile centralizado ou o desktop espremido; (b) a **trilha** passa a valer também no desktop, ou fica só no mobile (por ora, só no mobile); (c) o título dourado e a cor da ofensiva do design mobile viram tokens novos? |
+| 7 | **O mobile é feito depois do desktop (M12 a M15).** A lógica não muda; só a apresentação. |
+| 8 | **No celular a Home e o Curso mostram a trilha de lições**, e a barra de abas fica embaixo, só com ícones. A forma da trilha é revista no M17. |
+| 9 | **A conformidade legal entra antes da qualidade mobile e do lançamento (M16 e M17).** Os fundamentos ficam no `LEGALIDADE.md`. |
+| 10 | **Licenças:** MIT para o código, CC BY-NC-SA 4.0 para o conteúdo, OFL para as fontes. Nome, logo e Capi ficam fora das licenças abertas (`MARCA.md`). |
+| 11 | **Nenhuma marca de terceiros** em texto público (site, repositório, redes). O CI confere com `npm run checar-marcas`. |
+| 12 | **Aviso de uso de IA** no Sobre, nos Termos e no pé de cada explicação. Hoje não é exigência legal para o nosso caso; é transparência. |
+| 13 | **Sem verificação de idade:** o site não tem contas, anúncios, perfilamento nem conversa entre pessoas. A justificativa fica registrada no `LEGALIDADE.md`, seção 8. |
+| ⏳ | **Em aberto, não implementar:** (a) a faixa de **768 a 1023 px** (tablet) usa o layout mobile centralizado ou o desktop espremido; (b) a **trilha** passa a valer também no desktop, ou fica só no mobile (por ora, só no mobile); (c) o título dourado e a cor da ofensiva do design mobile viram tokens novos?; (d) as escolhas do **M17**: a nova forma da trilha, o novo feedback da Prática, a nova assinatura do botão 3D e o novo nome da ofensiva. |
 
 ---
 
@@ -680,6 +764,8 @@ Todas as telas que faltavam foram desenhadas, em faixas *"Apoio"* abaixo das tel
 
 Os protótipos dos novos exercícios funcionam por clique/toque. O arrastar e soltar, se for adicionado, é um extra sobre o mesmo fluxo.
 
+As páginas Privacidade e Termos (M16) não ganham prancha: usam o layout de texto do *Sobre*. As pranchas revisadas no M17 substituem as atuais nas mesmas posições.
+
 ---
 
 ## 8. Trilha paralela: divulgação
@@ -687,8 +773,14 @@ Os protótipos dos novos exercícios funcionam por clique/toque. O arrastar e so
 Não depende do código. As peças da página *Instagram* do arquivo de design podem ser publicadas assim que o conteúdo que elas citam estiver conferido.
 
 - Antes de publicar qualquer peça, conferir à mão as fontes escritas nela (no post "Mito ou fato": CF art. 77 §2º, Lei 9.504/1997 art. 2º e Código Eleitoral art. 224; no story: CF art. 46 §1º; no carrossel: CF arts. 27, 29, 44 e 66).
-- O link na bio só vale depois do M17.
+- O link na bio só vale depois do M19.
 - Novas peças seguem a mesma regra do site: fato verificável, fonte escrita na peça, sem opinião e sem partido.
+- **Regras eleitorais** (fundamentos no `LEGALIDADE.md`, seção 3):
+  - interação só com a figurinha de **quiz**, que tem resposta certa. **Nunca** usar figurinha de enquete, caixa de perguntas ou votação para saber a opinião das pessoas sobre eleição, candidato, partido ou governo; de 16 de agosto do ano eleitoral até o fim do 2º turno, nenhuma figurinha de enquete, de tema nenhum;
+  - nenhuma peça cita político em atividade, pré-candidato ou partido, nem "responde" a um caso que esteja no noticiário da disputa;
+  - **não impulsionar** posts sem uma decisão registrada no `ARQUITETURA.md`. Se for decidido impulsionar: só com a autorização de anúncios políticos da Meta, nunca de 16 de agosto até o fim do 2º turno de um ano eleitoral, e nunca sobre tema que esteja no centro da disputa naquele momento;
+  - imagem, áudio ou vídeo gerado por IA leva o rótulo "Feito com IA" na própria peça;
+  - nenhuma peça usa marca de terceiros nem se apresenta como "o [outro app] da política".
 
 ---
 
@@ -699,11 +791,11 @@ M0 Fundação ─► M1 Pipeline ─► M2 Motor ─► M3 Lição 1 ─► M4 L
                                                                            │
    M11 Módulos ◄─ M10 Offline ◄─ M9 Exercícios ◄─ M8 Cursos ◄─ M7 Sobre ◄─ M6 Caderno/Revisar
         │
-   M12 Base mobile ─► M13 Trilha ─► M14 Lição mobile ─► M15 Caderno/Revisar/Sobre mobile ─► M16 Qualidade mobile
-                                                                                                │
-                                                                                      M17 Lançamento
-                                                                                                │
-                                                                                            ★ NO AR
+   M12 Base mobile ─► M13 Trilha ─► M14 Lição mobile ─► M15 Caderno/Revisar/Sobre mobile
+                                                                           │
+   M19 Lançamento ◄─ M18 Qualidade mobile ◄─ M17 Identidade própria ◄─ M16 Conformidade legal
+        │
+     ★ NO AR
 ```
 
-Por que essa ordem: o M1 e o M2 vêm antes de qualquer tela porque todas dependem do formato do conteúdo e da lógica de progresso. A Lição (M3 e M4) vem antes da Home porque é o coração do produto: se ela não for boa, o resto não importa, e dá para validar com o `/_dev` sem precisar da Home. O Caderno e a Revisão (M6) vêm logo depois porque a promessa do produto é "você não esquece". O mobile (M12 a M16) vem depois de todo o desktop porque a lógica, o conteúdo e as telas já estão prontos e testados: o celular só troca a apresentação, sem mexer em regra nenhuma. O M17 fica por último para que o site apareça no domínio já completo, nos dois tamanhos.
+Por que essa ordem: o M1 e o M2 vêm antes de qualquer tela porque todas dependem do formato do conteúdo e da lógica de progresso. A Lição (M3 e M4) vem antes da Home porque é o coração do produto: se ela não for boa, o resto não importa, e dá para validar com o `/_dev` sem precisar da Home. O Caderno e a Revisão (M6) vêm logo depois porque a promessa do produto é "você não esquece". O mobile (M12 a M15) vem depois de todo o desktop porque a lógica, o conteúdo e as telas já estão prontos e testados: o celular só troca a apresentação, sem mexer em regra nenhuma. A conformidade (M16 e M17) entra antes da qualidade mobile porque muda telas e textos: o M18 testa o site já na forma final. O M19 fica por último para que o site apareça no domínio já completo, nos dois tamanhos e dentro da lei.
