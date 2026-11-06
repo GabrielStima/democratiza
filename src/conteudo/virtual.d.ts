@@ -14,3 +14,11 @@ declare module 'virtual:democratiza/licoes' {
     () => Promise<{ default: import('../content-schema/licao').Licao }>
   >;
 }
+
+declare module 'virtual:democratiza/legal' {
+  const legal: Record<
+    'privacidade' | 'termos',
+    import('../../vite-plugins/markdown').DocumentoLegal
+  >;
+  export default legal;
+}

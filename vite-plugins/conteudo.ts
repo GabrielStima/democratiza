@@ -1,9 +1,13 @@
+import { readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { loadEnv, type Plugin } from 'vite';
 import { construirConteudo } from '../src/content-schema/construir.ts';
 import { formatarErros } from '../src/content-schema/formatar.ts';
 import type { ResultadoConteudo } from '../src/content-schema/tipos.ts';
 import { lerPasta } from './leitor.ts';
+import { lerDocumentoLegal } from './markdown.ts';
+
+const DOCUMENTOS_LEGAIS = ['privacidade', 'termos'] as const;
 
 const PREFIXO = 'virtual:democratiza/';
 const RESOLVIDO = '\0' + PREFIXO;
@@ -12,6 +16,7 @@ const RESOLVIDO = '\0' + PREFIXO;
  * Lê content/, valida tudo e entrega o resultado como módulos virtuais:
  *  - virtual:democratiza/catalogo      catálogo leve (cursos, unidades, lições, conceitos)
  *  - virtual:democratiza/bibliografia  fontes únicas
+ *  - virtual:democratiza/legal         textos de content/legal/*.md já em HTML
  *  - virtual:democratiza/licoes        carregadores, um por lição
  *  - virtual:democratiza/licao/<c>/<u>/<l>  uma lição (arquivo separado no build)
  * No build, qualquer erro de conteúdo para tudo. No dev, os erros vão para o catálogo.
@@ -74,6 +79,16 @@ export function conteudo(): Plugin {
       const r = calcular();
       if (nome === 'catalogo') return `export default ${JSON.stringify(r.catalogo)};`;
       if (nome === 'bibliografia') return `export default ${JSON.stringify(r.bibliografia)};`;
+      if (nome === 'legal') {
+        const docs = Object.fromEntries(
+          DOCUMENTOS_LEGAIS.map((d) => {
+            const arquivo = join(raizContent, 'legal', `${d}.md`);
+            this.addWatchFile(arquivo);
+            return [d, lerDocumentoLegal(`content/legal/${d}.md`, readFileSync(arquivo, 'utf8'))];
+          }),
+        );
+        return `export default ${JSON.stringify(docs)};`;
+      }
       if (nome === 'licoes') {
         const linhas = Object.keys(r.licoes).map(
           (k) => `  ${JSON.stringify(k)}: () => import(${JSON.stringify(PREFIXO + 'licao/' + k)}),`,
