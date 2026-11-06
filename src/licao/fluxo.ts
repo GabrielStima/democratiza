@@ -140,16 +140,13 @@ export function dividirTermos(texto: string): Pedaco[] {
 
 export const REPOSITORIO = 'https://github.com/GabrielStima/democratiza';
 
-/** Endereço de uma issue já preenchida com a lição e o card. */
+/** Endereço da issue pelo modelo `erro-no-conteudo.yml`, já preenchido com a lição e o card. */
 export function enderecoDaIssue(licaoId: string, card: number): string {
-  const titulo = `Erro na lição ${licaoId}, card ${card + 1}`;
-  const corpo = [
-    `Lição: \`${licaoId}\``,
-    `Card: ${card + 1}`,
-    '',
-    'O que está errado (e, se puder, a fonte que mostra o certo):',
-    '',
-  ].join('\n');
-  const q = new URLSearchParams({ title: titulo, body: corpo });
+  const q = new URLSearchParams({
+    template: 'erro-no-conteudo.yml',
+    title: `Erro na lição ${licaoId}, card ${card + 1}`,
+    licao: licaoId,
+    card: `card ${card + 1}`,
+  });
   return `${REPOSITORIO}/issues/new?${q.toString()}`;
 }

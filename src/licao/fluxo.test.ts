@@ -143,6 +143,8 @@ describe('rótulos e termos', () => {
     const url = new URL(enderecoDaIssue('c/u/l', 1));
     expect(url.pathname).toBe('/GabrielStima/democratiza/issues/new');
     expect(url.searchParams.get('title')).toContain('c/u/l');
-    expect(url.searchParams.get('body')).toContain('Card: 2');
+    expect(url.searchParams.get('template')).toBe('erro-no-conteudo.yml');
+    expect(url.searchParams.get('licao')).toBe('c/u/l');
+    expect(url.searchParams.get('card')).toBe('card 2');
   });
 });

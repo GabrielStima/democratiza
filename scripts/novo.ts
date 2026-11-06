@@ -214,6 +214,11 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     console.log(
       '\nCriado como rascunho. Preencha os textos e as fontes; rode `npm run dev` para ver.',
     );
+    if (process.argv[2] === 'licao') {
+      console.log(
+        'Antes de marcar `revisado`, confira o checklist em LEGALIDADE.md (seção 11, "Antes de marcar uma lição como revisado").',
+      );
+    }
   } catch (e) {
     console.error(`✖ ${e instanceof Error ? e.message : String(e)}`);
     process.exit(1);

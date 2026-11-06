@@ -1,0 +1,33 @@
+name: Erro no conteúdo
+description: Achou um erro numa lição, pergunta ou fonte? Conte aqui.
+title: 'Erro: '
+labels: ['conteudo']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Este relato é público. Não escreva dados pessoais nem propaganda política.**
+        Relatos com esse tipo de conteúdo são ocultados e fechados.
+  - type: input
+    id: licao
+    attributes:
+      label: Lição
+      description: O id da lição aparece no link "Encontrou um erro?".
+    validations:
+      required: true
+  - type: input
+    id: card
+    attributes:
+      label: Card ou exercício
+      description: Por exemplo, "card 2" ou "exercício 4".
+  - type: textarea
+    id: erro
+    attributes:
+      label: O que está errado?
+    validations:
+      required: true
+  - type: textarea
+    id: fonte
+    attributes:
+      label: Fonte que mostra o certo
+      description: Lei e artigo, ou obra, autor e página. Um link ajuda.
