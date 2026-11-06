@@ -188,17 +188,23 @@ A BY-NC-SA deixa escolas, professores e qualquer pessoa reusarem o conteúdo, co
 - não tem conteúdo impróprio, compra ou recompensa aleatória;
 - o conteúdo é o mesmo para todo mundo.
 
-Pelo critério de proporcionalidade, a aferição de idade seria desproporcional ao risco. **Pendente (M16):** conferir esta avaliação com o guia da ANPD "Fornecedores de produtos ou serviços de tecnologia da informação: escopo e obrigações gerais do ECA Digital" e registrar aqui a conclusão.
+Pelo critério de proporcionalidade, a aferição de idade seria desproporcional ao risco. **Conferência com o guia da ANPD** (feita em 6 de novembro de 2026, no guia "Fornecedores de produtos ou serviços de tecnologia da informação: escopo e obrigações gerais do ECA Digital"):
+- um serviço de *acesso provável* precisa reunir, **ao mesmo tempo**, três requisitos do art. 1º, parágrafo único: probabilidade de uso e atratividade por crianças e adolescentes, facilidade de acesso e utilização, e **significativo grau de risco** à privacidade, à segurança ou ao desenvolvimento biopsicossocial. O Democratiza atende aos dois primeiros, mas provavelmente não ao terceiro: não coleta dados, não tem conta, anúncio, perfilamento, conversa entre pessoas nem compra;
+- o guia avisa que a autoavaliação do fornecedor não vincula a ANPD, que medidas de conformidade (como aferir idade) não servem para afastar os requisitos e que plataformas de natureza educativa podem receber tratamento diferenciado, sem ficar isentas da lei;
+- o guia cita notificações, recompensas, rankings e personalização como elementos que aumentam o uso por esse público, e veda interfaces que comprometam a autonomia de quem usa. Por isso as mecânicas foram revisadas (tabela abaixo);
+- **conclusão:** mantemos o enquadramento preliminar (tratar como de acesso provável, por prudência), sem aferição de idade, e seguimos as obrigações compatíveis: nada para configurar além do padrão, sem design que pressione, informação compreensível (Política em linguagem simples). Nada além disso foi pedido pelo guia para o nosso caso.
+- **Ainda falta:** o guia foi lido por uma ferramenta de resumo automático; conferir os trechos citados (pp. 29 a 42 e 55) no PDF e passar a avaliação pelo advogado, antes do M19.
 
 **Mecânicas de engajamento.** A sequência de dias e a meta diária são mecânicas de engajamento. Para que sigam o melhor interesse de quem é adolescente:
 - nenhum texto de culpa, ameaça ou urgência ("você vai perder…");
 - nenhuma notificação, contagem regressiva, rolagem infinita, reprodução automática ou recompensa aleatória;
 - qualquer mecânica nova passa por este documento antes de entrar.
 
-**Resultado da revisão das mecânicas** (preencher no M16):
+**Resultado da revisão das mecânicas:**
 | Data | O que foi conferido | Resultado |
 |---|---|---|
-| — | — | — |
+| 06/11/2026 | Textos de ofensiva, meta diária, revisão e Prática (Home, barra do topo, Revisar, Lição concluída, Sobre) | Removido o texto "Estude hoje para manter" da Home (urgência). Os demais são neutros ("Recorde: N dias", "Meta de hoje batida!", "Volta na sua revisão amanhã"). |
+| 06/11/2026 | Notificações, contagem regressiva, rolagem infinita, reprodução automática e recompensa aleatória | Nenhum existe. O embaralhamento das opções é repetível (semente fixa) e não dá prêmio. O teste `tests/e2e/mecanicas.spec.ts` trava a volta do texto de pressão e do pedido de notificação. |
 
 **Reavaliar já** se o site ganhar contas, comentários, ranking entre pessoas, notificações ou qualquer forma de anúncio.
 
@@ -241,18 +247,18 @@ A Lei 5.700/1971 permite usar os símbolos nacionais em contexto cívico e educa
 
 ### Antes do lançamento (M19)
 Código (M16 e M17):
-- [ ] `/privacidade` e `/termos` no ar, linkadas no rodapé, no menu lateral e no Sobre.
-- [ ] Aviso de IA no Sobre e no pé de cada explicação.
-- [ ] `LICENSE`, `content/LICENSE`, `public/fonts/OFL.txt` e `MARCA.md` no repositório.
-- [ ] `npm run checar-marcas` no CI e passando.
-- [ ] Modelo de issue com o aviso de relato público; checklist editorial no modelo de PR.
-- [ ] Mecânicas revisadas e registradas na seção 8.
+- [x] `/privacidade` e `/termos` no ar, linkadas no rodapé, no menu lateral e no Sobre.
+- [x] Aviso de IA no Sobre e no pé de cada explicação.
+- [x] `LICENSE`, `content/LICENSE`, `public/fonts/OFL.txt` e `MARCA.md` no repositório. (Falta trocar o aviso de `content/LICENSE` pelo texto legal completo da CC BY-NC-SA 4.0.)
+- [x] `npm run checar-marcas` no CI e passando.
+- [x] Modelo de issue com o aviso de relato público; checklist editorial no modelo de PR.
+- [x] Mecânicas revisadas e registradas na seção 8.
 - [ ] Identidade própria aplicada (M17) e registrada na seção 6.
 
 Fora do código:
 - [ ] Busca no INPI feita e, se livre, pedido de registro da marca enviado.
 - [ ] Termos e Política lidos por um advogado.
-- [ ] Avaliação do ECA Digital conferida com o guia da ANPD (seção 8).
+- [ ] Avaliação do ECA Digital conferida com o guia da ANPD (seção 8). Feita em 06/11/2026 a partir de um resumo; falta conferir o PDF e o advogado.
 
 ### Ao entrar num ano eleitoral
 - [ ] Ler as resoluções do TSE publicadas até 5 de março e atualizar a seção 3.
