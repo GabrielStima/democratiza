@@ -7,6 +7,10 @@ const graves = async (page: Page) =>
     (v) => v.impact === 'serious' || v.impact === 'critical',
   );
 
+/** O axe lê as cores no meio da animação de entrada da janela se não esperarmos ela acabar. */
+const animacoesAcabaram = (page: Page) =>
+  page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished)));
+
 const estadoSalvo = (page: Page) => page.evaluate(() => localStorage.getItem('democratiza:v1'));
 
 async function carregar(page: Page, perfil: string) {
@@ -60,6 +64,7 @@ for (const tela of TELAS) {
       const janela = page.getByRole('dialog', { name: 'Não foi possível abrir o arquivo' });
       await expect(janela).toBeVisible();
       await expect(janela.getByText('Seu progresso atual não foi alterado.')).toBeVisible();
+      await animacoesAcabaram(page);
       expect(await graves(page)).toEqual([]);
       await janela.getByRole('button', { name: 'Entendi' }).click();
       await expect(janela).toHaveCount(0);
@@ -98,6 +103,7 @@ for (const tela of TELAS) {
         await page.getByRole('button', { name: 'Apagar meu progresso' }).click();
         const apagar = page.getByRole('dialog', { name: 'Apagar todo o seu progresso?' });
         await expect(apagar.getByText('Não dá para desfazer.')).toBeVisible();
+        await animacoesAcabaram(page);
         expect(await graves(page)).toEqual([]);
         await apagar.getByRole('button', { name: 'Cancelar' }).click();
         expect(await estadoSalvo(page)).toBe(antes);
