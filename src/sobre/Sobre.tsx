@@ -4,6 +4,7 @@ import { Capi } from '../componentes/Capi';
 import { Selo } from '../componentes/Selo';
 import { mostrarAviso } from '../componentes/avisos.ts';
 import { bibliografia } from '../conteudo/index.ts';
+import { useRolarParaHash } from '../layouts/useHash.ts';
 import { ehMobile } from '../layouts/mobile.ts';
 import { REPOSITORIO } from '../licao/fluxo.ts';
 import {
@@ -15,6 +16,7 @@ import {
 } from '../stores/index.ts';
 import type { ResumoBackup } from '../storage/exportar.ts';
 import { PRINCIPIOS } from '../textos/principios.ts';
+import { TEXTO_IA } from '../textos/ia.ts';
 import { textoUso } from './dados.ts';
 import { JanelaApagar, JanelaArquivoInvalido, JanelaSubstituir } from './JanelasDeDados';
 import estilos from './sobre.module.css';
@@ -149,6 +151,7 @@ function SeusDados() {
 
 /** Página Sobre: projeto, princípios, método, dados do usuário, bibliografia. */
 export function Sobre() {
+  useRolarParaHash();
   return (
     <div class={estilos.pagina}>
       <header class={estilos.cabeca}>
@@ -197,6 +200,11 @@ export function Sobre() {
         </ul>
       </section>
 
+      <section aria-labelledby="como-escrevemos" class={estilos.secao}>
+        <h2 id="como-escrevemos">Como escrevemos</h2>
+        <p class={estilos.texto}>{TEXTO_IA}</p>
+      </section>
+
       <SeusDados />
 
       <section aria-labelledby="bibliografia" class={estilos.secao}>
@@ -237,7 +245,10 @@ export function Sobre() {
           </p>
         </div>
         <div class={estilos.botoes}>
-          <Botao3D variante="neutro" href={`${REPOSITORIO}/issues/new`}>
+          <Botao3D
+            variante="neutro"
+            href={`${REPOSITORIO}/issues/new?template=erro-no-conteudo.yml`}
+          >
             Sugerir correção
           </Botao3D>
           <Botao3D variante="neutro" href={REPOSITORIO}>
@@ -245,6 +256,12 @@ export function Sobre() {
           </Botao3D>
         </div>
       </section>
+
+      <nav aria-label="Páginas legais" class={estilos.legais}>
+        <a href="/privacidade">Política de privacidade</a>
+        <a href="/termos">Termos de uso</a>
+        <a href="/termos#licencas">Licenças</a>
+      </nav>
     </div>
   );
 }

@@ -251,3 +251,19 @@
     width: 100%;
   }
 }
+
+.legais {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px var(--espaco-5);
+  padding-top: var(--espaco-4);
+  border-top: 2px solid var(--borda);
+}
+.legais a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--toque-minimo);
+  color: var(--azul-escuro);
+  font-weight: 700;
+  text-decoration: underline;
+}

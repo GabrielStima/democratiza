@@ -51,10 +51,18 @@ export function Site({
           <nav class={estilos.linksRodape} aria-label="Rodapé">
             <a href="/sobre">Princípios</a>
             <a href="/cursos">Conteúdo</a>
-            <a href={`${REPOSITORIO}/issues/new`} target="_blank" rel="noopener noreferrer">
+            <a href="/privacidade">Privacidade</a>
+            <a href="/termos">Termos</a>
+            <a href="/termos#licencas">Licenças</a>
+            <a
+              href={`${REPOSITORIO}/issues/new?template=erro-no-conteudo.yml`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Sugerir correção
             </a>
           </nav>
+          <span class={estilos.licenca}>Conteúdo sob CC BY-NC-SA 4.0 · Código sob MIT</span>
         </div>
       </footer>
     </div>

@@ -82,6 +82,18 @@
 .nota p {
   margin: 0;
 }
+.legais {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+}
+.legais a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--toque-minimo);
+  color: var(--azul-escuro);
+  text-decoration: underline;
+}
 .principal {
   min-width: 0;
   padding: var(--espaco-6) var(--espaco-6) var(--espaco-7);

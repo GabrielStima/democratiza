@@ -33,6 +33,9 @@ const Estilo = lazy(() =>
     : Promise.resolve({ default: Erro404 }),
 );
 
+const Privacidade = lazy(() => import('./legal/Privacidade'));
+const Termos = lazy(() => import('./legal/Termos'));
+
 function noSite(filho: ComponentChildren, faixas = false) {
   return <LayoutSite faixas={faixas}>{filho}</LayoutSite>;
 }
@@ -63,6 +66,8 @@ export function Aplicacao() {
         <Route path="/revisar/sessao" component={() => <RotaSessao modo="revisao" />} />
         <Route path="/revisar/treino/:curso" component={() => <RotaSessao modo="treino" />} />
         <Route path="/sobre" component={() => noApp(<Sobre />)} />
+        <Route path="/privacidade" component={() => noSite(<Privacidade />)} />
+        <Route path="/termos" component={() => noSite(<Termos />)} />
         <Route
           path="/_estilo"
           component={() => (MOSTRAR_DEV ? noApp(<Estilo />) : noSite(<Erro404 />))}

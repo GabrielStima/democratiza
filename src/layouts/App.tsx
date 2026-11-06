@@ -58,6 +58,11 @@ export function App({ children }: { children: ComponentChildren }) {
             >
               Fazer backup
             </Botao3D>
+            <nav aria-label="Páginas legais" class={estilos.legais}>
+              <a href="/privacidade">Privacidade</a>
+              <a href="/termos">Termos</a>
+              <a href="/termos#licencas">Licenças</a>
+            </nav>
           </div>
         </aside>
       )}

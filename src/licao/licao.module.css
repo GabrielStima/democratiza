@@ -168,6 +168,16 @@
 .rodapeDoCard p {
   margin: 0;
 }
+.linksDoCard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--espaco-4);
+}
+.linksDoCard a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--toque-minimo);
+}
 
 /* Feedback da checagem */
 .feedback {

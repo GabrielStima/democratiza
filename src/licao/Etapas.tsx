@@ -1,3 +1,4 @@
+import { ENDERECO_COMO_ESCREVEMOS } from '../textos/ia.ts';
 import type { Card } from '../content-schema/licao.ts';
 import type { Checagem as ChecagemDados } from '../content-schema/exercicio.ts';
 import { Capi } from '../componentes/Capi';
@@ -77,9 +78,12 @@ export function CardExplicacao({
             card.fonte.descricao
           )}
         </p>
-        <a href={enderecoDaIssue(licaoId, indice)} target="_blank" rel="noopener noreferrer">
-          Encontrou um erro?
-        </a>
+        <span class={estilos.linksDoCard}>
+          <a href={enderecoDaIssue(licaoId, indice)} target="_blank" rel="noopener noreferrer">
+            Encontrou um erro?
+          </a>
+          <a href={ENDERECO_COMO_ESCREVEMOS}>Como este conteúdo é feito</a>
+        </span>
       </div>
     </article>
   );
