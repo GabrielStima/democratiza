@@ -289,8 +289,7 @@ function CartaoOfensiva({ d }: { d: DadosHome }) {
             {dias} {dias === 1 ? 'dia seguido' : 'dias seguidos'}
           </strong>
           <span>
-            {d.ofensiva.emRisco ? 'Estude hoje para manter · ' : ''}Recorde: {recorde}{' '}
-            {recorde === 1 ? 'dia' : 'dias'}
+            Recorde: {recorde} {recorde === 1 ? 'dia' : 'dias'}
           </span>
         </div>
       </div>
