@@ -27,7 +27,7 @@ Preact + Vite + TypeScript, `preact-iso`, `@preact/signals`, Zod, Vitest, Playwr
 | `npm run test:e2e` | Playwright |
 | `npm run novo -- <curso\|unidade\|licao\|conceito> ...` | Cria o esqueleto de conteúdo válido, como `rascunho` |
 | `npm run limpar` | Roda `node clean-appledouble.mjs` (ver seção 5) |
-| `npm run checar-marcas` | Falha se algum termo de `scripts/marcas-vetadas.json` aparecer no repositório (nasce no M16) |
+| `npm run checar-marcas` | Falha se algum termo de `scripts/marcas-vetadas.json` aparecer no repositório (`LEGALIDADE.md`, seção 6) |
 
 Os scripts nascem no M0, salvo quando indicado. Se algum ainda não existir, crie-o no milestone certo em vez de contornar.
 
