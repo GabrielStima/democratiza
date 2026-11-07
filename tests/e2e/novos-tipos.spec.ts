@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { clicarPerfil } from './perfil';
 
 const LICAO = '/c/aprofundamento-lorem/lorem-aprofundamento-um/lorem-licao-modelo-dois';
 
@@ -10,7 +11,7 @@ const graves = async (page: Page) =>
 
 async function carregar(page: Page, perfil: string) {
   await page.goto('/_dev');
-  await page.getByRole('button', { name: `Carregar perfil: ${perfil}` }).click();
+  await clicarPerfil(page, perfil);
 }
 
 /** Da Situação até a primeira pergunta da Prática. */
@@ -33,6 +34,11 @@ async function responderOpcoes(page: Page, certas: number[]) {
     await page.getByRole('button', { name: 'Verificar' }).click();
     await page.getByRole('button', { name: 'Continuar' }).click();
   }
+}
+
+/** Ao trocar de pergunta o app leva o foco ao conteúdo novo; só depois o teclado é da pessoa. */
+async function aguardarFocoNaPergunta(page: Page) {
+  await expect(page.locator('main [tabindex="-1"]').first()).toBeFocused();
 }
 
 /** Coloca cada item na categoria dada, só com foco e teclado (Enter). */
@@ -80,6 +86,7 @@ test.describe('tipos novos de exercício (com rascunhos ligados)', () => {
     await expect(verificar).toBeDisabled();
     expect(await graves(page)).toEqual([]);
 
+    await aguardarFocoNaPergunta(page);
     await classificarPorTeclado(page, { 'Item um': 'Lorem', 'Item dois': 'Lorem' });
     await expect(verificar).toBeDisabled();
     // Trocar de ideia: tocar no item já colocado o devolve.
@@ -114,6 +121,7 @@ test.describe('tipos novos de exercício (com rascunhos ligados)', () => {
     await responderOpcoes(page, [1, 2, 0]);
 
     // Classificar errado: tudo no mesmo lugar.
+    await aguardarFocoNaPergunta(page);
     await classificarPorTeclado(page, {
       'Item um': 'Ipsum',
       'Item dois': 'Lorem',
@@ -153,6 +161,7 @@ test.describe('tipos novos de exercício (com rascunhos ligados)', () => {
 
     // Os exercícios errados voltam uma vez no fim: classificar (certo agora) e mito.
     await expect(page.getByText(/Classificar · 7 de 8/)).toBeVisible();
+    await aguardarFocoNaPergunta(page);
     await classificarPorTeclado(page, {
       'Item um': 'Lorem',
       'Item dois': 'Ipsum',
@@ -178,6 +187,7 @@ test.describe('tipos novos de exercício (com rascunhos ligados)', () => {
     await carregar(page, 'Curso 1 completo');
     await ateAPratica(page);
     await responderOpcoes(page, [1, 2, 0]);
+    await aguardarFocoNaPergunta(page);
     await classificarPorTeclado(page, {
       'Item um': 'Lorem',
       'Item dois': 'Ipsum',
@@ -187,6 +197,8 @@ test.describe('tipos novos de exercício (com rascunhos ligados)', () => {
     await page.getByRole('button', { name: 'Verificar' }).click();
     await page.getByRole('button', { name: 'Continuar' }).click();
 
+    // Ao trocar de pergunta o app leva o foco ao conteúdo novo; só depois o teclado é da pessoa.
+    await expect(page.locator('main [tabindex="-1"]').first()).toBeFocused();
     const lista = page.getByRole('list', { name: 'Etapas para ordenar' });
     const ultima = lista.getByRole('listitem').last();
     const nome = (await ultima.locator('span').nth(1).textContent()) ?? '';
@@ -212,6 +224,7 @@ test.describe('tipos novos de exercício (com rascunhos ligados)', () => {
           .textContent()) ?? '';
       vistos.add(kicker.split(' · ')[0] ?? '');
       if (kicker.startsWith('Classificar')) {
+        await aguardarFocoNaPergunta(page);
         await classificarPorTeclado(page, {
           'Item um': 'Lorem',
           'Item dois': 'Ipsum',

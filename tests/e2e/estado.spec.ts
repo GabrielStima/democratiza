@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { clicarPerfil } from './perfil';
 
 test.describe('estado e perfis (com rascunhos ligados)', () => {
   test.skip(process.env.VITE_MOSTRAR_RASCUNHOS !== '1', 'os perfis só existem no /_dev');
@@ -7,7 +8,7 @@ test.describe('estado e perfis (com rascunhos ligados)', () => {
     page,
   }) => {
     await page.goto('/_dev');
-    await page.getByRole('button', { name: 'Carregar perfil: Em andamento' }).click();
+    await clicarPerfil(page, 'Em andamento');
     const fatos = page.getByTestId('fatos');
     await expect(fatos).toContainText('Ofensiva exibida7');
     await expect(fatos).toContainText('Conceitos vencidos6');
@@ -18,7 +19,7 @@ test.describe('estado e perfis (com rascunhos ligados)', () => {
 
   test('"Tudo em dia" não tem conceitos vencidos', async ({ page }) => {
     await page.goto('/_dev');
-    await page.getByRole('button', { name: 'Carregar perfil: Tudo em dia' }).click();
+    await clicarPerfil(page, 'Tudo em dia');
     await expect(page.getByTestId('fatos')).toContainText('Conceitos vencidos0');
   });
 
@@ -26,7 +27,7 @@ test.describe('estado e perfis (com rascunhos ligados)', () => {
     await page.goto('/');
     await expect(page.getByRole('heading', { name: /Entenda a política do Brasil/ })).toBeVisible();
     await page.goto('/_dev');
-    await page.getByRole('button', { name: 'Carregar perfil: Um curso só' }).click();
+    await clicarPerfil(page, 'Um curso só');
     await page.goto('/');
     await expect(page.getByRole('heading', { name: 'Bom te ver de novo!' })).toBeVisible();
     await page.goto('/_dev');
@@ -37,7 +38,7 @@ test.describe('estado e perfis (com rascunhos ligados)', () => {
 
   test('avançar dias sem estudar: em risco após 1, zerada após 2', async ({ page }) => {
     await page.goto('/_dev');
-    await page.getByRole('button', { name: 'Carregar perfil: Em andamento' }).click();
+    await clicarPerfil(page, 'Em andamento');
     await page.getByRole('button', { name: 'Avançar 1 dia' }).click();
     await expect(page.getByTestId('fatos')).toContainText('Ofensiva exibida7 (em risco)');
     await page.getByRole('button', { name: 'Avançar 1 dia' }).click();

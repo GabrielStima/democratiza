@@ -97,12 +97,12 @@ export function definirEstado(novo: Estado | null): void {
   else if (!salvarEstado(texto, novo)) persistente.value = false;
 }
 
-/** Troca o caderno e grava só o que mudou. */
-export function definirCaderno(novo: Caderno): void {
+/** Troca o caderno e grava só o que mudou; a promessa termina quando a gravação termina. */
+export function definirCadernoAguardando(novo: Caderno): Promise<void> {
   const { salvar, remover } = diferencas(caderno.value, novo);
   caderno.value = novo;
   const a = armazemCaderno();
-  void (async () => {
+  return (async () => {
     try {
       if (remover.length > 0) await a.remover(remover);
       if (salvar.length > 0) await a.salvar(salvar);
@@ -110,6 +110,11 @@ export function definirCaderno(novo: Caderno): void {
       persistente.value = false;
     }
   })();
+}
+
+/** Troca o caderno e grava só o que mudou. */
+export function definirCaderno(novo: Caderno): void {
+  void definirCadernoAguardando(novo);
 }
 
 /** A pessoa escolheu a meta diária: começa o progresso. */

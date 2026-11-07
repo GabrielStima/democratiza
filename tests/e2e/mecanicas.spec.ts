@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { clicarPerfil } from './perfil';
 
 /** ECA Digital (LEGALIDADE.md, seção 8): as mecânicas de engajamento não usam texto de pressão. */
 const PRESSAO =
@@ -10,7 +11,7 @@ test.describe('M16 · mecânicas sem pressão', () => {
   test('a Home de quem não estudou hoje não cobra nem ameaça', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto('/_dev');
-    await page.getByRole('button', { name: 'Carregar perfil: Em andamento' }).click();
+    await clicarPerfil(page, 'Em andamento');
     // Um dia sem estudar: a ofensiva fica "em risco" na lógica, mas a tela não pode pressionar.
     await page.getByRole('button', { name: /avançar 1 dia/i }).click();
     for (const rota of ['/', '/revisar', '/caderno']) {

@@ -1,6 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 import { readFileSync } from 'node:fs';
+import { clicarPerfil } from './perfil';
 
 const graves = async (page: Page) =>
   (await new AxeBuilder({ page }).analyze()).violations.filter(
@@ -15,7 +16,7 @@ const estadoSalvo = (page: Page) => page.evaluate(() => localStorage.getItem('de
 
 async function carregar(page: Page, perfil: string) {
   await page.goto('/_dev');
-  await page.getByRole('button', { name: `Carregar perfil: ${perfil}` }).click();
+  await clicarPerfil(page, perfil);
   await expect(page.getByTestId('fatos')).toBeVisible();
 }
 

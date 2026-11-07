@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { clicarPerfil } from './perfil';
 
 const MODELO = '/c/comece-por-aqui/lorem-unidade-um/lorem-licao-modelo';
 
@@ -125,7 +126,7 @@ test('lição completa com 1 erro: 55 XP, 5 de 6 e três conceitos no caderno', 
 
 test('sair no meio da Prática e voltar retoma na pergunta certa', async ({ page }) => {
   await page.goto('/_dev');
-  await page.getByRole('button', { name: 'Carregar perfil: Um curso só' }).click();
+  await clicarPerfil(page, 'Um curso só');
   await ateAPratica(page);
   await responder(page, CERTAS[0] as string);
   await page.getByRole('button', { name: 'Continuar' }).click();

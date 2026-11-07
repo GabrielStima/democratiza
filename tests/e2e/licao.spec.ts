@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { clicarPerfil } from './perfil';
 
 const MODELO = '/c/comece-por-aqui/lorem-unidade-um/lorem-licao-modelo';
 
@@ -98,7 +99,7 @@ test.describe('lição, parte 1 (com rascunhos ligados)', () => {
 
   test('quem tem progresso retoma do ponto em que parou, mesmo recarregando', async ({ page }) => {
     await page.goto('/_dev');
-    await page.getByRole('button', { name: 'Carregar perfil: Um curso só' }).click();
+    await clicarPerfil(page, 'Um curso só');
     await page.goto(MODELO);
     await page.getByLabel('Sit amet consectetur').check();
     await page.getByRole('button', { name: 'Ver explicação' }).click();
@@ -117,7 +118,7 @@ test.describe('lição, parte 1 (com rascunhos ligados)', () => {
 
   test('errar a checagem nunca muda o XP', async ({ page }) => {
     await page.goto('/_dev');
-    await page.getByRole('button', { name: 'Carregar perfil: Um curso só' }).click();
+    await clicarPerfil(page, 'Um curso só');
     const antes = await xpSalvo(page);
     expect(antes).toBeGreaterThan(0);
     await page.goto(MODELO);

@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { clicarPerfil } from './perfil';
 
 const graves = async (page: Page) =>
   (await new AxeBuilder({ page }).analyze()).violations.filter(
@@ -73,7 +74,7 @@ test.describe('M16 · com perfis de demonstração', () => {
   test('menu lateral (desktop) leva às páginas legais', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto('/_dev');
-    await page.getByRole('button', { name: 'Carregar perfil: Em andamento' }).click();
+    await clicarPerfil(page, 'Em andamento');
     await page.goto('/sobre');
     const legais = page
       .getByRole('complementary')

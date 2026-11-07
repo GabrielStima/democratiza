@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { clicarPerfil } from './perfil';
 
 const graves = async (page: Page) =>
   (await new AxeBuilder({ page }).analyze()).violations.filter(
@@ -8,7 +9,7 @@ const graves = async (page: Page) =>
 
 async function carregar(page: Page, perfil: string) {
   await page.goto('/_dev');
-  await page.getByRole('button', { name: `Carregar perfil: ${perfil}` }).click();
+  await clicarPerfil(page, perfil);
 }
 
 test.use({ viewport: { width: 390, height: 844 }, hasTouch: true });

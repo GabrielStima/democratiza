@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { clicarPerfil } from './perfil';
 
 const graves = async (page: Page) =>
   (await new AxeBuilder({ page }).analyze()).violations.filter(
@@ -8,7 +9,7 @@ const graves = async (page: Page) =>
 
 async function carregar(page: Page, perfil: string) {
   await page.goto('/_dev');
-  await page.getByRole('button', { name: `Carregar perfil: ${perfil}` }).click();
+  await clicarPerfil(page, perfil);
 }
 
 test('o 404 leva ao catálogo', async ({ page }) => {
@@ -42,7 +43,7 @@ test.describe('com rascunhos ligados', () => {
 
   test('o menu lateral leva ao catálogo e marca Cursos como página atual', async ({ page }) => {
     await page.goto('/_dev');
-    await page.getByRole('button', { name: 'Carregar perfil: Um curso só' }).click();
+    await clicarPerfil(page, 'Um curso só');
     await page.goto('/cursos');
     await expect(
       page.getByRole('navigation', { name: 'Principal' }).getByRole('link', { name: 'Cursos' }),

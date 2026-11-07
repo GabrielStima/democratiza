@@ -3,7 +3,13 @@ import { ofensivaAtual, ofensivaEmRisco } from '../engine/ofensiva.ts';
 import { deslocamentoAtual, hoje } from '../engine/relogio.ts';
 import { conceitosVencidos } from '../engine/revisao.ts';
 import { xpDeHoje } from '../engine/xp.ts';
-import { caderno, definirCaderno, definirEstado, estado } from '../stores/index.ts';
+import {
+  caderno,
+  definirCaderno,
+  definirCadernoAguardando,
+  definirEstado,
+  estado,
+} from '../stores/index.ts';
 import { PERFIS, type Perfil } from './perfis.ts';
 import { moverRelogio, zerarRelogio } from './relogioDev.ts';
 import { bibliografia, carregarLicao, catalogo } from '../conteudo/index.ts';
@@ -167,15 +173,18 @@ function SecaoLargura() {
 
 function SecaoEstado() {
   const [, atualizar] = useState(0);
+  // Nome do último perfil já gravado por inteiro (estado e caderno); os testes esperam por isso.
+  const [gravado, setGravado] = useState('');
   const e = estado.value;
   const dia = hoje();
   const deslocamento = deslocamentoAtual();
   const vencidos = conceitosVencidos(caderno.value, dia).length;
 
-  function carregar(p: Perfil) {
+  async function carregar(p: Perfil) {
     const r = p.construir(catalogo, dia);
     definirEstado(r.estado);
-    definirCaderno(r.caderno);
+    await definirCadernoAguardando(r.caderno);
+    setGravado(p.nome);
   }
   function mover(dias: number) {
     moverRelogio(dias);
@@ -229,7 +238,7 @@ function SecaoEstado() {
         </Botao3D>
       </div>
 
-      <dl class={estilos.fatos} data-testid="fatos">
+      <dl class={estilos.fatos} data-testid="fatos" data-perfil-gravado={gravado}>
         <dt>Dia simulado</dt>
         <dd>
           {dia} ({deslocamento >= 0 ? '+' : ''}
