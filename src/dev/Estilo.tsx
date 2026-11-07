@@ -6,7 +6,9 @@ import { BarraProgressoGrossa } from '../componentes/BarraProgressoGrossa';
 import { Cartao } from '../componentes/Cartao';
 import { CartaoResultado, ResultadoEmLinha } from '../componentes/CartaoResultado';
 import { Janela } from '../componentes/Janela';
-import { PainelFeedback } from '../componentes/PainelFeedback';
+import { CartaoFeedback } from '../componentes/CartaoFeedback';
+import { IconeSequencia } from '../componentes/IconeSequencia';
+import { Trilha } from '../trilha/Trilha';
 import { Selo } from '../componentes/Selo';
 import { mostrarAviso } from '../componentes/avisos';
 import estilos from './Estilo.module.css';
@@ -139,17 +141,40 @@ export function Estilo() {
         </p>
         <h3>Barra de progresso grossa</h3>
         <BarraProgressoGrossa valor={55} rotulo="Exemplo: 55% da lição" />
-        <h3>Painel de feedback</h3>
+        <h3>Cartão de feedback da Capi</h3>
         <div class={estilos.linha}>
-          <PainelFeedback tom="certa" titulo="Mandou bem! +10 XP">
+          <CartaoFeedback tom="certa" titulo="Isso mesmo! +10 XP">
             <p>Lei estadual vale só no estado onde foi aprovada.</p>
-          </PainelFeedback>
-          <PainelFeedback tom="errada" titulo="Resposta certa: só em Minas Gerais" />
-          <PainelFeedback tom="quase" titulo="Quase! E tudo bem, aqui não perde ponto." />
+          </CartaoFeedback>
+          <CartaoFeedback tom="errada" titulo="Não foi dessa vez" />
+          <CartaoFeedback tom="quase" titulo="Quase! Aqui não perde ponto." />
         </div>
+        <h3>Sequência</h3>
+        <IconeSequencia tamanho={40} />
+        <h3>Trilha em linha do tempo</h3>
+        <Trilha
+          nos={[
+            {
+              id: 'a',
+              titulo: 'Separação dos Poderes',
+              tipo: 'feita',
+              destino: '#',
+              detalhe: '2 conceitos',
+            },
+            {
+              id: 'b',
+              titulo: 'Legislativo: quem faz as leis',
+              tipo: 'atual',
+              destino: '#',
+              detalhe: '2 conceitos',
+            },
+            { id: 'c', titulo: 'Judiciário: quem julga', tipo: 'bloqueada', destino: '#' },
+            { id: 'd', titulo: 'Desafio da unidade', tipo: 'desafio', destino: '#' },
+          ]}
+        />
         <h3>Cartões de resultado</h3>
         <ResultadoEmLinha>
-          <CartaoResultado rotulo="Total de XP" valor="55" cor="ouro" />
+          <CartaoResultado rotulo="XP ganho" valor="55" cor="ouro" />
           <CartaoResultado rotulo="Acertos" valor="5/6" cor="verde" />
           <CartaoResultado rotulo="Tempo" valor="5:48" cor="azul" />
         </ResultadoEmLinha>

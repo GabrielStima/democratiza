@@ -94,7 +94,7 @@ export interface ApresentacaoOpcoes extends ApresentacaoBase {
   grandes: boolean;
   /** Mostra o enunciado num balão da Capi, com este texto no alto (mito ou fato). */
   balao?: string;
-  /** Títulos do rodapé, quando não são "Mandou bem!" e "Resposta certa: …". */
+  /** Títulos do cartão, quando não são "Isso mesmo!" e "Não foi dessa vez". */
   tituloCerto?: string;
   tituloErrado?: string;
   /** Debate entre correntes (só em Módulos): o argumento e as leituras comparadas. */

@@ -20,18 +20,17 @@ afterEach(() => {
 });
 
 describe('LicaoConcluida', () => {
-  it('no celular mostra a comemoração e os três cartões de resultado', () => {
+  it('no celular mostra a Capi e os três cartões de resultado', () => {
     ehMobile.value = true;
     const { container } = render(<LicaoConcluida d={dados} nome="Lição modelo" />);
     expect(screen.getByRole('heading', { name: 'Lição concluída!' })).toBeTruthy();
     const resultado = screen.getByRole('list', { name: 'Resultado' });
-    expect(resultado.textContent).toContain('Total de XP');
+    expect(resultado.textContent).toContain('XP ganho');
     expect(resultado.textContent).toContain('55');
     expect(resultado.textContent).toContain('5 de 6');
     expect(resultado.textContent).toContain('2 s');
-    // O confete só decora: escondido do leitor de tela.
-    const confetes = container.querySelector('[aria-hidden="true"]');
-    expect(confetes?.children.length).toBeGreaterThan(0);
+    // Sem confete: só a Capi decora.
+    expect(container.querySelectorAll('[aria-hidden="true"] > span')).toHaveLength(0);
   });
 
   it('no desktop mantém os números simples, sem confete', () => {

@@ -45,7 +45,7 @@ test.describe('lição, parte 1 (com rascunhos ligados)', () => {
     await expect(verificar).toBeDisabled();
     await page.getByLabel('Consectetur').check();
     await verificar.click();
-    await expect(page.getByText('Isso!')).toBeVisible();
+    await expect(page.getByText('Isso mesmo!')).toBeVisible();
     await expect(page.getByText(/Seu palpite no começo/)).toHaveCount(0);
     await page.getByRole('button', { name: 'Continuar' }).click();
 
@@ -54,7 +54,7 @@ test.describe('lição, parte 1 (com rascunhos ligados)', () => {
     await page.getByRole('button', { name: 'Entendi' }).click();
     await page.getByLabel('Sit amet').check();
     await page.getByRole('button', { name: 'Verificar' }).click();
-    await expect(page.getByText('Quase! E tudo bem, aqui não perde ponto.')).toBeVisible();
+    await expect(page.getByText('Quase! Aqui não perde ponto.')).toBeVisible();
     await expect(page.getByText('Seu palpite no começo foi: Lorem ipsum dolor')).toBeVisible();
     await page.getByRole('button', { name: 'Continuar' }).click();
 

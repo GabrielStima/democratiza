@@ -21,6 +21,7 @@ import {
 import { corrigir, estaPronto, marcacaoInicial } from './respostas.ts';
 import {
   FeedbackPratica,
+  tituloDoFeedback,
   LicaoConcluida,
   PerguntaPratica,
   ReverErros,
@@ -278,14 +279,8 @@ export function PraticaLicao({ id, licao, posicao, salvo, palpite, aoVoltar }: P
         feedback && exercicio && apresentacao
           ? {
               tom: feedback.ok ? 'certa' : 'errada',
-              conteudo: (
-                <FeedbackPratica
-                  ok={feedback.ok}
-                  xp={refeita ? null : feedback.xp}
-                  ap={apresentacao}
-                  ex={exercicio}
-                />
-              ),
+              titulo: tituloDoFeedback(apresentacao, feedback.ok, refeita ? null : feedback.xp),
+              conteudo: <FeedbackPratica ok={feedback.ok} ap={apresentacao} ex={exercicio} />,
             }
           : undefined
       }
@@ -293,9 +288,7 @@ export function PraticaLicao({ id, licao, posicao, salvo, palpite, aoVoltar }: P
         <>
           <span />
           {noFeedback ? (
-            <Botao3D variante={feedback.ok ? 'primario' : 'perigo'} onClick={continuar}>
-              Continuar
-            </Botao3D>
+            <Botao3D onClick={continuar}>Continuar</Botao3D>
           ) : (
             <Botao3D desativado={!pronto} onClick={verificar}>
               Verificar

@@ -46,7 +46,7 @@ test.describe('debate entre correntes (com rascunhos ligados)', () => {
     // Errar: a certa fica marcada e o quadro mostra as duas leituras com a referência de cada uma.
     await page.getByLabel('Leitura ipsum (2005)').check();
     await page.getByRole('button', { name: 'Verificar' }).click();
-    await expect(page.getByText('Resposta certa: Leitura lorem (1990)')).toBeVisible();
+    await expect(page.getByText('Não foi dessa vez')).toBeVisible();
     await expect(
       page.getByRole('heading', { name: 'As duas leituras, lado a lado' }),
     ).toBeVisible();
@@ -74,7 +74,7 @@ test.describe('debate entre correntes (com rascunhos ligados)', () => {
     );
     await page.getByRole('button', { name: 'Verificar' }).focus();
     await page.keyboard.press('Enter');
-    await expect(page.getByText(/Mandou bem!/)).toBeVisible();
+    await expect(page.getByText(/Isso mesmo!/)).toBeVisible();
     await expect(page.getByRole('heading', { name: /As duas leituras/ })).toBeVisible();
     await page.getByRole('button', { name: 'Continuar' }).focus();
     await page.keyboard.press('Enter');

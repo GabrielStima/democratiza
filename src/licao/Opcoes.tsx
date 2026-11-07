@@ -3,7 +3,7 @@ import estilos from './licao.module.css';
 export type EstadoOpcao = 'certa' | 'amarela' | 'errada';
 
 const MARCA: Record<EstadoOpcao, string> = {
-  certa: 'Resposta certa',
+  certa: 'Certa',
   amarela: 'Sua resposta',
   errada: 'Sua resposta',
 };

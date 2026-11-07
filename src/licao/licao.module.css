@@ -48,7 +48,6 @@
   padding: var(--espaco-4) var(--espaco-5);
   background: var(--fundo);
   border: 2px solid var(--borda-forte);
-  border-bottom-width: 5px;
   border-radius: var(--raio-m);
   font-size: 17px;
   font-weight: 700;
@@ -69,28 +68,35 @@
 }
 .certa input + .caixa,
 .certa input:checked + .caixa {
-  background: var(--verde-feedback);
-  border-color: var(--verde-ipe);
-  color: var(--verde-texto);
+  background: var(--fundo);
+  border-color: var(--verde-botao);
+  color: var(--texto);
 }
 .amarela input + .caixa,
 .amarela input:checked + .caixa {
-  background: var(--amarelo-claro);
+  background: var(--fundo);
   border-color: var(--amarelo-ouro);
-  color: var(--amarelo-texto);
+  color: var(--texto);
 }
 .errada input + .caixa,
 .errada input:checked + .caixa {
-  background: var(--coral-claro);
+  background: var(--fundo);
   border-color: var(--coral);
+  color: var(--texto);
+}
+.certa .marca {
+  color: var(--verde-mata);
+}
+.amarela .marca {
+  color: var(--amarelo-texto);
+}
+.errada .marca {
   color: var(--coral-escuro);
 }
 .marca {
   flex: none;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
 }
 
 /* Termo do glossário */
@@ -179,32 +185,6 @@
   min-height: var(--toque-minimo);
 }
 
-/* Feedback da checagem */
-.feedback {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--espaco-4);
-  margin: 0 0 var(--espaco-5);
-  padding: var(--espaco-4) var(--espaco-5);
-  border-radius: var(--raio-g);
-}
-.feedback p {
-  margin: 0 0 var(--espaco-2);
-}
-.feedbackCerta {
-  background: var(--verde-feedback);
-  color: var(--verde-texto);
-}
-.feedbackQuase {
-  background: var(--amarelo-claro);
-  color: var(--amarelo-texto);
-}
-.feedbackTitulo {
-  font-family: var(--fonte-titulo);
-  font-size: 22px;
-  font-weight: 800;
-}
-
 /* Fim da explicação */
 .fim {
   text-align: center;
@@ -259,7 +239,6 @@
 .enormes .caixa {
   min-height: 96px;
   border-radius: var(--raio-g);
-  border-bottom-width: 6px;
   font-family: var(--fonte-titulo);
   font-size: 34px;
   font-weight: 800;
@@ -285,11 +264,6 @@
 .barra {
   margin: 0 0 var(--espaco-5);
 }
-.feedbackTituloPequeno {
-  font-family: var(--fonte-titulo);
-  font-size: 20px;
-  font-weight: 800;
-}
 .fonteFeedback {
   font-size: 14px;
 }
@@ -310,7 +284,6 @@
   min-width: 140px;
   padding: var(--espaco-4);
   border: 2px solid var(--borda);
-  border-bottom-width: 4px;
   border-radius: var(--raio-g);
 }
 .numeroValor {
@@ -396,7 +369,6 @@
 .erro {
   padding: var(--espaco-5);
   border: 2px solid var(--borda);
-  border-bottom-width: 4px;
   border-radius: var(--raio-g);
 }
 .erro h2 {
@@ -479,92 +451,10 @@
   width: 148px;
   height: 148px;
   border-radius: 50%;
-  background: var(--amarelo-claro);
-  box-shadow: 0 6px 0 var(--amarelo-ouro);
+  background: var(--fundo-faixa);
 }
-.confetes {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.confete {
-  position: absolute;
-  width: 10px;
-  height: 16px;
-  border-radius: 3px;
-  animation: cair 2.4s ease-in-out infinite alternate;
-}
-.confete:nth-child(1) {
-  top: 4%;
-  left: 12%;
-  transform: rotate(20deg);
-}
-.confete:nth-child(2) {
-  top: 18%;
-  left: 26%;
-  transform: rotate(-30deg);
-  animation-delay: 0.3s;
-}
-.confete:nth-child(3) {
-  top: 2%;
-  left: 40%;
-  transform: rotate(55deg);
-  animation-delay: 0.6s;
-}
-.confete:nth-child(4) {
-  top: 14%;
-  right: 24%;
-  transform: rotate(-15deg);
-  animation-delay: 0.2s;
-}
-.confete:nth-child(5) {
-  top: 4%;
-  right: 10%;
-  transform: rotate(40deg);
-  animation-delay: 0.5s;
-}
-.confete:nth-child(6) {
-  top: 56%;
-  left: 8%;
-  transform: rotate(-50deg);
-  animation-delay: 0.1s;
-}
-.confete:nth-child(7) {
-  top: 60%;
-  right: 8%;
-  transform: rotate(25deg);
-  animation-delay: 0.4s;
-}
-.confete:nth-child(8) {
-  top: 84%;
-  left: 22%;
-  transform: rotate(-20deg);
-  animation-delay: 0.7s;
-}
-.confete-verde {
-  background: var(--verde-ipe);
-}
-.confete-ouro {
-  background: var(--amarelo-ouro);
-}
-.confete-azul {
-  background: var(--azul-anil);
-}
-.confete-coral {
-  background: var(--coral);
-}
-@keyframes cair {
-  to {
-    translate: 0 10px;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .confete {
-    animation: none;
-  }
-}
-.tituloOuro {
-  color: var(--amarelo-icone);
+.tituloVerde {
+  color: var(--verde-noite);
 }
 @media (max-width: 1023.98px) {
   .contador {

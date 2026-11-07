@@ -26,13 +26,13 @@ async function ateAPratica(page: Page) {
   await botao(page, 'Entendi').click();
   await page.getByLabel('Consectetur', { exact: true }).check();
   await botao(page, 'Verificar').click();
-  await expect(page.getByText('Isso!')).toBeVisible();
+  await expect(page.getByText('Isso mesmo!')).toBeVisible();
   expect(await semRolagemLateral(page)).toBe(true);
   await botao(page, 'Continuar').click();
   await botao(page, 'Entendi').click();
   await page.getByLabel('Adipiscing', { exact: true }).check();
   await botao(page, 'Verificar').click();
-  await expect(page.getByText('Quase! E tudo bem, aqui não perde ponto.')).toBeVisible();
+  await expect(page.getByText('Quase! Aqui não perde ponto.')).toBeVisible();
   expect(await semRolagemLateral(page)).toBe(true);
   await botao(page, 'Continuar').click();
   expect(await semRolagemLateral(page)).toBe(true);
@@ -58,9 +58,10 @@ test('lição completa com 1 erro em 390 px: 55 XP e 5 de 6, como no desktop', a
   const fundoNeutro = await rodape.evaluate((e) => getComputedStyle(e).backgroundColor);
 
   await responder(page, CERTAS[0] as string);
-  await expect(page.getByText('Mandou bem! +10 XP')).toBeVisible();
-  const fundoCerto = await rodape.evaluate((e) => getComputedStyle(e).backgroundColor);
-  expect(fundoCerto).not.toBe(fundoNeutro);
+  await expect(page.getByText('Isso mesmo! +10 XP')).toBeVisible();
+  // O rodapé continua branco: o feedback é o cartão da Capi, não a cor do rodapé.
+  expect(await rodape.evaluate((e) => getComputedStyle(e).backgroundColor)).toBe(fundoNeutro);
+  await expect(page.getByText('Certa', { exact: true })).toBeVisible();
   expect(await semRolagemLateral(page)).toBe(true);
   expect(await graves(page)).toEqual([]);
   await botao(page, 'Continuar').click();
@@ -68,11 +69,11 @@ test('lição completa com 1 erro em 390 px: 55 XP e 5 de 6, como no desktop', a
   await botao(page, 'Continuar').click();
 
   await responder(page, 'Sed do eiusmod');
-  await expect(page.getByText('Resposta certa: Consectetur adipiscing')).toBeVisible();
+  await expect(page.getByText('Não foi dessa vez')).toBeVisible();
   await expect(page.getByText('Essa pergunta volta na sua revisão.')).toBeVisible();
-  const fundoErrado = await rodape.evaluate((e) => getComputedStyle(e).backgroundColor);
-  expect(fundoErrado).not.toBe(fundoCerto);
-  expect(fundoErrado).not.toBe(fundoNeutro);
+  expect(await rodape.evaluate((e) => getComputedStyle(e).backgroundColor)).toBe(fundoNeutro);
+  await expect(page.getByText('Sua resposta', { exact: true })).toBeVisible();
+  await expect(page.getByText('Certa', { exact: true })).toBeVisible();
   expect(await semRolagemLateral(page)).toBe(true);
   await botao(page, 'Continuar').click();
 
@@ -95,7 +96,7 @@ test('lição completa com 1 erro em 390 px: 55 XP e 5 de 6, como no desktop', a
 
   await expect(page.getByRole('heading', { name: 'Lição concluída!' })).toBeVisible();
   const resultado = page.getByRole('list', { name: 'Resultado' });
-  await expect(resultado).toContainText('Total de XP');
+  await expect(resultado).toContainText('XP ganho');
   await expect(resultado).toContainText('55');
   await expect(resultado).toContainText('5 de 6');
   await expect(resultado).toContainText('Tempo');
@@ -119,23 +120,17 @@ test('lição completa com 1 erro em 390 px: 55 XP e 5 de 6, como no desktop', a
   expect(await semRolagemLateral(page)).toBe(true);
 });
 
-test('o confete é decorativo: escondido do leitor de tela e parado com menos movimento', async ({
-  page,
-}) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
+test('a lição concluída não tem confete nem animação', async ({ page }) => {
   await ateAPratica(page);
   for (const certa of CERTAS) {
     await responder(page, certa);
     await botao(page, 'Continuar').click();
   }
   await expect(page.getByRole('heading', { name: 'Lição concluída!' })).toBeVisible();
-  const confetes = page.locator('[aria-hidden="true"]:has(> span)').first();
-  await expect(confetes).toHaveCount(1);
-  const animacao = await confetes
-    .locator('> span')
-    .first()
-    .evaluate((e) => getComputedStyle(e).animationName);
-  expect(animacao).toBe('none');
+  const animados = await page
+    .locator('main *')
+    .evaluateAll((els) => els.filter((e) => getComputedStyle(e).animationName !== 'none').length);
+  expect(animados).toBe(0);
 });
 
 test('Rever explicação abre uma folha colada embaixo e fecha com Esc', async ({ page }) => {

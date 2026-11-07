@@ -67,7 +67,6 @@
 
   /* Sombras: botões têm volume baixo (3 px); opções e cartões usam borda inteira de 2 px (M17) */
   --sombra-botao: 0 3px 0;
-  --borda-3d: 5px;
   --foco: 0 0 0 3px #ffffff, 0 0 0 6px var(--azul-anil);
   --sombra-janela: 0 24px 60px rgb(11 61 32 / 28%);
 

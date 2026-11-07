@@ -8,15 +8,15 @@ interface Props {
   icone?: ComponentChildren;
 }
 
-/** Número do resultado (XP, acertos, tempo): faixa colorida com o rótulo e o valor grande. */
+/** Número do resultado (XP, acertos, tempo): cartão branco com o valor grande e o rótulo embaixo. */
 export function CartaoResultado({ rotulo, valor, cor, icone }: Props) {
   return (
     <li class={`${estilos.cartao} ${estilos[cor]}`}>
-      <span class={estilos.faixa}>{rotulo}</span>
       <span class={estilos.valor}>
         {icone}
         {valor}
       </span>
+      <span class={estilos.rotulo}>{rotulo}</span>
     </li>
   );
 }

@@ -128,14 +128,14 @@ function FonteDoExercicio({ ex }: { ex: Exercicio }) {
   );
 }
 
-/** Título do rodapé colorido: "Mandou bem!" e "Resposta certa: …", ou o do tipo de exercício. */
-function tituloDoFeedback(ap: Apresentacao, ok: boolean, xp: number | null): string {
+/** Título do cartão de feedback: "Isso mesmo!" e "Não foi dessa vez", ou o do tipo de exercício. */
+export function tituloDoFeedback(ap: Apresentacao, ok: boolean, xp: number | null): string {
   const pontos = xp !== null && xp > 0 ? ` +${xp} XP` : '';
   if (ok)
-    return `${ap.forma === 'opcoes' && ap.tituloCerto ? ap.tituloCerto : 'Mandou bem!'}${pontos}`;
+    return `${ap.forma === 'opcoes' && ap.tituloCerto ? ap.tituloCerto : 'Isso mesmo!'}${pontos}`;
   switch (ap.forma) {
     case 'opcoes':
-      return ap.tituloErrado ?? `Resposta certa: ${ap.opcoes[ap.correta] ?? ''}`;
+      return ap.tituloErrado ?? 'Não foi dessa vez';
     case 'classificar':
       return 'Quase! Veja onde cada item fica';
     case 'ordenar':
@@ -143,17 +143,14 @@ function tituloDoFeedback(ap: Apresentacao, ok: boolean, xp: number | null): str
   }
 }
 
-/** Conteúdo do rodapé colorido depois de verificar. */
+/** Conteúdo do cartão da Capi depois de verificar. */
 export function FeedbackPratica({
   ok,
-  xp,
   ap,
   ex,
   avisoRevisao = true,
 }: {
   ok: boolean;
-  /** XP desta resposta; null quando a lição está sendo refeita (não vale XP). */
-  xp: number | null;
   ap: Apresentacao;
   ex: Exercicio;
   /** Falso no treino livre, que não mexe no calendário de revisões. */
@@ -161,7 +158,6 @@ export function FeedbackPratica({
 }) {
   return (
     <>
-      <p class={estilos.feedbackTituloPequeno}>{tituloDoFeedback(ap, ok, xp)}</p>
       {!ok && ap.forma === 'ordenar' && (
         <ol class={estilos.ordemCerta}>
           {ap.etapas.map((e) => (
@@ -191,20 +187,12 @@ export interface DadosConcluida {
   cursosLiberados: string[];
 }
 
-const CONFETES = ['verde', 'ouro', 'azul', 'coral', 'ouro', 'verde', 'azul', 'coral'] as const;
-
 export function LicaoConcluida({ d, nome }: { d: DadosConcluida; nome: string }) {
   const mobile = ehMobile.value;
   return (
     <section class={estilos.concluida}>
       {mobile ? (
         <div class={estilos.celebracao}>
-          {/* Confete só decora: some para o leitor de tela e para quem pede menos movimento. */}
-          <span class={estilos.confetes} aria-hidden="true">
-            {CONFETES.map((cor, i) => (
-              <span key={i} class={`${estilos.confete} ${estilos[`confete-${cor}`]}`} />
-            ))}
-          </span>
           <span class={estilos.circuloCapi}>
             <Capi tamanho={112} rounded />
           </span>
@@ -212,12 +200,12 @@ export function LicaoConcluida({ d, nome }: { d: DadosConcluida; nome: string })
       ) : (
         <Capi tamanho={120} />
       )}
-      <h1 class={`${estilos.titulo} ${mobile ? estilos.tituloOuro : ''}`}>Lição concluída!</h1>
+      <h1 class={`${estilos.titulo} ${mobile ? estilos.tituloVerde : ''}`}>Lição concluída!</h1>
       <p class={estilos.texto}>{nome}</p>
       {d.refeita && <p class={estilos.aviso}>Lição refeita. O XP só conta na primeira vez.</p>}
       {mobile ? (
         <ResultadoEmLinha>
-          <CartaoResultado rotulo="Total de XP" valor={String(d.xpGanho)} cor="ouro" />
+          <CartaoResultado rotulo="XP ganho" valor={String(d.xpGanho)} cor="ouro" />
           <CartaoResultado rotulo="Acertos" valor={`${d.acertos} de ${d.total}`} cor="verde" />
           <CartaoResultado rotulo="Tempo" valor={d.tempo} cor="azul" />
         </ResultadoEmLinha>

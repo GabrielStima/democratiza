@@ -11,7 +11,7 @@ import { Licao as LayoutLicao } from '../layouts/Licao';
 import { SairDaLicao } from '../licao/Janelas';
 import { formatarTempo, type Marcacao } from '../licao/pratica.ts';
 import { corrigir, estaPronto, marcacaoInicial } from '../licao/respostas.ts';
-import { FeedbackPratica, PerguntaPratica } from '../licao/Telas';
+import { FeedbackPratica, PerguntaPratica, tituloDoFeedback } from '../licao/Telas';
 import { useEscSair } from '../licao/useEscSair.ts';
 import { caderno, carregado, registrarConclusaoRevisao } from '../stores/index.ts';
 import { Concluida, type DadosFim, type ModoSessao } from './Concluida';
@@ -283,10 +283,14 @@ function Sessao({ modo, chave }: { modo: ModoSessao; chave: string }) {
         verificado && item && ultima
           ? {
               tom: ultima.ok ? 'certa' : 'errada',
+              titulo: tituloDoFeedback(
+                item.apresentacao,
+                ultima.ok,
+                modo === 'revisao' && ultima.ok ? xpDoAcerto(true) : null,
+              ),
               conteudo: (
                 <FeedbackPratica
                   ok={ultima.ok}
-                  xp={modo === 'revisao' && ultima.ok ? xpDoAcerto(true) : null}
                   ap={item.apresentacao}
                   ex={item.ex}
                   avisoRevisao={modo === 'revisao'}
@@ -299,9 +303,7 @@ function Sessao({ modo, chave }: { modo: ModoSessao; chave: string }) {
         <>
           <span />
           {verificado ? (
-            <Botao3D variante={ultima?.ok ? 'primario' : 'perigo'} onClick={continuar}>
-              Continuar
-            </Botao3D>
+            <Botao3D onClick={continuar}>Continuar</Botao3D>
           ) : (
             <Botao3D desativado={!pronto} onClick={verificar}>
               Verificar

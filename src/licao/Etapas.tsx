@@ -2,6 +2,7 @@ import { ENDERECO_COMO_ESCREVEMOS } from '../textos/ia.ts';
 import type { Card } from '../content-schema/licao.ts';
 import type { Checagem as ChecagemDados } from '../content-schema/exercicio.ts';
 import { Capi } from '../componentes/Capi';
+import { CartaoFeedback } from '../componentes/CartaoFeedback';
 import { enderecoDaIssue } from './fluxo.ts';
 import estilos from './licao.module.css';
 import { Opcoes } from './Opcoes';
@@ -122,20 +123,15 @@ export function Checagem({
         travado={verificado}
         estados={estados}
       />
-      <div aria-live="polite">
+      <div role="status" aria-live="polite">
         {verificado && (
-          <div
-            class={`${estilos.feedback} ${acertou ? estilos.feedbackCerta : estilos.feedbackQuase}`}
+          <CartaoFeedback
+            tom={acertou ? 'certa' : 'quase'}
+            titulo={acertou ? 'Isso mesmo!' : 'Quase! Aqui não perde ponto.'}
           >
-            {!acertou && <Capi tamanho={64} />}
-            <div>
-              <p class={estilos.feedbackTitulo}>
-                {acertou ? 'Isso!' : 'Quase! E tudo bem, aqui não perde ponto.'}
-              </p>
-              <p>{checagem.reexplicacao}</p>
-              {palpite && <p>Seu palpite no começo foi: {palpite}</p>}
-            </div>
-          </div>
+            <p>{checagem.reexplicacao}</p>
+            {palpite && <p>Seu palpite no começo foi: {palpite}</p>}
+          </CartaoFeedback>
         )}
       </div>
     </section>

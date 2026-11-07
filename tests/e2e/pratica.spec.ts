@@ -45,7 +45,7 @@ test('lição completa com 1 erro: 55 XP, 5 de 6 e três conceitos no caderno', 
   await ateAPratica(page);
 
   await responder(page, CERTAS[0] as string);
-  await expect(page.getByText('Mandou bem! +10 XP')).toBeVisible();
+  await expect(page.getByText('Isso mesmo! +10 XP')).toBeVisible();
   await page.getByRole('button', { name: 'Continuar' }).click();
   await responder(page, CERTAS[1] as string);
   await page.getByRole('button', { name: 'Continuar' }).click();
@@ -53,7 +53,7 @@ test('lição completa com 1 erro: 55 XP, 5 de 6 e três conceitos no caderno', 
   // Erra a terceira: o rodapé avisa e a pergunta volta no fim.
   await expect(page.getByText(/3 de 6/)).toBeVisible();
   await responder(page, 'Sed do eiusmod');
-  await expect(page.getByText('Resposta certa: Consectetur adipiscing')).toBeVisible();
+  await expect(page.getByText('Não foi dessa vez')).toBeVisible();
   await expect(page.getByText('Essa pergunta volta na sua revisão.')).toBeVisible();
   await page.getByRole('button', { name: 'Continuar' }).click();
 
@@ -65,7 +65,7 @@ test('lição completa com 1 erro: 55 XP, 5 de 6 e três conceitos no caderno', 
   // A pergunta errada volta uma vez, vale +5 e o contador cresce para 7.
   await expect(page.getByText(/7 de 7/)).toBeVisible();
   await responder(page, 'Consectetur adipiscing');
-  await expect(page.getByText('Mandou bem! +5 XP')).toBeVisible();
+  await expect(page.getByText('Isso mesmo! +5 XP')).toBeVisible();
   await page.getByRole('button', { name: 'Continuar' }).click();
 
   await expect(page.getByRole('heading', { name: 'Lição concluída!' })).toBeVisible();
@@ -112,7 +112,7 @@ test('lição completa com 1 erro: 55 XP, 5 de 6 e três conceitos no caderno', 
   await page.getByRole('button', { name: 'Começar prática' }).click();
   for (const certa of CERTAS) {
     await responder(page, certa);
-    await expect(page.getByText('Mandou bem!', { exact: true })).toBeVisible();
+    await expect(page.getByText('Isso mesmo!', { exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Continuar' }).click();
   }
   await expect(page.getByText('Lição refeita. O XP só conta na primeira vez.')).toBeVisible();

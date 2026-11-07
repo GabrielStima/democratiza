@@ -1,0 +1,38 @@
+.cartao {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  margin-top: var(--espaco-4);
+  padding: 14px;
+  background: var(--fundo-faixa);
+  border: 2px solid var(--borda);
+  border-radius: 16px;
+  color: var(--texto);
+}
+.certa {
+  background: var(--verde-claro);
+  border-color: var(--verde-borda);
+}
+.quase {
+  background: var(--amarelo-claro);
+  border-color: var(--amarelo-ouro);
+  color: var(--amarelo-texto);
+}
+.capi {
+  display: flex;
+}
+.corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.corpo p {
+  margin: 0;
+}
+.titulo {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.15;
+}

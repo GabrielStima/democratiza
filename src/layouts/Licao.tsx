@@ -1,3 +1,4 @@
+import { CartaoFeedback } from '../componentes/CartaoFeedback';
 import type { ComponentChildren } from 'preact';
 import type { Fase } from '../licao/fluxo.ts';
 import { BarraProgressoGrossa } from '../componentes/BarraProgressoGrossa';
@@ -27,8 +28,8 @@ interface Props {
   aoFechar: () => void;
   /** Botões do rodapé (Voltar e o principal). */
   rodape: ComponentChildren;
-  /** Resposta da Prática: pinta o rodapé inteiro e mostra o feedback acima dos botões. */
-  feedback?: { tom: 'certa' | 'errada'; conteudo: ComponentChildren };
+  /** Resposta da Prática: cartão da Capi logo abaixo das opções; o rodapé fica só com os botões. */
+  feedback?: { tom: 'certa' | 'errada'; titulo: string; conteudo: ComponentChildren };
   children: ComponentChildren;
 }
 
@@ -120,13 +121,17 @@ export function Licao({
           </div>
         </header>
       )}
-      <main class={estilos.principal}>{children}</main>
-      <footer class={`${estilos.rodape} ${feedback ? estilos[feedback.tom] : ''}`}>
-        {feedback && (
-          <div class={estilos.feedback} aria-live="polite">
-            {feedback.conteudo}
-          </div>
-        )}
+      <main class={estilos.principal}>
+        {children}
+        <div role="status" aria-live="polite">
+          {feedback && (
+            <CartaoFeedback tom={feedback.tom} titulo={feedback.titulo}>
+              {feedback.conteudo}
+            </CartaoFeedback>
+          )}
+        </div>
+      </main>
+      <footer class={estilos.rodape}>
         <div class={estilos.rodapeInterno}>{rodape}</div>
       </footer>
     </div>

@@ -108,7 +108,7 @@ test.describe('tipos novos de exercício (com rascunhos ligados)', () => {
     await expect(page.getByText('Todos colocados.')).toBeVisible();
     await expect(verificar).toBeEnabled();
     await verificar.click();
-    await expect(page.getByText(/Mandou bem! \+10 XP/)).toBeVisible();
+    await expect(page.getByText(/Isso mesmo! \+10 XP/)).toBeVisible();
     await expect(page.getByText('Certo', { exact: true })).toHaveCount(4);
     expect(await graves(page)).toEqual([]);
   });
@@ -148,7 +148,7 @@ test.describe('tipos novos de exercício (com rascunhos ligados)', () => {
       'Quarta etapa sit amet',
     ]);
     await page.getByRole('button', { name: 'Verificar' }).click();
-    await expect(page.getByText(/Mandou bem!/)).toBeVisible();
+    await expect(page.getByText(/Isso mesmo!/)).toBeVisible();
     await expect(lista.getByRole('button')).toHaveCount(0);
     await page.getByRole('button', { name: 'Continuar' }).click();
 
@@ -169,7 +169,7 @@ test.describe('tipos novos de exercício (com rascunhos ligados)', () => {
       'Item quatro': 'Ipsum',
     });
     await page.getByRole('button', { name: 'Verificar' }).click();
-    await expect(page.getByText(/Mandou bem! \+5 XP/)).toBeVisible();
+    await expect(page.getByText(/Isso mesmo! \+5 XP/)).toBeVisible();
     await page.getByRole('button', { name: 'Continuar' }).click();
     await page.getByLabel('Mito', { exact: true }).check();
     await page.getByRole('button', { name: 'Verificar' }).click();
