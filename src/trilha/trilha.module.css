@@ -1,169 +1,196 @@
 .trilha {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   margin: 0;
   padding: 4px 0;
   list-style: none;
-  display: flex;
-  flex-direction: column;
 }
 .item {
   position: relative;
-  height: 100px;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+}
+.item_atual {
+  align-items: start;
+}
+/* Linha que liga um marco ao seguinte: verde até onde a pessoa chegou, cinza depois. */
+.item:not(.ultimo)::before {
+  content: '';
+  position: absolute;
+  top: 44px;
+  bottom: -14px;
+  left: 20px;
+  width: 4px;
+  background: var(--borda-forte);
+}
+.item_feita:not(.ultimo)::before {
+  background: var(--verde-botao);
+}
+.marco {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
 }
-.itemAtual {
-  height: 114px;
-  padding-top: 54px;
+.marco_feita {
+  background: var(--verde-botao);
+  color: #fff;
 }
-.controle {
+.marco_atual {
+  background: var(--fundo);
+  border: 3px solid var(--verde-botao);
+  color: var(--verde-mata);
+  font-family: var(--fonte-titulo);
+  font-size: 20px;
+  font-weight: 800;
+}
+.marco_bloqueada,
+.marco_desafio {
+  background: var(--cinza-chip);
+  border: 2px solid var(--borda-forte);
+  color: var(--texto-suave);
+}
+.linha {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: var(--toque-minimo);
   padding: 0;
   background: none;
   border: none;
-  border-radius: var(--raio-pilula);
   color: inherit;
+  font: inherit;
+  text-align: left;
   text-decoration: none;
   cursor: pointer;
 }
-.controle[aria-disabled='true'] {
+.linha:focus-visible,
+.acao:focus-visible {
+  outline: none;
+  box-shadow: var(--foco);
+}
+.linhaBloqueada {
   cursor: default;
 }
-.no {
+.nome {
+  font-size: 16px;
+  font-weight: 800;
+}
+.linhaBloqueada .nome {
+  color: var(--texto-corpo);
+}
+.estado {
+  color: var(--verde-mata);
+  font-size: 13px;
+  font-weight: 700;
+}
+.linhaBloqueada .estado {
+  color: var(--texto-suave);
+}
+.cartaoAtual {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 6px;
+  padding: 12px 14px 14px;
+  background: var(--verde-claro);
+  border: 2px solid var(--verde-botao);
+  border-radius: 16px;
 }
-.circulo {
-  width: 72px;
-  height: 66px;
-  box-sizing: content-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--raio-pilula);
-  border-bottom: 8px solid var(--borda-no);
-  background: var(--fundo-no);
-  color: var(--cor-no);
-}
-.feita,
-.atual {
-  --fundo-no: var(--verde-botao);
-  --borda-no: var(--verde-mata);
-  --cor-no: #fff;
-}
-.bloqueada,
-.desafio {
-  --fundo-no: var(--cinza-trilho);
-  --borda-no: var(--cinza-sombra);
-  --cor-no: var(--cinza-seta);
-}
-.anel {
-  width: 86px;
-  height: 86px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 6px;
-  border: 5px solid var(--verde-claro);
-  border-radius: var(--raio-pilula);
-}
-.balao {
-  position: absolute;
-  top: -50px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 9px 14px;
-  background: var(--fundo);
-  border: 2px solid var(--borda);
-  border-bottom-width: 4px;
-  border-radius: 14px;
-  color: var(--verde-mata);
-  font-size: 14px;
+.nomeAtual {
+  margin: 0;
+  padding-right: 44px;
+  font-family: var(--fonte-texto);
+  font-size: 17px;
   font-weight: 800;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  white-space: nowrap;
+  line-height: 1.25;
 }
-.balao::after {
-  content: '';
-  position: absolute;
-  bottom: -9px;
-  left: 50%;
-  width: 12px;
-  height: 12px;
-  background: var(--fundo);
-  border-right: 2px solid var(--borda);
-  border-bottom: 2px solid var(--borda);
-  transform: translateX(-50%) rotate(45deg);
+.detalhe {
+  color: var(--texto-corpo);
+  font-size: 13px;
 }
 .capi {
   position: absolute;
-  top: 4px;
+  top: -14px;
+  right: -6px;
+  display: flex;
 }
-.capiDireita {
-  right: 6px;
+.acao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin-top: 6px;
+  padding: 0 20px;
+  background: var(--verde-botao);
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 3px 0 var(--verde-mata);
+  color: #fff;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
 }
-.capiEsquerda {
-  left: 6px;
+.acao:active {
+  transform: translateY(3px);
+  box-shadow: none;
 }
 
 .banner {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  justify-content: space-between;
   gap: var(--espaco-3);
-  padding: 14px var(--espaco-4);
-  border-bottom: 5px solid var(--borda-banner);
-  border-radius: 18px;
-  background: var(--fundo-banner);
-  color: #fff;
-}
-.banner_atual,
-.banner_feita {
-  --fundo-banner: var(--verde-botao);
-  --borda-banner: var(--verde-mata);
-}
-.banner_bloqueada {
-  --fundo-banner: var(--texto-suave);
-  --borda-banner: var(--texto-corpo);
+  padding-bottom: var(--espaco-3);
+  border-bottom: 2px solid var(--borda);
 }
 .bannerTexto {
-  flex: 1;
-  min-width: 0;
   display: flex;
+  flex: 1;
   flex-direction: column;
+  gap: 2px;
+  min-width: 0;
 }
 .bannerTag {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
+  color: var(--verde-mata);
+  font-size: 13px;
   font-weight: 800;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
+}
+.banner_bloqueada .bannerTag {
+  color: var(--texto-corpo);
 }
 .bannerTitulo {
   margin: 0;
-  color: #fff;
   font-size: 21px;
   line-height: 1.15;
 }
+.banner_bloqueada .bannerTitulo {
+  color: var(--texto-corpo);
+}
 .bannerAviso {
-  margin-top: 2px;
+  color: var(--texto-suave);
   font-size: 13px;
 }
 .guia {
-  flex: none;
-  width: 46px;
-  height: 46px;
   display: flex;
+  flex: none;
   align-items: center;
-  justify-content: center;
-  border: 2px solid rgb(255 255 255 / 45%);
-  border-bottom-width: 5px;
-  border-radius: 14px;
-  color: #fff;
+  min-height: var(--toque-minimo);
+  color: var(--azul-anil);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+.guia:hover {
+  text-decoration: underline;
 }
 .guia:focus-visible {
   outline: none;

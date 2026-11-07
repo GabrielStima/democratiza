@@ -1,11 +1,10 @@
 import type { JSX } from 'preact';
 import { Capi } from '../componentes/Capi';
-import { deslocamento, rotuloDoNo, type NoDaTrilha, type TipoNo } from './nos.ts';
+import { type NoDaTrilha, type TipoNo } from './nos.ts';
 import estilos from './trilha.module.css';
 
-const ICONES: Record<TipoNo, JSX.Element> = {
+const ICONES: Record<Exclude<TipoNo, 'atual'>, JSX.Element> = {
   feita: <path d="M5 12.5l4.5 4.5L19 7.5" />,
-  atual: <path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z" />,
   bloqueada: (
     <>
       <rect x="5" y="11" width="14" height="10" rx="2" />
@@ -21,101 +20,114 @@ const ICONES: Record<TipoNo, JSX.Element> = {
   ),
 };
 
-function Icone({ tipo }: { tipo: TipoNo }) {
-  const cheio = tipo === 'atual';
+/** Marco quadrado de canto arredondado: visto (feita), número (atual) ou cadeado/troféu. */
+function Marco({ tipo, numero }: { tipo: TipoNo; numero: number }) {
+  if (tipo === 'atual') {
+    return (
+      <span class={`${estilos.marco} ${estilos.marco_atual}`} aria-hidden="true">
+        {numero}
+      </span>
+    );
+  }
   return (
-    <svg
-      aria-hidden="true"
-      width={tipo === 'feita' ? 36 : 32}
-      height={tipo === 'feita' ? 36 : 32}
-      viewBox="0 0 24 24"
-      fill={cheio ? 'currentColor' : 'none'}
-      stroke="currentColor"
-      stroke-width={tipo === 'feita' ? 4.2 : 2.6}
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    >
-      {ICONES[tipo]}
-    </svg>
+    <span class={`${estilos.marco} ${estilos[`marco_${tipo}`]}`} aria-hidden="true">
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width={tipo === 'feita' ? 3.2 : 2.6}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        {ICONES[tipo]}
+      </svg>
+    </span>
   );
 }
 
+const ESTADO_ESCRITO: Record<TipoNo, string> = {
+  feita: 'Feita',
+  atual: 'Agora',
+  bloqueada: 'Bloqueada · libera ao terminar a anterior',
+  desafio: 'Desafio da unidade · revisão dos conceitos',
+};
+
 interface NoProps {
   no: NoDaTrilha;
-  indice: number;
+  numero: number;
+  ultimo: boolean;
   /** Visitante: o nó atual abre a escolha da meta em vez de ir direto à lição. */
   aoAbrirAtual?: () => void;
 }
 
-function No({ no, indice, aoAbrirAtual }: NoProps) {
-  const desloc = deslocamento(indice);
-  const rotulo = rotuloDoNo(no);
-  const atual = no.tipo === 'atual';
-  const bloqueado = no.tipo === 'bloqueada' || no.tipo === 'desafio';
-  const circulo = (
-    <span class={`${estilos.circulo} ${estilos[no.tipo]}`}>
-      <Icone tipo={no.tipo} />
-    </span>
-  );
-  const corpo = (
-    <span class={estilos.no} style={{ transform: `translateX(${desloc}px)` }}>
-      {atual && (
-        <span class={estilos.balao} aria-hidden="true">
-          Começar
-        </span>
-      )}
-      {atual ? <span class={estilos.anel}>{circulo}</span> : circulo}
-    </span>
-  );
-  let controle;
-  if (bloqueado) {
-    controle = (
-      <button type="button" class={estilos.controle} aria-disabled="true" aria-label={rotulo}>
-        {corpo}
-      </button>
+function No({ no, numero, ultimo, aoAbrirAtual }: NoProps) {
+  const classeLi = `${estilos.item} ${estilos[`item_${no.tipo}`]} ${ultimo ? estilos.ultimo : ''}`;
+  if (no.tipo === 'atual') {
+    const verbo = aoAbrirAtual ? 'Começar' : 'Continuar';
+    const nome = `${verbo}: ${no.titulo}`;
+    return (
+      <li class={classeLi}>
+        <Marco tipo={no.tipo} numero={numero} />
+        <div class={estilos.cartaoAtual}>
+          <span class={estilos.capi} aria-hidden="true">
+            <Capi tamanho={56} />
+          </span>
+          <span class={estilos.estado}>{ESTADO_ESCRITO.atual}</span>
+          <h3 class={estilos.nomeAtual}>{no.titulo}</h3>
+          {no.detalhe && <span class={estilos.detalhe}>{no.detalhe}</span>}
+          {aoAbrirAtual ? (
+            <button type="button" class={estilos.acao} aria-label={nome} onClick={aoAbrirAtual}>
+              {verbo}
+            </button>
+          ) : (
+            <a href={no.destino} class={estilos.acao} aria-label={nome}>
+              {verbo}
+            </a>
+          )}
+        </div>
+      </li>
     );
-  } else if (atual && aoAbrirAtual) {
-    controle = (
-      <button type="button" class={estilos.controle} aria-label={rotulo} onClick={aoAbrirAtual}>
-        {corpo}
-      </button>
-    );
-  } else {
-    controle = (
-      <a href={no.destino} class={estilos.controle} aria-label={rotulo}>
-        {corpo}
-      </a>
+  }
+  if (no.tipo === 'feita') {
+    return (
+      <li class={classeLi}>
+        <Marco tipo={no.tipo} numero={numero} />
+        <a href={no.destino} class={estilos.linha}>
+          <span class={estilos.nome}>{no.titulo}</span>{' '}
+          <span class={estilos.estado}>{ESTADO_ESCRITO.feita}</span>
+        </a>
+      </li>
     );
   }
   return (
-    <li class={`${estilos.item} ${atual ? estilos.itemAtual : ''}`}>
-      {controle}
-      {atual && (
-        <span
-          class={`${estilos.capi} ${desloc <= 0 ? estilos.capiDireita : estilos.capiEsquerda}`}
-          aria-hidden="true"
-        >
-          <Capi tamanho={92} />
-        </span>
-      )}
+    <li class={classeLi}>
+      <Marco tipo={no.tipo} numero={numero} />
+      <button
+        type="button"
+        class={`${estilos.linha} ${estilos.linhaBloqueada}`}
+        aria-disabled="true"
+      >
+        <span class={estilos.nome}>{no.titulo}</span>{' '}
+        <span class={estilos.estado}>{ESTADO_ESCRITO[no.tipo]}</span>
+      </button>
     </li>
   );
 }
 
-/** A trilha de lições: nós em zigue-zague. `inicio` continua o desenho de uma trilha anterior. */
-export function Trilha({
-  nos,
-  inicio = 0,
-  aoAbrirAtual,
-}: {
-  nos: NoDaTrilha[];
-  inicio?: number;
-  aoAbrirAtual?: () => void;
-}) {
+/** A trilha de lições como linha do tempo: marcos ligados por uma linha, com o nome ao lado. */
+export function Trilha({ nos, aoAbrirAtual }: { nos: NoDaTrilha[]; aoAbrirAtual?: () => void }) {
   return (
     <ol class={estilos.trilha} aria-label="Trilha de lições">
       {nos.map((no, i) => (
-        <No key={no.id} no={no} indice={inicio + i} aoAbrirAtual={aoAbrirAtual} />
+        <No
+          key={no.id}
+          no={no}
+          numero={i + 1}
+          ultimo={i === nos.length - 1}
+          aoAbrirAtual={aoAbrirAtual}
+        />
       ))}
     </ol>
   );
@@ -123,7 +135,7 @@ export function Trilha({
 
 export type EstadoBanner = 'feita' | 'atual' | 'bloqueada';
 
-/** Faixa da unidade: verde na atual (e na feita, com ✓), cinza na bloqueada. */
+/** Cabeçalho da unidade: branco, com o número, o título e, se houver, o link "Ver o curso". */
 export function BannerUnidade({
   numero,
   titulo,
@@ -136,28 +148,13 @@ export function BannerUnidade({
   estado: EstadoBanner;
   /** Texto pequeno, ex.: "Libera ao terminar a Unidade 2". */
   aviso?: string | null;
-  /** Endereço do guia da unidade (botão com ícone de livro). */
+  /** Endereço da página do curso (link "Ver o curso"). */
   guia?: string;
 }) {
   return (
     <div class={`${estilos.banner} ${estilos[`banner_${estado}`]}`}>
       <div class={estilos.bannerTexto}>
         <span class={estilos.bannerTag}>
-          {estado === 'feita' && (
-            <svg
-              aria-hidden="true"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="4"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M5 12.5l4.5 4.5L19 7.5" />
-            </svg>
-          )}
           Unidade {numero}
           {estado === 'feita' && <span> · concluída</span>}
         </span>
@@ -165,21 +162,8 @@ export function BannerUnidade({
         {aviso && <span class={estilos.bannerAviso}>{aviso}</span>}
       </div>
       {guia && (
-        <a href={guia} class={estilos.guia} aria-label={`Guia da unidade ${numero}`}>
-          <svg
-            aria-hidden="true"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.6"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M4 19V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z" />
-            <path d="M8 7h6M8 11h6" />
-          </svg>
+        <a href={guia} class={estilos.guia}>
+          Ver o curso
         </a>
       )}
     </div>

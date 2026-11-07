@@ -154,7 +154,6 @@ function Pagina({ id }: { id: string }) {
   const d = dadosDoCurso(curso, estado.value, caderno.value, catalogo);
   const visitante = estado.value === null;
   if (ehMobile.value) {
-    let inicio = 0;
     return (
       <div class={estilos.mobile}>
         <nav aria-label="Caminho" class={estilos.caminho}>
@@ -193,8 +192,6 @@ function Pagina({ id }: { id: string }) {
         <section aria-label="Unidades" class={estilos.unidadesMobile}>
           {d.unidades.map((u) => {
             const nos = u.status === 'atual' ? nosDaUnidade(u) : [];
-            const comeco = inicio;
-            inicio += nos.length;
             return (
               <div key={u.id} class={estilos.unidadeMobile}>
                 <BannerUnidade
@@ -206,7 +203,6 @@ function Pagina({ id }: { id: string }) {
                 {nos.length > 0 && (
                   <Trilha
                     nos={nos}
-                    inicio={comeco}
                     aoAbrirAtual={visitante ? () => abrirMeta('primeira') : undefined}
                   />
                 )}

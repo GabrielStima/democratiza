@@ -23,10 +23,10 @@ test.describe('M13 · trilha no celular', () => {
   test('Home: a trilha mostra nós feitos, o atual e os bloqueados', async ({ page }) => {
     await carregar(page, 'Em andamento');
     await page.goto('/');
-    await expect(page.getByRole('link', { name: /\(feita\)$/ }).first()).toBeVisible();
-    const atual = page.getByRole('link', { name: /^Começar: / });
+    await expect(page.getByRole('link', { name: / Feita$/ }).first()).toBeVisible();
+    const atual = page.getByRole('link', { name: /^Continuar: / });
     await expect(atual).toHaveCount(1);
-    const bloqueada = page.getByRole('button', { name: /\(bloqueada\)$/ }).first();
+    const bloqueada = page.getByRole('button', { name: / Bloqueada/ }).first();
     await expect(bloqueada).toHaveAttribute('aria-disabled', 'true');
     expect((await atual.boundingBox())!.width).toBeGreaterThanOrEqual(44);
     expect(await semRolagemLateral(page)).toBe(true);
@@ -36,7 +36,7 @@ test.describe('M13 · trilha no celular', () => {
   test('Home: tocar no nó atual abre a lição', async ({ page }) => {
     await carregar(page, 'Em andamento');
     await page.goto('/');
-    await page.getByRole('link', { name: /^Começar: / }).click();
+    await page.getByRole('link', { name: /^Continuar: / }).click();
     await expect(page).toHaveURL(/\/c\/[^/]+\/[^/]+\/[^/]+/);
   });
 
@@ -45,7 +45,7 @@ test.describe('M13 · trilha no celular', () => {
     await page.goto('/');
     const url = page.url();
     await page
-      .getByRole('button', { name: /\(bloqueada\)$/ })
+      .getByRole('button', { name: / Bloqueada/ })
       .first()
       .click({ force: true });
     expect(page.url()).toBe(url);
@@ -58,7 +58,7 @@ test.describe('M13 · trilha no celular', () => {
       .getByRole('link', { name: /Continuar|Ver curso|Abrir/ })
       .first()
       .click({ force: true });
-    await expect(page.getByRole('link', { name: /^Começar: / })).toHaveCount(1);
+    await expect(page.getByRole('link', { name: /^Continuar: / })).toHaveCount(1);
     expect(await semRolagemLateral(page)).toBe(true);
     expect(await graves(page)).toEqual([]);
   });
@@ -73,7 +73,7 @@ test.describe('M13 · trilha no celular', () => {
   test('Home com um curso só: mostra o progresso no curso', async ({ page }) => {
     await carregar(page, 'Um curso só');
     await page.goto('/');
-    await expect(page.getByRole('link', { name: /^Começar: / })).toHaveCount(1);
+    await expect(page.getByRole('link', { name: /^Continuar: / })).toHaveCount(1);
     expect(await semRolagemLateral(page)).toBe(true);
   });
 });

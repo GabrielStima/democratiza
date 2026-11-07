@@ -13,36 +13,26 @@ const nos: NoDaTrilha[] = [
 describe('Trilha', () => {
   it('feita e atual são links; bloqueada e troféu são botões desativados', () => {
     render(<Trilha nos={nos} />);
-    expect(screen.getByRole('link', { name: 'Executivo (feita)' }).getAttribute('href')).toBe(
+    expect(screen.getByRole('link', { name: 'Executivo Feita' }).getAttribute('href')).toBe(
       '/c/x/u/a',
     );
-    expect(screen.getByRole('link', { name: 'Começar: Legislativo' }).getAttribute('href')).toBe(
+    expect(screen.getByRole('link', { name: 'Continuar: Legislativo' }).getAttribute('href')).toBe(
       '/c/x/u/b',
     );
-    const bloqueada = screen.getByRole('button', { name: 'Judiciário (bloqueada)' });
+    const bloqueada = screen.getByRole('button', { name: /^Judiciário Bloqueada/ });
     expect(bloqueada.getAttribute('aria-disabled')).toBe('true');
-    expect(screen.getByRole('button', { name: /Desafio.*desafio da unidade/ })).toBeTruthy();
+    expect(screen.getByRole('button', { name: /^Desafio Desafio da unidade/ })).toBeTruthy();
     expect(screen.getAllByRole('listitem')).toHaveLength(4);
   });
 
-  it('o nó atual mostra o balão Começar e desloca cada nó em zigue-zague', () => {
+  it('numera o marco da atual e escreve o estado de cada lição', () => {
     const { container } = render(<Trilha nos={nos} />);
-    expect(container.textContent).toContain('Começar');
-    const desloc = Array.from(container.querySelectorAll<HTMLElement>('span[style]')).map(
-      (e) => e.style.transform,
-    );
-    expect(desloc).toEqual([
-      'translateX(0px)',
-      'translateX(-46px)',
-      'translateX(-64px)',
-      'translateX(-46px)',
-    ]);
-  });
-
-  it('continua o desenho a partir de `inicio`', () => {
-    const { container } = render(<Trilha nos={nos.slice(0, 1)} inicio={5} />);
-    expect(container.querySelector<HTMLElement>('span[style]')?.style.transform).toBe(
-      'translateX(46px)',
+    expect(container.textContent).toContain('Agora');
+    expect(container.textContent).toContain('Feita');
+    expect(container.textContent).toContain('Bloqueada');
+    expect(screen.getByRole('heading', { name: 'Legislativo' })).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Continuar: Legislativo' }).textContent).toBe(
+      'Continuar',
     );
   });
 
@@ -60,9 +50,7 @@ describe('BannerUnidade', () => {
       <BannerUnidade numero={2} titulo="Como a democracia funciona" estado="atual" guia="/c/x" />,
     );
     expect(screen.getByRole('heading', { name: 'Como a democracia funciona' })).toBeTruthy();
-    expect(screen.getByRole('link', { name: 'Guia da unidade 2' }).getAttribute('href')).toBe(
-      '/c/x',
-    );
+    expect(screen.getByRole('link', { name: 'Ver o curso' }).getAttribute('href')).toBe('/c/x');
     rerender(
       <BannerUnidade
         numero={3}
