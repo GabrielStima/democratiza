@@ -182,6 +182,8 @@ export function Ordenar({
   const lista = useRef<HTMLOListElement>(null);
 
   // Mover a linha recria o botão no DOM; devolve o foco ao mesmo botão (ou ao outro, na ponta).
+  // Depende também de `valor`: o pai e este componente podem renderizar em momentos diferentes,
+  // e o foco precisa ser devolvido depois da última troca de lugar.
   useEffect(() => {
     if (!foco) return;
     const botoes = lista.current?.querySelectorAll<HTMLButtonElement>(
@@ -190,7 +192,7 @@ export function Ordenar({
     const quer = [...(botoes ?? [])].find((b) => b.dataset.sentido === foco.sentido);
     const outro = [...(botoes ?? [])].find((b) => b.dataset.sentido !== foco.sentido);
     if (!foiParaOutroLugar()) (quer && !quer.disabled ? quer : outro)?.focus();
-  }, [foco]);
+  }, [foco, valor]);
 
   function mover(pos: number, d: -1 | 1) {
     const alvo = pos + d;
