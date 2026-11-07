@@ -1,42 +1,41 @@
+/* Botão com volume baixo: sombra de 3 px, raio de 12 px e texto em caixa normal (M17). */
 .botao {
+  --sombra-cor: var(--verde-mata);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--espaco-2);
-  min-height: 54px;
-  padding: 0 40px;
-  border: none;
-  border-bottom: var(--borda-3d) solid;
-  border-radius: var(--raio-m);
+  box-sizing: border-box;
+  min-height: 52px;
+  padding: 0 28px;
+  border: 2px solid transparent;
+  border-radius: var(--raio-p);
+  box-shadow: 0 3px 0 var(--sombra-cor);
   font-family: inherit;
   font-weight: 800;
-  font-size: 15px;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
+  font-size: 17px;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
   transition:
     transform 0.08s ease,
-    border-bottom-width 0.08s ease;
+    box-shadow 0.08s ease;
 }
 
 .botao:active:not(.desativado) {
   transform: translateY(3px);
-  border-bottom-width: 2px;
+  box-shadow: 0 0 0 var(--sombra-cor);
 }
 
 .pequeno {
-  min-height: 0;
-  padding: 12px 22px;
-  border-radius: var(--raio-p);
-  font-size: 14px;
-  letter-spacing: 0.6px;
+  min-height: var(--toque-minimo);
+  padding: 0 18px;
+  font-size: 15px;
 }
 .grande {
-  min-height: 0;
-  padding: 18px 30px;
-  font-size: 16px;
+  min-height: 58px;
+  padding: 0 32px;
+  font-size: 18px;
 }
 
 .larga {
@@ -45,35 +44,40 @@
 
 .primario {
   background: var(--verde-botao);
-  border-bottom-color: var(--verde-noite);
+  border-color: var(--verde-botao);
+  --sombra-cor: var(--verde-mata);
   color: #fff;
 }
 .primario:hover:not(.desativado) {
   background: var(--verde-botao-hover);
+  border-color: var(--verde-botao-hover);
 }
 
 .secundario {
-  background: var(--azul-anil);
-  border-bottom-color: var(--azul-escuro);
-  color: #fff;
+  background: #fff;
+  border-color: var(--azul-anil);
+  --sombra-cor: var(--azul-escuro);
+  color: var(--azul-anil);
 }
 
 .perigo {
   background: var(--coral-botao);
-  border-bottom-color: var(--coral-escuro);
+  border-color: var(--coral-botao);
+  --sombra-cor: var(--coral-escuro);
   color: #fff;
 }
 
 .neutro {
   background: #fff;
-  border: 2px solid var(--borda-forte);
-  border-bottom: var(--borda-3d) solid var(--borda-forte);
+  border-color: var(--borda-forte);
+  --sombra-cor: var(--borda-forte);
   color: var(--azul-anil);
 }
 
 .desativado {
   background: var(--cinza-trilho);
-  border-bottom-color: var(--cinza-sombra);
+  border-color: var(--cinza-trilho);
+  --sombra-cor: var(--cinza-sombra);
   color: var(--texto-mudo);
   cursor: default;
 }

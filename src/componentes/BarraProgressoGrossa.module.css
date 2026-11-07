@@ -1,24 +1,14 @@
 .trilho {
   flex: 1;
-  height: 16px;
+  height: 10px;
   overflow: hidden;
   background: var(--cinza-trilho);
   border-radius: var(--raio-pilula);
 }
 .preenchimento {
-  position: relative;
   height: 100%;
-  min-width: 16px;
+  min-width: 10px;
   background: var(--verde-ipe);
   border-radius: var(--raio-pilula);
   transition: width 0.3s ease;
-}
-.brilho {
-  position: absolute;
-  top: 4px;
-  right: 8px;
-  left: 8px;
-  height: 4px;
-  background: rgb(255 255 255 / 35%);
-  border-radius: var(--raio-pilula);
 }

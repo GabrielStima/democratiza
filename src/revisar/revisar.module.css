@@ -45,13 +45,12 @@
 }
 .azul {
   background: var(--azul-anil);
-  border-bottom: 6px solid var(--azul-escuro);
+  border: 2px solid var(--azul-escuro);
   color: #fff;
 }
 .verde {
   background: var(--verde-claro);
   border: 2px solid var(--verde-borda);
-  border-bottom-width: 6px;
   color: var(--verde-noite);
 }
 .destaqueTexto {
@@ -382,7 +381,7 @@
 /* Celular: cartão verde, forças em linha e próximas revisões em cartões */
 .verdeForte {
   background: var(--verde-botao);
-  border-bottom: 6px solid var(--verde-mata);
+  border: 2px solid var(--verde-mata);
   color: #fff;
 }
 .verdeForte .rotuloDestaque,
@@ -419,7 +418,6 @@
   min-width: 0;
   padding: var(--espaco-3) var(--espaco-2);
   border: 2px solid var(--borda);
-  border-bottom-width: 4px;
   border-radius: var(--raio-m);
   text-align: center;
 }

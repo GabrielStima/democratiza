@@ -95,7 +95,6 @@
   gap: var(--espaco-2);
   padding: 18px 20px;
   border: 2px solid var(--borda);
-  border-bottom-width: var(--borda-3d);
   border-radius: var(--raio-g);
   background: var(--fundo);
 }

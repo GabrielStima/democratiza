@@ -6,7 +6,7 @@ interface Props {
   rotulo: string;
 }
 
-/** Barra grossa do topo da lição no celular: verde, com um brilho por cima. */
+/** Barra do topo da lição no celular: verde, lisa, com 10 px de altura. */
 export function BarraProgressoGrossa({ valor, rotulo }: Props) {
   const v = Math.min(100, Math.max(0, Math.round(valor)));
   return (
@@ -18,9 +18,7 @@ export function BarraProgressoGrossa({ valor, rotulo }: Props) {
       aria-valuemin={0}
       aria-valuemax={100}
     >
-      <div class={estilos.preenchimento} style={{ width: `${v}%` }}>
-        <span class={estilos.brilho} aria-hidden="true" />
-      </div>
+      <div class={estilos.preenchimento} style={{ width: `${v}%` }} />
     </div>
   );
 }
