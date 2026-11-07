@@ -75,7 +75,7 @@ export function JanelaApagar({
     <Janela titulo="Apagar todo o seu progresso?" aberta={aberta} aoFechar={aoFechar}>
       <Corpo etiqueta="Apagar progresso" titulo="Apagar todo o seu progresso?">
         <p>
-          Isso remove XP, ofensiva, lições feitas e o caderno deste navegador.{' '}
+          Isso remove XP, sequência, lições feitas e o caderno deste navegador.{' '}
           <strong>Não dá para desfazer.</strong> Se quiser guardar tudo, salve um backup antes.
         </p>
         <button type="button" class={estilos.link} onClick={aoSalvarAntes}>

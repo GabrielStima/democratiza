@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'preact/hooks';
 import { Botao3D } from '../componentes/Botao3D';
 import { Capi } from '../componentes/Capi';
+import { TRACOS_SEQUENCIA } from '../componentes/IconeSequencia';
 import { catalogo, carregarLicao } from '../conteudo/index.ts';
 import { listarLicoes } from '../engine/progresso.ts';
 import { apresentar, type ApresentacaoOpcoes } from '../licao/pratica.ts';
@@ -64,10 +65,8 @@ const PASSOS = [
   },
   {
     tom: 'amarelo',
-    icone: (
-      <path d="M12 2c1 3.5 5 5.5 5 11a5 5 0 0 1-10 0c0-2.5 1.2-4 2.5-5 .2 2 1 3 2 3.5C11 9 11.5 5 12 2z" />
-    ),
-    titulo: 'Mantenha a ofensiva',
+    icone: TRACOS_SEQUENCIA,
+    titulo: 'Mantenha a sequência',
     texto: 'Estude um pouco por dia e acompanhe sua meta e seus dias seguidos.',
   },
 ] as const;
@@ -76,11 +75,9 @@ const TONS_UNIDADE = ['verde', 'azul', 'amarelo'] as const;
 
 const GAMIFICACAO = [
   {
-    classe: 'iconeChama',
-    icone: (
-      <path d="M12 2c1 3.5 5 5.5 5 11a5 5 0 0 1-10 0c0-2.5 1.2-4 2.5-5 .2 2 1 3 2 3.5C11 9 11.5 5 12 2z" />
-    ),
-    titulo: 'Ofensiva',
+    classe: 'iconeSequencia',
+    icone: TRACOS_SEQUENCIA,
+    titulo: 'Sequência',
     texto: 'Dias seguidos estudando',
   },
   {
@@ -311,7 +308,7 @@ export function HomeVisitante() {
           <div class={estilos.textoGamificacao}>
             <h2>Aprender sem esquecer</h2>
             <p>
-              Cada lição vale XP. A cada dia estudado sua ofensiva cresce. E cada conceito novo vai
+              Cada lição vale XP. A cada dia estudado sua sequência cresce. E cada conceito novo vai
               para o seu caderno, onde a Capi traz de volta na hora certa para você não esquecer.
             </p>
           </div>

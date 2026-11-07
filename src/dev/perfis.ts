@@ -84,7 +84,7 @@ export const PERFIS: Perfil[] = [
   {
     id: 'um-curso-so',
     nome: 'Um curso só',
-    descricao: '3 dias de ofensiva, curso 1 com 3 lições feitas, nenhum outro curso liberado.',
+    descricao: '3 dias de sequência, curso 1 com 3 lições feitas, nenhum outro curso liberado.',
     construir(catalogo, hoje) {
       const curso = catalogo.cursos[0];
       const caderno: Caderno = {};
@@ -99,7 +99,7 @@ export const PERFIS: Perfil[] = [
     nome: revisao === 'vencidos' ? 'Em andamento' : 'Tudo em dia',
     descricao:
       revisao === 'vencidos'
-        ? '7 dias de ofensiva (recorde 12), 30/50 XP hoje, curso 1 com 5 lições, curso 2 liberado com 1, vários conceitos vencidos.'
+        ? '7 dias de sequência (recorde 12), 30/50 XP hoje, curso 1 com 5 lições, curso 2 liberado com 1, vários conceitos vencidos.'
         : 'Como "Em andamento", mas nenhum conceito vencido.',
     construir(catalogo: Catalogo, hoje: string) {
       const [c1, c2] = catalogo.cursos;

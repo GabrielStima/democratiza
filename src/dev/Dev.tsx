@@ -246,7 +246,7 @@ function SecaoEstado() {
         </dd>
         <dt>Visitante?</dt>
         <dd>{e ? 'não' : 'sim'}</dd>
-        <dt>Ofensiva exibida</dt>
+        <dt>Sequência exibida</dt>
         <dd>
           {e ? ofensivaAtual(e.ofensiva, dia) : 0}
           {e && ofensivaEmRisco(e.ofensiva, dia) ? ' (em risco)' : ''}

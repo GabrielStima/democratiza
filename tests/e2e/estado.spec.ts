@@ -10,10 +10,10 @@ test.describe('estado e perfis (com rascunhos ligados)', () => {
     await page.goto('/_dev');
     await clicarPerfil(page, 'Em andamento');
     const fatos = page.getByTestId('fatos');
-    await expect(fatos).toContainText('Ofensiva exibida7');
+    await expect(fatos).toContainText('Sequência exibida7');
     await expect(fatos).toContainText('Conceitos vencidos6');
     await page.reload();
-    await expect(page.getByTestId('fatos')).toContainText('Ofensiva exibida7');
+    await expect(page.getByTestId('fatos')).toContainText('Sequência exibida7');
     await expect(page.getByTestId('fatos')).toContainText('Conceitos vencidos6');
   });
 
@@ -40,9 +40,9 @@ test.describe('estado e perfis (com rascunhos ligados)', () => {
     await page.goto('/_dev');
     await clicarPerfil(page, 'Em andamento');
     await page.getByRole('button', { name: 'Avançar 1 dia' }).click();
-    await expect(page.getByTestId('fatos')).toContainText('Ofensiva exibida7 (em risco)');
+    await expect(page.getByTestId('fatos')).toContainText('Sequência exibida7 (em risco)');
     await page.getByRole('button', { name: 'Avançar 1 dia' }).click();
-    await expect(page.getByTestId('fatos')).toContainText('Ofensiva exibida0');
+    await expect(page.getByTestId('fatos')).toContainText('Sequência exibida0');
   });
 });
 

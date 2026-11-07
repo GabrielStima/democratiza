@@ -1,5 +1,6 @@
 import { Botao3D } from '../componentes/Botao3D';
 import { Capi } from '../componentes/Capi';
+import { IconeSequencia } from '../componentes/IconeSequencia';
 import { ROTULO_NIVEL, Selo } from '../componentes/Selo';
 import { catalogo } from '../conteudo/index.ts';
 import { hoje } from '../engine/relogio.ts';
@@ -259,31 +260,14 @@ const LETRA_DO_DIA = (dia: string) =>
 const NOME_DO_DIA = (dia: string) =>
   new Date(`${dia}T12:00:00`).toLocaleDateString('pt-BR', { weekday: 'long' });
 
-function Chama() {
-  return (
-    <svg
-      aria-hidden="true"
-      width="32"
-      height="32"
-      viewBox="0 0 24 24"
-      fill="var(--laranja-chama)"
-      stroke="var(--laranja-borda)"
-      stroke-width="1.6"
-      stroke-linejoin="round"
-    >
-      <path d="M12 2c1 3.5 5 5.5 5 11a5 5 0 0 1-10 0c0-2.5 1.2-4 2.5-5 .2 2 1 3 2 3.5C11 9 11.5 5 12 2z" />
-    </svg>
-  );
-}
-
 function CartaoOfensiva({ d }: { d: DadosHome }) {
   const dias = d.ofensiva.dias;
   const recorde = d.ofensiva.recorde;
   return (
     <section class={`${estilos.cartaoLateral} ${estilos.ofensiva}`}>
-      <h2 class="so-leitor">Ofensiva</h2>
+      <h2 class="so-leitor">Sequência</h2>
       <div class={estilos.ofensivaTopo}>
-        <Chama />
+        <IconeSequencia tamanho={32} />
         <div class={estilos.ofensivaDias}>
           <strong>
             {dias} {dias === 1 ? 'dia seguido' : 'dias seguidos'}
@@ -296,7 +280,7 @@ function CartaoOfensiva({ d }: { d: DadosHome }) {
       <ol class={estilos.semana}>
         {d.ofensiva.semana.map((s) => (
           <li key={s.dia} class={s.estudou ? estilos.estudou : ''}>
-            <span class={estilos.bolinha} aria-hidden="true" />
+            <span class={estilos.quadrado} aria-hidden="true" />
             <span aria-hidden="true">{LETRA_DO_DIA(s.dia)}</span>
             <span class="so-leitor">
               {NOME_DO_DIA(s.dia)}: {s.estudou ? 'estudou' : 'não estudou'}
@@ -464,10 +448,7 @@ function TrilhaDaHome({ d }: { d: DadosHome }) {
             estado="bloqueada"
             aviso={proxima.aviso}
           />
-          <Trilha
-            nos={previa.map((n) => ({ ...n, tipo: 'bloqueada' as const }))}
-            inicio={nos.length}
-          />
+          <Trilha nos={previa.map((n) => ({ ...n, tipo: 'bloqueada' as const }))} />
         </>
       )}
     </section>

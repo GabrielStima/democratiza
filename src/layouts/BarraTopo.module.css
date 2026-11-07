@@ -21,7 +21,6 @@
   justify-content: center;
   background: var(--fundo-faixa);
   border: 2px solid var(--borda);
-  border-bottom-width: 4px;
   border-radius: var(--raio-p);
 }
 .numeros {
@@ -39,7 +38,7 @@
   font-weight: 800;
 }
 .chama {
-  color: var(--laranja-borda);
+  color: var(--verde-mata);
 }
 .raio {
   color: var(--amarelo-icone);

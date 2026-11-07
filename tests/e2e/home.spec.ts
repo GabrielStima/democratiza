@@ -84,7 +84,7 @@ test.describe('com rascunhos ligados', () => {
     await expect(page.getByRole('heading', { name: 'Revisão de hoje' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Revisar agora' })).toBeVisible();
     await expect(page.getByRole('link', { name: /Revisar.*6/ })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Ofensiva' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Sequência' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Cursos', exact: true })).toHaveCount(1);
     expect(await graves(page)).toEqual([]);
   });
